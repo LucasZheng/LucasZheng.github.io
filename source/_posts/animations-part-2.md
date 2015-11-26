@@ -1,6 +1,6 @@
 title: Web Animation API（二） 
 description: 让我们来谈一谈未来的Web Animation API
-date: 2015-11-25 22:52:13
+date: 2015-11-25 23:52:13
 categories:
 - javascript
 
