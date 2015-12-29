@@ -2,7 +2,7 @@ title: Angular VS Backbone VS Ember
 date: 2015-03-17 16:26:56
 description: 对当前流行的三个mvc框架进行了简单的比较分析。
 categories:
-- mvc
+- MVC
 
 tags: [Angular, Backbone, Ember]
 ---

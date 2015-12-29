@@ -3,8 +3,7 @@ description: Vue.js是一个数据双向绑定的MVVM的library，文章将讲�
 date: 2015-09-07 20:27:46
 
 categories:
-- javascript
-- mvc
+- MVC
 
 tags: [javascript, vue]
 

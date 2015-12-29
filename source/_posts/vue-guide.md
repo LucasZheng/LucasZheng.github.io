@@ -2,7 +2,7 @@ title: vue初探
 date: 2015-03-14 16:21:55
 description: vue是一个MVVM的数据双向绑定的library，比其它MVC框架更轻量级，更容易学习
 categories:
-- mvc
+- MVC
 
 tags: [vue]
 ---

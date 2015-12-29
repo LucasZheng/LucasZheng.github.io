@@ -3,10 +3,9 @@ description: Promise在javascript单元测试中的应用。
 date: 2015-09-13 20:27:46
 
 categories:
-- javascript
 - test
 
-tags: [javascript, unit test, promise]
+tags: [unit test, promise]
 
 ---
 Promise已经成为javascript标准的一部分，原生的`Promise`已经在所有的主流浏览器中得到实现，包括Chrome，Firefox和Safari。<!-- more -->
