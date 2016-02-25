@@ -104,5 +104,25 @@ git rebase -i Commit 0
 Commit X
 Commit 0
 ```
+
+#### 解决冲突
+当我们使用git pull/push 或git merge时，有时会产生一些冲突，可能有些部分文件需要我们手动来解决，还有些冲突文件我们可以确定要么是保留我们local版本的修改，要么是使用remote/other分支的修改。
+如果我们对所有的冲突文件都保留local或remote分支的修改，那么我们可以：`cd project-folder`，然后搜索所有的冲突文件：`grep -lr '<<<<<<<' ./`。执行：
+```
+git checkout --ours PATH/FILE
+```
+或
+```
+git checkout --theirs PATH/FILE
+```
+也可以用如下的流处理：
+```
+grep -lr '<<<<<<<' . | xargs git checkout --ours
+```
+或
+```
+grep -lr '<<<<<<<' . | xargs git checkout --theirs
+```
+
 #### 利用git hooks
 在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。
