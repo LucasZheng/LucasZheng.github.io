@@ -5,8 +5,7 @@ date: 2015-05-25 20:27:46
 categories:
 - javascript
 
-tags:
-- []
+tags: [promise]
 
 ---
 Promise对很多有一定js开发经验的developer来说并不陌生，它解决了js中callback hell的问题，让我们的js代码更优雅、更容易阅读和维护。<!-- more -->虽然现实中developer在一定程度上会使用promise，但他们并没有真正的了解它的工作原理。如下面的代码，你能说出它们之间的差别吗？
