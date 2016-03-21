@@ -124,5 +124,63 @@ grep -lr '<<<<<<<' . | xargs git checkout --ours
 grep -lr '<<<<<<<' . | xargs git checkout --theirs
 ```
 
+#### 添加远程仓库
+在本地添加已经存在的远端仓库，并推送代码：
+```
+git remote add origin https://github.com/sdaityari/my_git_project.git
+git push -u origin master
+```
+
+#### 基于某个commit创建一个新的分支
+```
+git checkout -b old_commit_branch cafb55d
+```
+
+#### 更改当前分支名称
+```
+git branch -m renamed_branch
+```
+
 #### 利用git hooks
 在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。
+
+#### 其他常用命令
+```
+本地新建并切换到该分支：git checkout -b xxx
+切换到某个分支：git checkout xxx
+撤销本地工作区的所有文件修改：git checkout .
+撤销本地工作区的某个文件修改：git checkout xxx
+撤销暂存区的所有文件修改到工作区：git reset HEAD .
+撤销暂存区中某个文件修改到工作区：git reset HEAD xxx
+撤销上次提交记录但保留修改到暂存区: git reset --soft HEAD~1
+撤销暂存区和工作区的所有文件修改：git reset --hard HEAD
+撤回到上次提交版本(产生一个新的commit): git revert HEAD~1
+查看本地所有分支：git branch
+查看所有分支（包括远程分支）： git branch -a
+删除本地某个分支：git branch -d xxx
+强制删除本地某个分支：git branch -D xxx
+修改本地分支名称：git branch -m old_branch_name new_branch_name  
+删除远程的xxx分支： git push origin :xxx
+推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch
+--track test origin/test)
+推送本地分支到远程并track：git push -u origin test
+获取远程某个分支（clone）：先在master分支上git pull， 然后git checkout -b acl-624/zoro origin/acl-624（如果本地分支名已经存在，就不需要－b参数）
+获取远程某个分支（track）：git checkout --track origin/int06
+合并xxx分支到当前分支：git merge xxx
+查看本地分支与远程分支的差异：git diff master origin/master
+查看工作区和暂存区的diff：git diff
+查看暂存区和历史记录区的diff：git diff —cached
+查看工作区和历史记录区的diff：git diff HEAD
+查看某个commit id的修改内容：git show 19311ff5720ff3660f875
+清除非git管理的文件：git clean -fd
+修改当前分支名称：git branch -m newname
+拉取远端某个分支合并到当前分支：git pull origin test    (git pull会拉取所有的远端分支并合并到本地)
+应用某个特定stash：git stash apply stash@{xxx}
+删除某个特定stash：git stash drop stash@{xxx}
+撤销暂存区新创建且尚未提交的文件到本地：git rm --cached mistake_file
+本地和暂存区同时删除：git rm xxx
+修改最近一次的提交comment: git commit --amend -m "New Message"
+查看仓库中某个文件每行的提交信息：git blame my_file
+查看最近2次的提交历史记录：git log -2
+查看file1文件file2文件的提交记录：git log file1 file2
+```
