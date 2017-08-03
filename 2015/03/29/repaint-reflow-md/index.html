@@ -1,0 +1,725 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>web性能优化之－－reflow和repaint | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="repaint和reflow是如何产生的，如何减少它对页面的视觉体验">
+<meta name="keywords" content="performance,reflow,repaint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web性能优化之－－reflow和repaint">
+<meta property="og:url" content="http://ilucas.me/2015/03/29/repaint-reflow-md/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="repaint和reflow是如何产生的，如何减少它对页面的视觉体验">
+<meta property="og:image" content="http://ilucas.me/img/render.png">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web性能优化之－－reflow和repaint">
+<meta name="twitter:description" content="repaint和reflow是如何产生的，如何减少它对页面的视觉体验">
+<meta name="twitter:image" content="http://ilucas.me/img/render.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/29/repaint-reflow-md/" title="web性能优化之－－reflow和repaint" itemprop="url">web性能优化之－－reflow和repaint</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-29T07:57:47.000Z" itemprop="datePublished"> 发表于 2015-03-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器render流程"><span class="toc-number">1.</span> <span class="toc-text">浏览器render流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reflow和repaint"><span class="toc-number">2.</span> <span class="toc-text">reflow和repaint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聪明的浏览器"><span class="toc-number">3.</span> <span class="toc-text">聪明的浏览器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reflow是如何引起的"><span class="toc-number">4.</span> <span class="toc-text">reflow是如何引起的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试工具"><span class="toc-number">5.</span> <span class="toc-text">测试工具</span></a></li></ol>
+		
+		</div>
+		
+		<p>也许每个前端开发人员在去面试时都会遇到这么一个问题：‘从浏览器地址栏输入url后到页面完全展现内容，这之间都发生了什么事情？’，这个问题在网上有很详细的答案，<a id="more"></a>你可以回答的比较简单，也可以回答得特别详细，看你自己的掌握程度。今天在这里概述下其中的一个环节：reflow和repaint。因为在我们提到web性能优化的时候，我们一般想到的诸如：合并压缩静态文件、css置顶，js置低等方法，一般我们很少会想到reflow和repaint其实对web页面的性能也有一定的影响。  </p>
+<h4 id="浏览器render流程"><a href="#浏览器render流程" class="headerlink" title="浏览器render流程"></a>浏览器render流程</h4><p>浏览器在获取到后端传过来的内容后，就开始执行render流程。不同内核的浏览器render流程略有不同，但下面的图给了一个大致的工作流程：<br><img src="/img/render.png" alt="render流程"></p>
+<ul>
+<li>浏览器解析HTML代码并且构建DOM树。此时HTML代码中元素的相对位置和DOM树是一致的。</li>
+<li>解析css代码。包括UA自身的stylesheet、用户自身的样式文件、外链的样式文件、inline 样式和代码中设置的style样式。</li>
+<li>开始构建渲染树(render tree)。渲染树和DOM树比较相似，但渲染树能够根据style进行调整，比如一个<code>div</code>设置了<code>display:none</code>，那么这个元素就不会在渲染树中存在。同样对于<code>head</code>元素也不会存在。渲染树中的元素可以理解为一个盒子，有<code>width</code>,<code>height</code>, <code>border</code>,<code>margin</code>等属性。</li>
+<li>渲染树完成后，浏览器开始绘制（draw）。</li>
+</ul>
+<p><strong> 举个例子 </strong><br>html 代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Beautiful page<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Once upon a time there was a looong paragraph...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span>Secret message<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    ...   </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>构建出的DOM树如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">documentElement (html)</div><div class="line">    head</div><div class="line">        title</div><div class="line">    body</div><div class="line">        p</div><div class="line">            [text node]    </div><div class="line">        div </div><div class="line">            [text node] </div><div class="line">        div</div><div class="line">            img   </div><div class="line">        ...</div></pre></td></tr></table></figure></p>
+<p>渲染树如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">root (RenderView)</div><div class="line">    body</div><div class="line">        p</div><div class="line">            line 1</div><div class="line">    div</div><div class="line">        img</div><div class="line">    ...</div></pre></td></tr></table></figure></p>
+<h4 id="reflow和repaint"><a href="#reflow和repaint" class="headerlink" title="reflow和repaint"></a>reflow和repaint</h4><p>在页面初始化过程中至少会有一次repaint的layout（除非你是一个空白页面）。页面打开后，在<code>input</code>中输入信息时会有下面的一系列变化产生：</p>
+<ul>
+<li>部分或整个渲染树需要重新计算布局，这称之为reflow。所以页面初始化时必然有一次reflow。</li>
+<li>屏幕上的部分元素发生改变，由于改变了某个节点的属性，比如背景色，屏幕需要重新更新。这称之为repaint。</li>
+</ul>
+<p>其实reflow和repaint可以如下定义：</p>
+<ul>
+<li>当元素的视觉样式发生改变，但并不会重新引起layout时，就会触发浏览器repaint。比如改变outline、字体颜色、背景颜色等。</li>
+<li>当改变某个元素的行为会导致部分或所有页面元素发生layout时，就会触发浏览器reflow。比如隐藏/显示元素、改变元素的尺寸大小等。</li>
+</ul>
+<h4 id="聪明的浏览器"><a href="#聪明的浏览器" class="headerlink" title="聪明的浏览器"></a>聪明的浏览器</h4><p>reflow和repaint都会占用cpu和内存资源，任何一个元素的属性发生改变都会触发reflow或repaint，或者两个都同时触发。幸运的是，当前许多浏览器都对repaint和reflow进行了优化，浏览器就会尽量减少它们所带来的负面影响。其中的一个策略就是不要reflow或repaint，或者至少不立即执行。浏览器会建立一个队列，将每次的改变放到这个队列中，等到一定程度时一次性flush这个队列，这就只会产生一次reflow计算。不幸的是，一些浏览器特别是IE还没有做到这点。</p>
+<h4 id="reflow是如何引起的"><a href="#reflow是如何引起的" class="headerlink" title="reflow是如何引起的"></a>reflow是如何引起的</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">”error”</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h4</span>&gt;</span>My Module<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Error:<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>Description of the error…<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h5</span>&gt;</span>Corrective action required:<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ol</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Step one<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Step two<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面的html代码片段中，如果<code>p</code>元素发生了reflow，那么它的子元素<code>strong</code>也会跟着reflow，因为它是<code>p</code>的子元素，同时<code>p</code>的父元素（包括父元素以上的元素）和兄弟元素也都会跟着reflow。大部分的reflow都会引起浏览器的重新re-render。<br>ok，我们来看下有哪些因素能引起reflow：</p>
+<ul>
+<li>调整window大小或滚动页面</li>
+<li>改变font</li>
+<li>添加或删除stylesheet</li>
+<li>内容改变。比如用户在input里面输入内容</li>
+<li>激活css的伪类。比如：<code>:hover</code></li>
+<li>操作class属性</li>
+<li>通过script操作DOM（添加、删除、更新）</li>
+<li>计算offsetWidth和offsetHeight</li>
+<li>设置style的某个属性</li>
+</ul>
+<p>如何避免或减少reflow带来的影响？<br>可以从css和javascript两个主要方面来进行优化。<br><strong> css </strong></p>
+<ul>
+<li>降低class的作用域<br>reflow的元素可以自顶而下和自下而顶的引起其它元素的reflow。reflow是不可避免的，但我们可以尽量减少它的影响。通过降低class的作用域，我们可以将reflow的影响面缩小。比如你应该避免在容器的最外层改变class，因为它会影响容器内的所有子元素显示。面向对象的css代码原则上是将class绑定到它所实际需要作用的元素上。  </li>
+<li>避免设置大量的inline style<br>我们知道操作DOM一般都比较慢。我们可以把所有的change都用DOM片段组装好，然后一次性应用到DOM上去。同样，通过style属性来设置样式也会引起reflow，并且是每个样式都会引起一次reflow。所以，将所有的style都用class来实现，然后将这个class应用到元素上，这样就只会有一次reflow。  </li>
+<li>用<code>fixed</code>或<code>absolute</code>来设置动画<br>通过这种方式来设置元素布局，当自身reflow时不会引起全局的reflow。  </li>
+<li>尽量使动画更流畅<br>Opera建议应该使动画过渡更流畅，意思就是我们应该每次只移动1px，但是如果动画及其子元素的reflow占用了浏览器100%的cpu时，浏览器就会重新更新整个动画流程。如果我们一次移动3px，那么在性能比较差的机器上或移动设备上就显得不那么流畅。  </li>
+<li>避免使用table布局（或设置table-layout:fixed）<br>table中的任何一个元素发生layout改变时，都会引起整个table的reflow。在需要用table的地方，我们尽量设置<code>table-layout</code>属性（任何非auto值），这可以让整个table一行一行的进行渲染。  </li>
+<li>避免css中的表达式<br>css中的表达式都会有一定的开销。当页面中的元素reflow时，这些表达式每次都会重新计算，可能每秒中都会计算成千上万次。这个要特别注意！</li>
+</ul>
+<p><strong> javascript </strong></p>
+<ul>
+<li>‘采用offline模式操作DOM’<br> 你可以将所有的DOM操作在js中完成，然后一次性替换DOM树上的节点。  </li>
+<li>避免频繁的计算style<br>如果你需要计算style，你可以将第一次计算的值缓存起来供后面的计算使用。  </li>
+</ul>
+<h4 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h4><p>  推荐一个测试工具：<code>DynaTrace</code>,通过它你可以清楚看到页面是在何时reflow、何时repaint，分别占用了多长时间，也还可以看到用户的事件，如click，mouse相关事件，keyboard事件等。当然这个工具提供的功能远不止于此，你可以深入的研究下，结合其它的性能测试工具来对你的网站做一个全面的性能分析。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/performance/">performance</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/performance/">performance</a><a href="/tags/reflow/">reflow</a><a href="/tags/repaint/">repaint</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/03/29/repaint-reflow-md/" data-title="web性能优化之－－reflow和repaint | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/05/25/deep-learn-promise/" title="深入了解promise">
+  <strong>上一篇：</strong><br/>
+  <span>
+  深入了解promise</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/22/css-modular-md/"  title="css的模块化">
+ <strong>下一篇：</strong><br/> 
+ <span>css的模块化
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#浏览器render流程"><span class="toc-number">1.</span> <span class="toc-text">浏览器render流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reflow和repaint"><span class="toc-number">2.</span> <span class="toc-text">reflow和repaint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聪明的浏览器"><span class="toc-number">3.</span> <span class="toc-text">聪明的浏览器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reflow是如何引起的"><span class="toc-number">4.</span> <span class="toc-text">reflow是如何引起的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试工具"><span class="toc-number">5.</span> <span class="toc-text">测试工具</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

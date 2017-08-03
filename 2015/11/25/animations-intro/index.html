@@ -1,0 +1,688 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Web Animation API（一） | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="让我们来谈一谈未来的Web Animation API">
+<meta name="keywords" content="Animation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Animation API（一）">
+<meta property="og:url" content="http://ilucas.me/2015/11/25/animations-intro/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="让我们来谈一谈未来的Web Animation API">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web Animation API（一）">
+<meta name="twitter:description" content="让我们来谈一谈未来的Web Animation API">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/25/animations-intro/" title="Web Animation API（一）" itemprop="url">Web Animation API（一）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-25T14:52:13.000Z" itemprop="datePublished"> 发表于 2015-11-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是Web-Animations-API"><span class="toc-number">1.</span> <span class="toc-text">什么是Web Animations API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个基本的动画"><span class="toc-number">2.</span> <span class="toc-text">创建一个基本的动画</span></a></li></ol>
+		
+		</div>
+		
+		<p>在接下来的几篇文章中我们将讨论一下web浏览器自身实现的Animation API，长话短说，让我们直接进入正文：<a id="more"></a></p>
+<h4 id="什么是Web-Animations-API"><a href="#什么是Web-Animations-API" class="headerlink" title="什么是Web Animations API"></a>什么是Web Animations API</h4><p>Web Animations API 是什么？它主要实现什么功能？<br>在过去几年中，由于得到css和javascript的支持，动画应用得到更多的重视。但每种动画实现方式都有它自身的有缺点：</p>
+<ul>
+<li>浏览器可以运用硬件加速来提升动画的流畅性，但是样式规则需要在css中定义，并且需要javascript来获取动态变化的值；</li>
+<li><code>requestAnimationFrame</code>已经得到很好的支持，并且浏览器在动画运行时可以进行优化。但是如果有其他javascript运行时，动画仍然有可能出现卡顿，同时也需要大量的数学运算；</li>
+<li><code>setInterval</code>可以用来实现动画效果，但它并不准确而且卡顿现象也比较突出；</li>
+<li><code>jQuery.animate()</code>可以让开发者轻松实现动画效果，但同样也会有性能方面的影响；</li>
+<li>其他一下库，如<code>Velocity</code>和<code>GreenSock</code>对动画的性能进行了很多优化，尽管如此，它们仍需要加载类库并进行长期维护。</li>
+</ul>
+<p>总的来说，我们希望浏览器能够对它支持的越多越好。Web Animations API就是在浏览器层面对动画进行实现。</p>
+<p>Web Animations API刚出来不久，目前只在Chrome和Firefox得到支持，接下来我们看看它实际上能给我们开发者提供什么功能。</p>
+<h4 id="创建一个基本的动画"><a href="#创建一个基本的动画" class="headerlink" title="创建一个基本的动画"></a>创建一个基本的动画</h4><p>和CSS Animation 相比，WAAPI能够让开发者对动画进行更多的控制。下面我们通过这个API创建一个基本的动画：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate([</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(1)'</span>, <span class="attr">opacity</span>: <span class="number">1</span>, <span class="attr">offset</span>: <span class="number">0</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.5)'</span>, <span class="attr">opacity</span>: <span class="number">.5</span>, <span class="attr">offset</span>: <span class="number">.3</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.667)'</span>, <span class="attr">opacity</span>: <span class="number">.667</span>, <span class="attr">offset</span>: <span class="number">.7875</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.6)'</span>, <span class="attr">opacity</span>: <span class="number">.6</span>, <span class="attr">offset</span>: <span class="number">1</span> &#125;</div><div class="line">  ], &#123;</div><div class="line">    <span class="attr">duration</span>: <span class="number">700</span>, <span class="comment">//milliseconds</span></div><div class="line">    easing: <span class="string">'ease-in-out'</span>, <span class="comment">//'linear', a bezier curve, etc.</span></div><div class="line">    delay: <span class="number">10</span>, <span class="comment">//milliseconds</span></div><div class="line">    iterations: <span class="literal">Infinity</span>, <span class="comment">//or a number</span></div><div class="line">    direction: <span class="string">'alternate'</span>, <span class="comment">//'normal', 'reverse', etc.</span></div><div class="line">    fill: <span class="string">'forwards'</span> <span class="comment">//'backwards', 'both', 'none', 'auto'</span></div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>作为对比，用css实现方式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">keyframes</span> emphasis &#123;</div><div class="line">  0% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1); </div><div class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>; </div><div class="line">  &#125;</div><div class="line">  39% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.5); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">5</span>; </div><div class="line">  &#125;</div><div class="line">  78<span class="selector-class">.75</span>% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.667); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">667</span>; </div><div class="line">  &#125;</div><div class="line">  100% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.6);</div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">6</span>; </div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: emphasis <span class="number">700ms</span> ease-in-out <span class="number">10ms</span> infinite alternate</div><div class="line">forwards;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们依次解释下代码的含义。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate()</div></pre></td></tr></table></figure></p>
+<p>我们找到需要实现动画的dom节点并调用animate方法，由于animate是新实现的方法，在使用前你需要先测试是否有这个方法，或者使用<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>.<br><code>animate</code>接收两个参数，一个是数组格式的keyframe效果，一个是动画效果的持续时间及其他参数。于css实现的动画不同，这里可以用一个变量来应用当前的动画，在接下来的应用中，你可以重用或修改这个引用的动画效果。<br>下面这个图是分别用WAAPI和CSS实现的相同动画，左边是那一列是WAAPI实现的效果，右边是css实现的效果。<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/zt30wxk4/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javascript/">javascript</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Animation/">Animation</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/11/25/animations-intro/" data-title="Web Animation API（一） | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/11/25/animations-part-2/" title="Web Animation API（二）">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Web Animation API（二）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/29/reverse-text-color-mix-blend-mode/"  title="根据背景色自动改变文字的颜色">
+ <strong>下一篇：</strong><br/> 
+ <span>根据背景色自动改变文字的颜色
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是Web-Animations-API"><span class="toc-number">1.</span> <span class="toc-text">什么是Web Animations API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建一个基本的动画"><span class="toc-number">2.</span> <span class="toc-text">创建一个基本的动画</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

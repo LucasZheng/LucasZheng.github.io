@@ -1,0 +1,700 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>css的模块化 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="如何让我们的css实现模块化，如何在项目中编写高效、可扩展和可维护性的css代码">
+<meta name="keywords" content="css,modular,BEM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css的模块化">
+<meta property="og:url" content="http://ilucas.me/2015/03/22/css-modular-md/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="如何让我们的css实现模块化，如何在项目中编写高效、可扩展和可维护性的css代码">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css的模块化">
+<meta name="twitter:description" content="如何让我们的css实现模块化，如何在项目中编写高效、可扩展和可维护性的css代码">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/22/css-modular-md/" title="css的模块化" itemprop="url">css的模块化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-22T02:59:50.000Z" itemprop="datePublished"> 发表于 2015-03-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#OOCSS"><span class="toc-number">1.</span> <span class="toc-text">OOCSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ACSS"><span class="toc-number">2.</span> <span class="toc-text">ACSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMACSS"><span class="toc-number">3.</span> <span class="toc-text">SMACSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BEM"><span class="toc-number">4.</span> <span class="toc-text">BEM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择"><span class="toc-number">5.</span> <span class="toc-text">如何选择</span></a></li></ol>
+		
+		</div>
+		
+		<p>前段时间项目组的同事在做tech share时分享了一种新的css代码写法，名称叫BEM。下来了解了下，其实就是我们长期以来希望实现css模块化的一种约定规范。<a id="more"></a>，与此同时，我也查阅了一些其它相关css模块化的文章，因此就结合自己的看法记录在这里。<br>css代码在整个前端资源中是比较松散的，大家对css代码没有形成一个统一的规范，大家各自按照自己喜欢的规范来编写代码，只要最终实现的视觉效果一致就ok。所以在一个项目中最终各个开发人员写出来的css代码有很大的差异。随着javascript实现模块化进行得如火如荼的同时，一些开发人员或者大的前端团队也希望能够对css进行模块化，让css代码实现更高的可维护性。在这一发展过程中，出现了诸如：<code>OOCSS</code>、<code>ACSS</code>、<code>SMACSS</code>和<code>BEM</code>几种规范，下面就大概讲下它们的规范细节。  </p>
+<h4 id="OOCSS"><a href="#OOCSS" class="headerlink" title="OOCSS"></a>OOCSS</h4><p>OOCSS是Object Oriented CSS的简称，从字面上看，它是采用了面向对象的思想。它的两个主要原则是：  </p>
+<ul>
+<li><em>将结构和样式分开</em><br>将结构和样式分开，可以使你复用样式规则。比如，你不能直接在<code>.button</code>上添加渐变样式，而是定义一个渐变规则来让<code>.button</code>继承。  </li>
+<li><em>将容器和内容分开</em><br>这意味着你的css规则不能嵌套很深，应该直接给最深层次的元素应用一个class，比如不要这样：<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">ul</span> <span class="selector-tag">li</span><span class="selector-class">.list-item</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>而是：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list-item</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="ACSS"><a href="#ACSS" class="headerlink" title="ACSS"></a>ACSS</h4><p>ACSS是Atomic CSS的简称。这是一种颗粒度更小的命名规则。如下面可以复用的class：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.mt-20</span> &#123;</div><div class="line">    <span class="attribute">margin-top</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* Or */</span></div><div class="line"><span class="selector-class">.fl</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对每一个选择器只应用一个规则，在最大程度上进行复用。比如下面的代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The way we write CSS has changed a lot in last few years, and the abbreviation [...]<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/article/"</span>&gt;</span>More→<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们想让p元素inline，常规下我们会为p元素新单独写一个inline的样式规则，但如果我们之前有如下的样式规则：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.di</span> &#123;</div><div class="line">    <span class="attribute">display</span>: inline;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>则我们可以直接将它赋给p元素就可以了：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"di"</span>&gt;</span>The way we write CSS has changed a lot in last few years, and the abbreviation [...]<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/article/"</span>&gt;</span>More→<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这种命名规范在大的站点中比较实用，它的目录结构一般如下(采用了sass预编译)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">atomic-structuring/</div><div class="line">├── atoms</div><div class="line">│   ├── _button.scss</div><div class="line">│   ├── _flag.scss</div><div class="line">│   ├── _grids.scss</div><div class="line">│   └── _media.scss</div><div class="line">├── molecules</div><div class="line">│   ├── _banner.scss</div><div class="line">│   ├── _custom-post.scss</div><div class="line">│   ├── _footer-nav.scss</div><div class="line">│   └── _heading-group.scss</div><div class="line">├── quarks</div><div class="line">│   ├── _links.scss</div><div class="line">│   ├── _lists.scss</div><div class="line">│   ├── _paragraphs.scss</div><div class="line">│   └── _tables.scss</div><div class="line">└── utilities</div><div class="line">    ├── _base-spacing.scss</div><div class="line">    ├── _clearfix.scss</div><div class="line">    └── _reset.scss</div></pre></td></tr></table></figure></p>
+<h4 id="SMACSS"><a href="#SMACSS" class="headerlink" title="SMACSS"></a>SMACSS</h4><p>SMACSS是Scalable and Modular Architecture for CSS的简称。它和上面讲的规范大同小异，但它更多在于指导你如何写出更加优秀的css代码。你可以通过阅读<a href="http://smacss.com/" target="_blank" rel="external"> SMACSS website</a>来了解更多的信息。</p>
+<h4 id="BEM"><a href="#BEM" class="headerlink" title="BEM"></a>BEM</h4><p>BEM代表<code>blcok</code>，<code>element</code>和<code>modifier</code>，它是前端css一种新的命名方法。这种class的命名方法能够让你的css代码更加语义化。这种约定的命名规则非常适合开发大项目的团队。<br>命名约定如下：<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.block</span> &#123;&#125;</div><div class="line"><span class="selector-class">.block__element</span> &#123;&#125;</div><div class="line"><span class="selector-class">.block--modifier</span> &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p> 使用<code>--</code>和<code>__</code>的原因就是你可以在block中使用<code>-</code>，如：<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.site-search</span> &#123;&#125; <span class="comment">/* Block */</span></div><div class="line"><span class="selector-class">.site-search__field</span> &#123;&#125; <span class="comment">/* Element */</span></div><div class="line"><span class="selector-class">.site-search--full</span> &#123;&#125; <span class="comment">/* Modifier */</span></div></pre></td></tr></table></figure></p>
+<p> 从BEM给class命名的这种规范可以容易看出当前元素的作用。通过阅读HTML中的一些class，你就能够大概了解DOM片段的结构，一些元素可能是一个组件，一些是构成这些组件的子元素，还有一些是当前组件的修饰符。像如下的代码：<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.person</span> &#123;&#125;</div><div class="line"><span class="selector-class">.person__hand</span> &#123;&#125;</div><div class="line"><span class="selector-class">.person--female</span> &#123;&#125;</div><div class="line"><span class="selector-class">.person--female__hand</span> &#123;&#125;</div><div class="line"><span class="selector-class">.person__hand--left</span> &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p> 最顶层的block是<strong> person </strong>，它的子元素有<strong> hand </strong>，同时<strong> person </strong> 还有一个修饰符<strong> female </strong>，它的下面也有子元素<strong> hand </strong>。如果我们采用常规的css来写，就像下面这样：<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.person</span> &#123;&#125;</div><div class="line"><span class="selector-class">.hand</span> &#123;&#125;</div><div class="line"><span class="selector-class">.female</span> &#123;&#125;</div><div class="line"><span class="selector-class">.female-hand</span> &#123;&#125;</div><div class="line"><span class="selector-class">.left-hand</span> &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>这也可以实现页面样式，但各个class之间就毫无关联。比如<code>.female</code>代表什么female呢？<code>.hand</code>代表钟表的hand？通过BEM我们就能够明白大概的含义。<br>拿上面<code>.site-search</code>举例，我们常规的命名如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"site-search  full"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"field"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"Submit"</span> <span class="attr">value</span> =<span class="string">"Search"</span> <span class="attr">class</span>=<span class="string">"button"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这种class并没有给我们更多的信息，如果用BEM我们可以改成如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"site-search  site-search--full"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"site-search__field"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"Submit"</span> <span class="attr">value</span> =<span class="string">"Search"</span> <span class="attr">class</span>=<span class="string">"site-search__button"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们可以看出<code>.site-search</code>是一个block，它有一个子元素<code>.site-search__field</code>，同时我们也可以看出blcok有一个修饰符<code>.site-search--full</code>。<br>也许有人会说BEM这种风格太难看了，确实如此，但任何事情都有利和弊两方面。它所带来的作用远比它的外观更重要。而且现在大多编辑器都有自动补全的功能，且gzip完全可以忽略这点增加的代码量。<br>现在前端开发人员大多喜欢用sass或less来提高css代码的编写效率，同样BEM也很容易嵌套在这些语言中，以sass为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/* Sass 3.3+ */</div><div class="line">.object &#123;</div><div class="line">    color: red;</div><div class="line">    &amp;__descendant &#123;</div><div class="line">        color: black;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* Generates:</div><div class="line">.object &#123;</div><div class="line">    color: red;</div><div class="line">&#125;</div><div class="line">.object__descendant &#123;</div><div class="line">    color: black</div><div class="line">&#125;</div><div class="line">*/</div></pre></td></tr></table></figure></p>
+<p><strong> 使用or不使用BEM </strong><br>BEM所带来的效果是显而易见的，在团队中代码变得更加容易维护，当然也并不是任意class都要遵从BEM的规范，比如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.caps</span> &#123; <span class="attribute">text-transform</span>: uppercase; &#125;</div></pre></td></tr></table></figure></p>
+<p>这个css就不属于任何一个分类，它仅仅是一个单独的样式规则。再比如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.site-logo</span> &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>它也不属于任何一个分类。但如果我们的logo是在header中，则可以用BEM规则：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.header</span> &#123;&#125;</div><div class="line"><span class="selector-class">.header__logo</span> &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>但这没有必要，BEM的原则就是知道某个元素属于哪个相关的类别。其中使用BEM最难的一点就是要知道什么时候使用它，什么时候不使用它。</p>
+<h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><p>你可以选择你感兴趣的某种方案，或者是混合使用。对于小的站点，我们不太关注css代码的质量，但对于大的项目，你就需要选择一种合适的方案，让你的css代码在以后可以更容易维护。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/css/">css</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/css/">css</a><a href="/tags/modular/">modular</a><a href="/tags/BEM/">BEM</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/03/22/css-modular-md/" data-title="css的模块化 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/29/repaint-reflow-md/" title="web性能优化之－－reflow和repaint">
+  <strong>上一篇：</strong><br/>
+  <span>
+  web性能优化之－－reflow和repaint</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/20/performance-image-md/"  title="web性能优化之－－图片">
+ <strong>下一篇：</strong><br/> 
+ <span>web性能优化之－－图片
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#OOCSS"><span class="toc-number">1.</span> <span class="toc-text">OOCSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ACSS"><span class="toc-number">2.</span> <span class="toc-text">ACSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMACSS"><span class="toc-number">3.</span> <span class="toc-text">SMACSS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BEM"><span class="toc-number">4.</span> <span class="toc-text">BEM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择"><span class="toc-number">5.</span> <span class="toc-text">如何选择</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

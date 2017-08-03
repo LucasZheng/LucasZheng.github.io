@@ -1,0 +1,756 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>RESTful API | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="RESTful api设计准则及最佳实践">
+<meta name="keywords" content="RESTful">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RESTful API">
+<meta property="og:url" content="http://ilucas.me/2015/12/29/restful-api-guidence/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="RESTful api设计准则及最佳实践">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RESTful API">
+<meta name="twitter:description" content="RESTful api设计准则及最佳实践">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/29/restful-api-guidence/" title="RESTful API" itemprop="url">RESTful API</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-29T14:52:13.000Z" itemprop="datePublished"> 发表于 2015-12-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful设计准则"><span class="toc-number">1.</span> <span class="toc-text">RESTful设计准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful最佳实践"><span class="toc-number">2.</span> <span class="toc-text">RESTful最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用RESTful标准的URL和action"><span class="toc-number">2.1.</span> <span class="toc-text">使用RESTful标准的URL和action</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#始终使用SSL"><span class="toc-number">2.2.</span> <span class="toc-text">始终使用SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文档"><span class="toc-number">2.3.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本"><span class="toc-number">2.4.</span> <span class="toc-text">版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对资源进行过滤"><span class="toc-number">2.5.</span> <span class="toc-text">对资源进行过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指定API返回哪些字段"><span class="toc-number">2.6.</span> <span class="toc-text">指定API返回哪些字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#尽量使用JSON"><span class="toc-number">2.7.</span> <span class="toc-text">尽量使用JSON</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用驼峰形式给字段命名"><span class="toc-number">2.8.</span> <span class="toc-text">使用驼峰形式给字段命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#API返回数据的可读性"><span class="toc-number">2.9.</span> <span class="toc-text">API返回数据的可读性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不要采用信封的方式来封装数据"><span class="toc-number">2.10.</span> <span class="toc-text">不要采用信封的方式来封装数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误信息"><span class="toc-number">2.11.</span> <span class="toc-text">错误信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP状态码"><span class="toc-number">2.12.</span> <span class="toc-text">HTTP状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">2.13.</span> <span class="toc-text">其他</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>RESTful架构是一种流行的互联网软件架构，它结构清晰，符合标准，易于理解，扩展方便。<a id="more"></a><br>REST是Representational State Transfer的缩写，翻译为“表现层状态转化”。表现层其实就是资源，因此可以理解为“资源状态转化”。<br>网络应用上的任何实体都可以看作是一种资源，通过一个URI(统一资源定位符)指向它。  </p>
+<p><strong>表现层（Representation）</strong><br>“资源”是一种信息实体，它可以有多种外在表现形式。我们把“资源”具体呈现出来的形式叫做它的“表现层”。<br>例如，文本可以是txt格式表现，也可以用HTML格式，XML格式，JSON格式表现；图片可以是JPG格式也可以是PNG格式表现等。<br>URI之代表资源实体，不代表它的形式。URI应该之代表“资源”的位置，而它具体的表现形式应该在HTTP请求的头信息中用Accept和Content-Type字段指定，这两个字段才是对“表现层”的描述。  </p>
+<p><strong>状态转化（State Transfer）</strong><br>访问一个WEB应用就代表了客户端与服务短的一个互动过程。HTTP协议是一个无状态协议。因此所有的状态都保存在服务端。如果客户端想要操作服务器，就必须通过某种手段让服务端发生“状态变化”（State<br>Transfer）。而这种状化是建立在表现层之上的，所以就是“表现层状态转化”。  </p>
+<h3 id="RESTful设计准则"><a href="#RESTful设计准则" class="headerlink" title="RESTful设计准则"></a>RESTful设计准则</h3><ul>
+<li>统一的接口</li>
+<li>无状态</li>
+<li>可缓存</li>
+<li>CS结构</li>
+<li>分层系统</li>
+<li>按需编码</li>
+</ul>
+<p><strong>统一的接口</strong><br>统一接口定义了客户端和服务端之间通信的接口，它简化和解耦了架构，使接口的每个部分都相对独立，统一接口的四个原则是：</p>
+<ul>
+<li>基于每个资源<br>每个资源都可以用一个URI来表示。资源与它们最终的展现形态在概念上是独立的，比如服务端不会返回一个数据库，而是返回HTML。XML和JSON代表了一些数据记录。</li>
+<li>通过表现层修改资源<br>每个客户端可以操作（修改或删除等）服务端的资源。</li>
+<li>资源的自我定义<br>每个资源保护足够的信息来描述自己。如MIME类型，响应内容明确表示它们是否可以被缓存。</li>
+<li>资源相关性<br>除了传统上请求包含header和response外，REST还意味着可以在响应中包含其他相关资源的api链接。</li>
+</ul>
+<p><strong>无状态</strong><br>无状态是REST的核心。URI只定义一个资源，其他的查询状态可以作为URI的参数来传递，在服务端处理完成后，需要把这些查询状态通过header等方式返回给客户端。<br>我们习惯用<code>session</code>来维持通信的一些状态。但在REST中，客户端必须给服务端足够的信息来处理这个请求，即使在多个请求时也有必要发送重复的状态信息。无状态特性让服务端维护更加容易，不需要去管session的一些状态。<br>那么状态和资源之间有什么区别呢？资源时恒定不变的，它储存在数据库中，不论谁来请求它，都返回相同的内容。状态是变化的，不同的请求带上不同的状态信息，就会得到不同的数据。  </p>
+<p><strong>是否缓存</strong><br>每个响应需要指出是否可以被缓存。  </p>
+<p><strong>CS结构</strong><br>统一的接口让客户端和服务端得以分开，客户端不用考虑数据的存储，服务端不用考虑客户端的状态，它们两者之间可以独立开发。  </p>
+<p><strong>分层系统</strong><br>客户端不知道它是否直接和终端连接，或者是和代理服务器连接。代理服务器可以通过负载均衡和缓存来提升系统的性能和可扩展性。  </p>
+<p><strong>按需编码（可选）</strong><br>服务端可以临时扩展或自定义一些功能，并向客户端发送一些可执行的内容。比如Java  applet或客户端的js脚本。<br>总之，除了按需编码外，缺少上面原则中的任何一个在严格意义上都不算是RESTful。  </p>
+<h3 id="RESTful最佳实践"><a href="#RESTful最佳实践" class="headerlink" title="RESTful最佳实践"></a>RESTful最佳实践</h3><h4 id="使用RESTful标准的URL和action"><a href="#使用RESTful标准的URL和action" class="headerlink" title="使用RESTful标准的URL和action"></a>使用RESTful标准的URL和action</h4><p>每个资源或资源集合都对应着一个URL，URL中应该使用名称来描述，对于操作资源的行为可以使用HTTP请求中的<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code> 来定义。如下：  </p>
+<ul>
+<li>GET /tickets    - 获取tickets列表</li>
+<li>GET /tickets/12   - 获取指定的ticket</li>
+<li>POST /tickets   - 创建一个新的ticket</li>
+<li>PUT /tickets/12   - 更新指定ticket</li>
+<li>PATCH /tickets/12  - 更新指定ticket部分信息</li>
+<li>DELETE /tickets/12  - 删除指定ticket</li>
+</ul>
+<p>在定义URL时，对于资源名称我们应该尽量统一使用复数格式。对于有关联性的资源，RESTful也提供了有用的设计原则，如：  </p>
+<ul>
+<li>GET /tickets/12/messages    - 获取指定ticket下的message列表</li>
+<li>GET /tickets/12/messages/5   - 获取指定的ticket下的指定message</li>
+<li>POST /tickets/12/messages   - 在指定的ticket下创建一个新的message</li>
+<li>PUT /tickets/12/messages/5   - 在指定的ticket下更新指定message</li>
+<li>PATCH /tickets/12/messages/5  - 在指定的ticket下更新指定message部分信息</li>
+<li>DELETE /tickets/12/messages/5  - 在指定的ticket下删除指定message</li>
+</ul>
+<p>当然如果资源的关联性没那么强，那么我们也可以将依赖的资源单独独立成一个api，此时我们再请求管理资源时就会多发一个api请求去获取相关资源。</p>
+<h4 id="始终使用SSL"><a href="#始终使用SSL" class="headerlink" title="始终使用SSL"></a>始终使用SSL</h4><p>你的应用可能会被在任何地方使用，如图书馆，咖啡厅，机场等，这些公共场合都是不安全的，网络通信有可能被劫持。使用SSL的另外一个好处就是你不需要用户的登录来验证它的合法性，而是通过证书来验证。</p>
+<h4 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h4><p>一个好的api文档要让用户能够快速的找到他所需要的信息，明白各个api的用途。文档应该给出详细的request/response例子。此外如果某些api有更新或不再使用，也需要在文档中给用户明确的提示。  </p>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h4><p>始终给你的api加上版本号。api的每次更新都应该加上版本号，这样如果我们某些时候需要老版本的api数据，我们就可以请求对应版本的api。版本号可以放在URL中或http的和header中，但通常为了直观明了，将版本号放在URL中。</p>
+<ul>
+<li><a href="https://example.org/api/v1/*" target="_blank" rel="external">https://example.org/api/v1/*</a></li>
+<li><a href="https://api.example.com/v1/*" target="_blank" rel="external">https://api.example.com/v1/*</a></li>
+</ul>
+<h4 id="对资源进行过滤"><a href="#对资源进行过滤" class="headerlink" title="对资源进行过滤"></a>对资源进行过滤</h4><p>对资源定义的URL应该尽量简洁，而对资源进行的搜索、过滤、排序等行为可以通过URL的参数来传递。如：</p>
+<ul>
+<li>GET /tickets?state=open  </li>
+<li>GET /tickets?sort=-priority</li>
+<li>GET /tickets?sort=-priority,created_at</li>
+<li>GET /tickets?state=closed&amp;sort=-updated_at</li>
+<li>GET /tickets?q=return&amp;state=open&amp;sort=-priority,created_at</li>
+</ul>
+<h4 id="指定API返回哪些字段"><a href="#指定API返回哪些字段" class="headerlink" title="指定API返回哪些字段"></a>指定API返回哪些字段</h4><p>通常用户只需要api返回中的部分数据，而不是整个资源，此时可以使用<code>fields</code>来限制返回的数据。如下： </p>
+<ul>
+<li>GET /tickets?fields=id,subject,customer_name,updated_at&amp;state=open&amp;sort=-updated_at</li>
+</ul>
+<p>api返回数据的精简同样可以减少网络的请求时间，提升用户的体验。</p>
+<h4 id="尽量使用JSON"><a href="#尽量使用JSON" class="headerlink" title="尽量使用JSON"></a>尽量使用JSON</h4><p>尽量都适用json来传递数据，如果有使用XML的特殊场景，那么你应该在你的api后面追加<code>.json</code>或<code>.xml</code>来描述该api返回什么格式的数据。</p>
+<h4 id="使用驼峰形式给字段命名"><a href="#使用驼峰形式给字段命名" class="headerlink" title="使用驼峰形式给字段命名"></a>使用驼峰形式给字段命名</h4><p>如果你使用JSON，那么就应该使用javascript的命名规范：使用驼峰形式给字段命名。如果你使用的其他语言，则最好遵循它们自己的规范:c#和java采用驼峰形式，python和rugy采用下划线形式。  </p>
+<h4 id="API返回数据的可读性"><a href="#API返回数据的可读性" class="headerlink" title="API返回数据的可读性"></a>API返回数据的可读性</h4><p>api返回的数据可以展开以可读的方式呈现给用户，也可以压缩成一行数据传递。压缩后的数据确实能带来更少的网络负载，但如果开启了gzip功能后，api的压缩和未压缩前并未带来明显的效果，而未压缩的api能够提升它的可读性，因此尽量避免对api返回的数据进行压缩。  </p>
+<h4 id="不要采用信封的方式来封装数据"><a href="#不要采用信封的方式来封装数据" class="headerlink" title="不要采用信封的方式来封装数据"></a>不要采用信封的方式来封装数据</h4><p>尽量不要采用如下的格式来封装数据：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"data"</span> : &#123;</div><div class="line">    <span class="attr">"id"</span> : <span class="number">123</span>,</div><div class="line">    <span class="attr">"name"</span> : <span class="string">"John"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除非在使用<code>jsonp</code>来处理跨域请求时（通常url中带有<code>callback</code>或<code>jsonp</code>），这时可以采用如下的格式来封装数据：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">callback_function(&#123;</div><div class="line">  status_code: 200,</div><div class="line">  next_page: "https://..",</div><div class="line">  response: &#123;</div><div class="line">    ... actual JSON response body ... </div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h4><p>请求api时返回错误信息有时是不可避免的，在返回的信息中我们应该尽量包含完整的说明，如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"code"</span> : <span class="number">1234</span>,</div><div class="line">  <span class="attr">"message"</span> : <span class="string">"Something bad happened :("</span>,</div><div class="line">  <span class="attr">"description"</span> :<span class="number">1234</span> <span class="string">"More details about the error here"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对应<code>PUT</code>，<code>PATCH</code>，<code>POST</code>我们还需要给出更详细的错误信息，如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"code"</span> : <span class="number">1024</span>,</div><div class="line">  <span class="attr">"message"</span> : <span class="string">"Validation Failed"</span>,</div><div class="line">          <span class="attr">"errors"</span> : [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"code"</span> : <span class="number">5432</span>,</div><div class="line">      <span class="attr">"field"</span> : <span class="string">"fieldsrst_name"</span>,</div><div class="line">      <span class="attr">"message"</span> : <span class="string">"First name cannot have fancy characters"</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">       <span class="attr">"code"</span> : <span class="number">5622</span>,</div><div class="line">       <span class="attr">"field"</span> : <span class="string">"password"</span>,</div><div class="line">       <span class="attr">"message"</span> : <span class="string">"Password cannot be blank"</span></div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h4><p>HTTP中定义了许多状态码，api返回的状态码应该遵循既有的原则，让用户能够一目了然的明白当前的请求状态。常用状态码如下：</p>
+<ul>
+<li>200 - OK</li>
+<li>304 - Not Modified</li>
+<li>400 -Not Bad Request</li>
+<li>401 - Unauthorized</li>
+<li>403 - Forbidden</li>
+<li>404 - Not Found</li>
+<li>500 - Internal server error</li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li>API的身份认证应该使用OAuth2.0框架</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/other/">other</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/RESTful/">RESTful</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/12/29/restful-api-guidence/" data-title="RESTful API | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/01/07/perfect-full-page-background-image/" title="背景图案占满整个屏幕的完美解决方案">
+  <strong>上一篇：</strong><br/>
+  <span>
+  背景图案占满整个屏幕的完美解决方案</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/12/17/git-tips/"  title="你所不知道的git技巧">
+ <strong>下一篇：</strong><br/> 
+ <span>你所不知道的git技巧
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful设计准则"><span class="toc-number">1.</span> <span class="toc-text">RESTful设计准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RESTful最佳实践"><span class="toc-number">2.</span> <span class="toc-text">RESTful最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用RESTful标准的URL和action"><span class="toc-number">2.1.</span> <span class="toc-text">使用RESTful标准的URL和action</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#始终使用SSL"><span class="toc-number">2.2.</span> <span class="toc-text">始终使用SSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文档"><span class="toc-number">2.3.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本"><span class="toc-number">2.4.</span> <span class="toc-text">版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对资源进行过滤"><span class="toc-number">2.5.</span> <span class="toc-text">对资源进行过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指定API返回哪些字段"><span class="toc-number">2.6.</span> <span class="toc-text">指定API返回哪些字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#尽量使用JSON"><span class="toc-number">2.7.</span> <span class="toc-text">尽量使用JSON</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用驼峰形式给字段命名"><span class="toc-number">2.8.</span> <span class="toc-text">使用驼峰形式给字段命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#API返回数据的可读性"><span class="toc-number">2.9.</span> <span class="toc-text">API返回数据的可读性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不要采用信封的方式来封装数据"><span class="toc-number">2.10.</span> <span class="toc-text">不要采用信封的方式来封装数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误信息"><span class="toc-number">2.11.</span> <span class="toc-text">错误信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP状态码"><span class="toc-number">2.12.</span> <span class="toc-text">HTTP状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">2.13.</span> <span class="toc-text">其他</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

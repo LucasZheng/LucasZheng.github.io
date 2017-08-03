@@ -1,0 +1,707 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>chrome调试器中的13个技巧和窍门 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="chrome调试器中的13个技巧和窍门">
+<meta name="keywords" content="debug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chrome调试器中的13个技巧和窍门">
+<meta property="og:url" content="http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="chrome调试器中的13个技巧和窍门">
+<meta property="og:image" content="http://ilucas.me/images/quick_switch_file.gif">
+<meta property="og:image" content="http://ilucas.me/images/search_within_source.gif">
+<meta property="og:image" content="http://ilucas.me/images/go_to_line.gif">
+<meta property="og:image" content="http://ilucas.me/images/select_element_in_console.gif">
+<meta property="og:image" content="http://ilucas.me/images/use_multiple_carets.gif">
+<meta property="og:image" content="http://ilucas.me/images/preserve_log.gif">
+<meta property="og:image" content="http://ilucas.me/images/pretty_source_code.gif">
+<meta property="og:image" content="http://ilucas.me/images/device_emulation.gif">
+<meta property="og:image" content="http://ilucas.me/images/color_picker.gif">
+<meta property="og:image" content="http://ilucas.me/images/force_element_state.gif">
+<meta property="og:image" content="http://ilucas.me/images/visualize_shadow_dom.gif">
+<meta property="og:image" content="http://ilucas.me/images/select_next_occurrence.gif">
+<meta property="og:image" content="http://ilucas.me/images/change_color_format.gif">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chrome调试器中的13个技巧和窍门">
+<meta name="twitter:description" content="chrome调试器中的13个技巧和窍门">
+<meta name="twitter:image" content="http://ilucas.me/images/quick_switch_file.gif">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/12/13-must-know-chrome-devtools-tips-tricks/" title="chrome调试器中的13个技巧和窍门" itemprop="url">chrome调试器中的13个技巧和窍门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-12T14:52:13.000Z" itemprop="datePublished"> 发表于 2015-10-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件快速转换"><span class="toc-number">1.</span> <span class="toc-text">文件快速转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码中搜索"><span class="toc-number">2.</span> <span class="toc-text">源码中搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定位到某行"><span class="toc-number">3.</span> <span class="toc-text">定位到某行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在console中选择元素"><span class="toc-number">4.</span> <span class="toc-text">在console中选择元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多行编辑"><span class="toc-number">5.</span> <span class="toc-text">多行编辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保留日志"><span class="toc-number">6.</span> <span class="toc-text">保留日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化压缩代码"><span class="toc-number">7.</span> <span class="toc-text">格式化压缩代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备仿真"><span class="toc-number">8.</span> <span class="toc-text">设备仿真</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#颜色拾取"><span class="toc-number">9.</span> <span class="toc-text">颜色拾取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#改变元素状态"><span class="toc-number">10.</span> <span class="toc-text">改变元素状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看shadow-DOM"><span class="toc-number">11.</span> <span class="toc-text">查看shadow DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同时操作重复变量"><span class="toc-number">12.</span> <span class="toc-text">同时操作重复变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#改变颜色格式"><span class="toc-number">13.</span> <span class="toc-text">改变颜色格式</span></a></li></ol>
+		
+		</div>
+		
+		<p>Chrome浏览器的调试功能十分强大，今天介绍其中的13个技巧，这能提高你debug页面的效率。<a id="more"></a></p>
+<h4 id="文件快速转换"><a href="#文件快速转换" class="headerlink" title="文件快速转换"></a>文件快速转换</h4><p>当DevTools打开时，按住<code>Ctrl+P</code>，mac上是<code>Cmd+P</code>，输入想要搜索的文件名称，就能打开对应项目中的文件。<br><img src="/images/quick_switch_file.gif" alt="quick_switch_file"></p>
+<h4 id="源码中搜索"><a href="#源码中搜索" class="headerlink" title="源码中搜索"></a>源码中搜索</h4><p>如果想要项目中某个文件中特定的字符串，可以按住<code>Ctrl + Shift + F</code>，mac是<code>Cmd + Opt + F</code>，这种搜索模式支持正则匹配。<br><img src="/images/search_within_source.gif" alt="search_within_source"></p>
+<h4 id="定位到某行"><a href="#定位到某行" class="headerlink" title="定位到某行"></a>定位到某行</h4><p>当你在Sources中打开一个文件时，你可以按住<code>Ctrl + G</code>，输入行号来定位。<br><img src="/images/go_to_line.gif" alt="go_to_line"></p>
+<h4 id="在console中选择元素"><a href="#在console中选择元素" class="headerlink" title="在console中选择元素"></a>在console中选择元素</h4><p>DevTools中的console支持DOM元素的选择：</p>
+<ul>
+<li><code>$()</code>，是<code>document.querySelector()</code>的简写，返回匹配css规则的第一个元素。</li>
+<li><code>$$()</code>，是<code>document.querySelectorAll()</code>的简写，返回匹配css规则的元素集合。</li>
+<li><code>$0 – $4</code>，选择元素的历史纪录，$0代表最近的选择元素。</li>
+</ul>
+<p><img src="/images/select_element_in_console.gif" alt="select_element_in_console"></p>
+<h4 id="多行编辑"><a href="#多行编辑" class="headerlink" title="多行编辑"></a>多行编辑</h4><p>当你打开一个文件时，可以按住<code>Ctrl</code>，mac上是<code>Cmd</code>，然后单击想要编辑的行，可以是多行，输入或删除文本。<br><img src="/images/use_multiple_carets.gif" alt="use_multiple_carets"></p>
+<h4 id="保留日志"><a href="#保留日志" class="headerlink" title="保留日志"></a>保留日志</h4><p>在Console中，勾选<code>Preserve Log</code>，当你在页面间跳转时，Console中之前的log就会被保留，这对于你想查看之前的日志非常有用。<br><img src="/images/preserve_log.gif" alt="preserve_log"></p>
+<h4 id="格式化压缩代码"><a href="#格式化压缩代码" class="headerlink" title="格式化压缩代码"></a>格式化压缩代码</h4><p>DevTools有一个功能可以格式化压缩后的代码，方便你调试线上的源码。<br><img src="/images/pretty_source_code.gif" alt="pretty_source_code"></p>
+<h4 id="设备仿真"><a href="#设备仿真" class="headerlink" title="设备仿真"></a>设备仿真</h4><p>在DevTools可以仿真移动设备，比如触摸，加速度计，甚至可以模拟定位。<br><img src="/images/device_emulation.gif" alt="device_emulation"></p>
+<h4 id="颜色拾取"><a href="#颜色拾取" class="headerlink" title="颜色拾取"></a>颜色拾取</h4><p>在Styles中可以打开color picker，浮动光标到页面上时，可以显示对应的颜色。<br><img src="/images/color_picker.gif" alt="color_picker"></p>
+<h4 id="改变元素状态"><a href="#改变元素状态" class="headerlink" title="改变元素状态"></a>改变元素状态</h4><p>在Styles中，可以勾选元素的各种状态来查看对应的样式。<br><img src="/images/force_element_state.gif" alt="force_element_state"></p>
+<h4 id="查看shadow-DOM"><a href="#查看shadow-DOM" class="headerlink" title="查看shadow DOM"></a>查看shadow DOM</h4><p><img src="/images/visualize_shadow_dom.gif" alt="visualize_shadow_dom"></p>
+<h4 id="同时操作重复变量"><a href="#同时操作重复变量" class="headerlink" title="同时操作重复变量"></a>同时操作重复变量</h4><p>当在Sources中编辑文件时，选择某个字符串后，多次按<code>Ctrl+D</code>，mac上是<code>Cmd+D</code>可以选择相邻的重复字符串，选定后可以同时进行编辑操作。<br><img src="/images/select_next_occurrence.gif" alt="select_next_occurrence"></p>
+<h4 id="改变颜色格式"><a href="#改变颜色格式" class="headerlink" title="改变颜色格式"></a>改变颜色格式</h4><p>在颜色预览框上，按住<code>Shift</code>，然后单击，可以在rgba，hsl和十六进制之间进行转换。<br><img src="/images/change_color_format.gif" alt="change_color_format"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/other/">other</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/debug/">debug</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/" data-title="chrome调试器中的13个技巧和窍门 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/10/29/reverse-text-color-mix-blend-mode/" title="根据背景色自动改变文字的颜色">
+  <strong>上一篇：</strong><br/>
+  <span>
+  根据背景色自动改变文字的颜色</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/11/difference-debounce-throttle/"  title="debounce和throttle的区别">
+ <strong>下一篇：</strong><br/> 
+ <span>debounce和throttle的区别
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件快速转换"><span class="toc-number">1.</span> <span class="toc-text">文件快速转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码中搜索"><span class="toc-number">2.</span> <span class="toc-text">源码中搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定位到某行"><span class="toc-number">3.</span> <span class="toc-text">定位到某行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在console中选择元素"><span class="toc-number">4.</span> <span class="toc-text">在console中选择元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多行编辑"><span class="toc-number">5.</span> <span class="toc-text">多行编辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保留日志"><span class="toc-number">6.</span> <span class="toc-text">保留日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化压缩代码"><span class="toc-number">7.</span> <span class="toc-text">格式化压缩代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设备仿真"><span class="toc-number">8.</span> <span class="toc-text">设备仿真</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#颜色拾取"><span class="toc-number">9.</span> <span class="toc-text">颜色拾取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#改变元素状态"><span class="toc-number">10.</span> <span class="toc-text">改变元素状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看shadow-DOM"><span class="toc-number">11.</span> <span class="toc-text">查看shadow DOM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同时操作重复变量"><span class="toc-number">12.</span> <span class="toc-text">同时操作重复变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#改变颜色格式"><span class="toc-number">13.</span> <span class="toc-text">改变颜色格式</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

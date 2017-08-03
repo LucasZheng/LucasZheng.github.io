@@ -1,0 +1,689 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Angular VS Backbone VS Ember | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="对当前流行的三个mvc框架进行了简单的比较分析。">
+<meta name="keywords" content="Ember,Angular,Backbone">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular VS Backbone VS Ember">
+<meta property="og:url" content="http://ilucas.me/2015/03/17/angular-backbone-ember-md/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="对当前流行的三个mvc框架进行了简单的比较分析。">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular VS Backbone VS Ember">
+<meta name="twitter:description" content="对当前流行的三个mvc框架进行了简单的比较分析。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/17/angular-backbone-ember-md/" title="Angular VS Backbone VS Ember" itemprop="url">Angular VS Backbone VS Ember</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-17T08:26:56.000Z" itemprop="datePublished"> 发表于 2015-03-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#了解框架"><span class="toc-number">1.</span> <span class="toc-text">了解框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#社区"><span class="toc-number">2.</span> <span class="toc-text">社区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框架大小"><span class="toc-number">3.</span> <span class="toc-text">框架大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模版"><span class="toc-number">4.</span> <span class="toc-text">模版</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AngularJS"><span class="toc-number">4.1.</span> <span class="toc-text">AngularJS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Backbone"><span class="toc-number">4.2.</span> <span class="toc-text">Backbone</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Ember"><span class="toc-number">4.3.</span> <span class="toc-text">Ember</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AngularJS-1"><span class="toc-number">5.</span> <span class="toc-text">AngularJS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Backbone-1"><span class="toc-number">6.</span> <span class="toc-text">Backbone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ember-1"><span class="toc-number">7.</span> <span class="toc-text">Ember</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<p>在这篇文章中我们将对三种比较流行的MV*框架：AngularJS、Backbone和Ember进行分析比较，在你的项目中根据你的时间和能力选择合适的框架。<a id="more"></a> 一般我们都会选择比较健壮、稳定的框架，但其实不要被你的这些观点过束缚。在web领域，新的技术更新频率比较快，很快某种比较合适的技术方案就会被淘汰。基于这点，我们将会对这三种框架进行深入的分析比较。</p>
+<h4 id="了解框架"><a href="#了解框架" class="headerlink" title="了解框架"></a>了解框架</h4><p>我们今天所见到的框架都有一个共同点：它们都是开源、基于MIT license的，并且都是用来解决用MV*模式开发SPA应用的。它们都有views、events、data model和routing。我们先快速的看下这些框架的历史背景，然后深入的进行比较。<br>AngularJS作为大型商业产品的一部分出现在2009年，它的主要特点就是双向绑定、注入依赖、测试简单和通过指令来操作html。<br>Backbone.js是一个轻量级的MVC框架。它出现在2010年，之后很短的时间内就变得很流行。<br>Ember最早出现是在2007年，最初是由Sproutlt，后来是Apple来开发的。在2011年，Yehuda Katz，jquery和ruby项目的核心成员之一frok了Ember代码。Ember的用户包括Yahoo!、Groupon和ZenDesk。</p>
+<h4 id="社区"><a href="#社区" class="headerlink" title="社区"></a>社区</h4><p>社区是选择框架时考虑的一个重要因数。一个大的社区意味着由更多的用户问题提出，更多的第三方模块支持，更多的学习资料。在这三种框架中，Angular在github上的star是最多的，超过其它两种框架的star之和。且Agular在StackOverflow上的提问也是最多的。从最近几年的使用上来看，Angular框架的用户数在急剧的上升，而Ember和Backbone的使用人数则相对平缓。</p>
+<h4 id="框架大小"><a href="#框架大小" class="headerlink" title="框架大小"></a>框架大小</h4><p>页面的加载时间是你的应用的一个重要指标。用户对较长的加载时间往往是没有耐心的，所以你要想尽一切办法来提高页面的加载速度。对框架而言，由两个考虑的因数：框架大小和框架初始化的时间<br>Javascript的静态文件往往通过minifiy和gzip压缩传输。所以我们比较下它们minified-gzipped版本。但仅从自身框架大小来看也是有问题的，比如Backbone.js本身只有6.5kb，但往往还需要加载Underscore(5kb)、jQuery(32kb)或Zepto(9.1kb)。Ember本身大小是90kb，但往往还需要加载jQuery和Handlbars(共计136.2kb)。AngularJS一般不需要加载第三方的库，本身大小仅仅为39.5kb。</p>
+<h4 id="模版"><a href="#模版" class="headerlink" title="模版"></a>模版</h4><p>Angular和Ember引入了模版引擎。Backbone则让用户自己来决定是否使用模版引擎。下面我们就以实际的例子来分析下三种框架的模版引擎使用：  </p>
+<h5 id="AngularJS"><a href="#AngularJS" class="headerlink" title="AngularJS"></a>AngularJS</h5><p>Angular的模版引擎就是在html中用双大括弧来包含表达式（这里用’[[‘和’ ]]’替代）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;ul&gt; </div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">"framework in frameworks"</span> <span class="attr">title</span>=<span class="string">"[[framework.description]]"</span>&gt;</span></span></div><div class="line">        [[framework.name]] </div><div class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span> </div><div class="line">&lt;<span class="regexp">/ul&gt;</span></div></pre></td></tr></table></figure></p>
+<h5 id="Backbone"><a href="#Backbone" class="headerlink" title="Backbone"></a>Backbone</h5><p>Backbone可以和很多的第三方模版引擎结合，默认是使用Underscore。因为Backbone要依赖Underscore，且已经加载到你的页面中，所以你可以在你的应用中直接使用它。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;ul&gt; </div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">%</span> <span class="attr">_.each</span>(<span class="attr">frameworks</span>, <span class="attr">function</span>(<span class="attr">framework</span>) &#123; %&gt;</span> </span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">title</span>=<span class="string">"&lt;%- framework.description %&gt;"</span>&gt;</span> </div><div class="line">            <span class="tag">&lt;<span class="name">%-</span> <span class="attr">framework.name</span> %&gt;</span> </div><div class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">%</span> &#125;); %&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h5 id="Ember"><a href="#Ember" class="headerlink" title="Ember"></a>Ember</h5><p>Ember当前采用Handlebars作为模版引擎（这里用’[[‘和’ ]]’替代）。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;ul&gt; </div><div class="line">    [[#each frameworks]]</div><div class="line">        &lt;li [[bind-attr title=description]]&gt; </div><div class="line">            [[name]] </div><div class="line">        &lt;/li&gt; </div><div class="line">    [[/each]] </div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="AngularJS-1"><a href="#AngularJS-1" class="headerlink" title="AngularJS"></a>AngularJS</h4><p><strong> 好的方面 </strong><br>Angular给开发者引入了很多新的概念，双向绑定能减少很多的代码量，像下面的jQuery代码片段：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#greet-form input.user-name'</span>).on(<span class="string">'value'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    $(<span class="string">'#greet-form div.user-name'</span>).text(<span class="string">'Hello '</span> + <span class="keyword">this</span>.val() + <span class="string">'!'</span>); </div><div class="line">&#125;);</div></pre></td></tr></table></figure><br>用Angular可以改写成如下（这里用’[[‘和’ ]]’替代）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;input ng-model=<span class="string">"user.name"</span> type=<span class="string">"text"</span> /&gt;</div><div class="line">Hello [[user.name]]!</div></pre></td></tr></table></figure><br>Angular可以很好的帮助你构建应用：Controllers, Directives, Factories, Filters, Services 和 Views这些都可以用模块化的方式开发。每种模块代表一种功能角色。Views用来处理UI，Controllers处理UI背后的逻辑，Services用来维护后端的通信及相关的通用性业务逻辑，Directioves则可以用来通过HTML方式创建复用的组件。<br>自动的脏检测意味着你可以不用getter和setter方式来控制数据，你只需要修改环境中的某个变量，Angular会自动检测变量的变化并做对应的处理。   </p>
+<p><strong> 不好的方面 </strong><br>Angular的Directives API比较复杂，而且有些概念对开发者而言比较模糊，directives的配置也比较复杂，需要花一定的时间来熟悉。<br>Angular采用原型继承的模式，对那些习惯面向对象语言，如Java和C#的开发者比较难理解。<br>Angular可以在模版里面使用表达式，表达式功能很强大，但有时也会出问题，它可以让开发者在模版里面使用很复杂的逻辑判断和表达式，这对于独立的测试是有问题的。像下面的代码就比较糟糕：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"(oldPassword &amp;&amp; checkComplexity(newPassword) &amp;&amp; oldPassword != newPassword) ? (changePassword(oldPassword, newPassword) &amp;&amp; (oldPassword=(newPassword=''))) : (errorMessage='Please input a new password matching the following requirements: ' + passwordRequirements)"</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在许多情况下，错误比较难跟踪检测。比如拼写错误或调用一个undefined的function，Angular会对这些问题进行忽略而不加以任何警告提示，所以一般很难查出问题的原因所在。<br>最后，Angular的脏检测对开发者也是一个亮点。在非Angular的环境中很容易忘记调用$digest()。另一方面，你必须小心以免触发无限循环的脏检测。一般来说，页面上有大量的交互元素时，Angular会变得比较慢。所以最好在一个页面上不要有超过2000个绑定。</p>
+<h4 id="Backbone-1"><a href="#Backbone-1" class="headerlink" title="Backbone"></a>Backbone</h4><p><strong> 好的方面 </strong><br>轻量级的框架，学习曲线单一，只有一些简单的概念需要掌握(Models/Collections, Views, Routes)。它的文档也比较全面，甚至你可以在一小时内看完它整个源代码。正因为它比较小，所以可以快速的构建你的应用。也出现了很多基于Backbone的第三方框架，比如：Aura, Backbone UI, Chaplin, Geppetto, Marionette, LayoutManager, Thorax, Vertebrae。所以和Angular、Backbone比较，你的选择性比较灵活。</p>
+<p><strong> 不好的方面 </strong><br>Backbone并不提供架构，它只提供一些基础的工具让你来创建自己的架构。这时你就必须对比如内存管理格外小心。由于它的view缺乏生命周期管理，所以在操作view时还得考虑内存泄露的问题。<br>由于Backbone的简单性，它的很多功能都可以由第三方库或模块来实现，所以在你的应用中，面对如此多的选择，你需要花一定的时间来选择哪个库或模块更适合你的需要。<br>Backbone缺乏数据双向绑定，意味着你要写很多的代码来操作view。<br>由于Backone是直接操作view里面的DOM，所以单元测试也比较困难，而且模版还不好复用。</p>
+<h4 id="Ember-1"><a href="#Ember-1" class="headerlink" title="Ember"></a>Ember</h4><p><strong> 好的方面 </strong><br>Ember也不需要写大量的boilerplate代码，它会自动的帮你配置，比如自动决定route和controller的名称。即使你忘记写controller，Ember也会自动帮你创建一个。<br>Ember有很好的router和可选的data layer，叫Ember data。不像其它两个框架，它们都有一个data layer（Backbone的Collection/Model，Angular的$resource），Ember通过和后端的 Ruby-on-Rails或者RESTful JSON API结合创建了一个特殊的data module。它可以通过配置来模拟开发所需要的数据。<br>性能是Ember设计时考虑的一个重要目标。当某个数据改变时，页面只会对某个节点更新。它还可以在开发时通过HandleBars预编译模版，使你的应用跑得更快。</p>
+<p><strong> 不好的方面 </strong><br>Ember API 的文档在稳定版本出来前改变了很多。因此，很多内容或例子都过时了。<br>Handlebars在DOM中插入了很多<code>&lt;script&gt;</code>标签，随着时间的推移，你的模版中充满了<code>&lt;script&gt;</code>，你很难分辨出哪些是你自己的代码。而且这些标签对某些第三方库的功能也会造成影响，比如jQuery UI的Sortalbe。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>我们已经了解了各个框架的优缺点，Ember对那些熟悉Ruby, Python, Java, C#或者其它面向对象语言的开发者比较容易上手，同时它的性能也稍占上风。<br>Backbone比较小，容易学习，提供了你的应用之基本所需。<br>Angular有一个很大的社区来维护，有google作为后台，而且还在不断成长中，它也适合用来构建各种规模的应用。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/mvc/">mvc</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Ember/">Ember</a><a href="/tags/Angular/">Angular</a><a href="/tags/Backbone/">Backbone</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/03/17/angular-backbone-ember-md/" data-title="Angular VS Backbone VS Ember | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/20/performance-image-md/" title="web性能优化之－－图片">
+  <strong>上一篇：</strong><br/>
+  <span>
+  web性能优化之－－图片</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/16/why-webcomponent-important-md/"  title="为什么webcomponent很重要">
+ <strong>下一篇：</strong><br/> 
+ <span>为什么webcomponent很重要
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#了解框架"><span class="toc-number">1.</span> <span class="toc-text">了解框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#社区"><span class="toc-number">2.</span> <span class="toc-text">社区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#框架大小"><span class="toc-number">3.</span> <span class="toc-text">框架大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模版"><span class="toc-number">4.</span> <span class="toc-text">模版</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#AngularJS"><span class="toc-number">4.1.</span> <span class="toc-text">AngularJS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Backbone"><span class="toc-number">4.2.</span> <span class="toc-text">Backbone</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Ember"><span class="toc-number">4.3.</span> <span class="toc-text">Ember</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AngularJS-1"><span class="toc-number">5.</span> <span class="toc-text">AngularJS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Backbone-1"><span class="toc-number">6.</span> <span class="toc-text">Backbone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ember-1"><span class="toc-number">7.</span> <span class="toc-text">Ember</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

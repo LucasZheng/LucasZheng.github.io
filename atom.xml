@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Lucas</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://ilucas.me/"/>
+  <updated>2017-08-03T09:44:02.000Z</updated>
+  <id>http://ilucas.me/</id>
+  
+  <author>
+    <name>Lucas</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>css之focus-within</title>
+    <link href="http://ilucas.me/2017/08/03/css-focus-within/"/>
+    <id>http://ilucas.me/2017/08/03/css-focus-within/</id>
+    <published>2017-08-03T13:54:52.000Z</published>
+    <updated>2017-08-03T09:44:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>:focus-within</code>伪类能够在当前元素或其后代任何元素在<code>focus</code>状态时应用相应的规则。语言上比较难理解，可以直接看下面的例子：<a id="more"></a><br>CSS:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.name-container</span> &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.name-container</span><span class="selector-pseudo">:focus-within</span> &#123;</div><div class="line">  <span class="attribute">background</span>: yellow;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">input</span> &#123;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>HTML:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The div below will have a yellow background if</div><div class="line">    either input inside is focused.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"name-container"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"given_name"</span>&gt;</span></div><div class="line">    Given Name:</div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"given_name"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"family_name"</span>&gt;</span></div><div class="line">    Family Name:</div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"family_name"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>渲染结果：<br><img src="/images/focus-within.png" alt=""></p>
+<p>应用条件：<br>当前元素或后代任何元素具备<code>focus</code>能力都能触发这个伪类规则，且触发形式不限，可以是通过<strong>点击</strong>、<strong>tab</strong>甚至是通过js来让某个元素<code>focus</code>。</p>
+<p>应用场景：<br>编辑表单时，让整个表单应用某些样式规则</p>
+<p>CanIUse:<br><img src="/images/focus-within-caniuse.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      css之focus-within伪类
+    
+    </summary>
+    
+      <category term="css" scheme="http://ilucas.me/categories/css/"/>
+    
+    
+      <category term="css" scheme="http://ilucas.me/tags/css/"/>
+    
+      <category term="css3" scheme="http://ilucas.me/tags/css3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>img元素中的crossorigin属性</title>
+    <link href="http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/"/>
+    <id>http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/</id>
+    <published>2017-04-19T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>img</code>是我们在web开发中比较常用的一个标签，它代表着文档中的一个图像元素。HTML5给这个标签新增加了一个<code>crossorigin</code>属性，这个属性决定了图片获取过程中是否开启<code>CORS</code>功能<a id="more"></a></p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>在最近的项目开发中，有一个需求是让用户输入一个任意图片的url地址，在前端预览图片并让用户裁剪，再将裁剪好的图片上传到后端的服务器上。这里输入的图片地址很有可能来自第三方站点，这就涉及到一个跨域的问题，如果仅仅是展示预览图片的话是没有什么问题的，但这里裁剪图片时需要将裁剪好的图片进行base64编码，如果没有使用<code>crossorign</code>开启<code>CORS</code>功能的话，在使用<code>canvas</code>的<code>toBlob()</code>、<code>toDataURL()</code>和<code>getImageData()</code>方法时就会出现跨域的问题。</p>
+<h4 id="crossorigin属性"><a href="#crossorigin属性" class="headerlink" title="crossorigin属性"></a>crossorigin属性</h4><p>这个属性有两个值可选：<br><code>anonymous</code>：如果使用这个值的话就会在请求中的<code>header</code>中的带上<code>Origin</code>属性，但请求不会带上<code>cookie</code>和其他的一些认证信息。<br><code>use-credentials</code>：这个就同时会在跨域请求中带上<code>cookie</code>和其他的一些认证信息。<br>在使用这两个值时都需要server端在response的header中带上<code>Access-Control-Allow-Credentials</code>属性。<br>可以通过server的配置文件来开启这个属性：<a href="https://github.com/h5bp/server-configs-apache/blob/fc379c45f52a09dd41279dbf4e60ae281110a5b0/src/.htaccess#L36-L53" target="_blank" rel="external">server开启Access-Control-Allow-Credentials</a><br>前端写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image,</div><div class="line">    canvas = <span class="built_in">document</span>.createElement(<span class="string">"canvas"</span>),</div><div class="line">    ctx = canvas.getContext(<span class="string">"2d"</span>),</div><div class="line">    src = <span class="string">"http://example.com/image"</span>; <span class="comment">// insert image url here</span></div><div class="line"></div><div class="line">img.crossOrigin = <span class="string">"anonymous"</span>;</div><div class="line"></div><div class="line">img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    canvas.width = img.width;</div><div class="line">    canvas.height = img.height;</div><div class="line">    ctx.drawImage( img, <span class="number">0</span>, <span class="number">0</span> );</div><div class="line">    localStorage.setItem( <span class="string">"savedImageData"</span>, canvas.toDataURL(<span class="string">"image/png"</span>) );</div><div class="line">&#125;</div><div class="line">img.src = src;</div><div class="line"><span class="comment">// make sure the load event fires for cached images too</span></div><div class="line"><span class="keyword">if</span> ( img.complete || img.complete === <span class="literal">undefined</span> ) &#123;</div><div class="line">    img.src = <span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="</span>;</div><div class="line">    img.src = src;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="safari浏览器的bug"><a href="#safari浏览器的bug" class="headerlink" title="safari浏览器的bug"></a>safari浏览器的bug</h4><p>在safari浏览器中发现一个bug，即用户选择本地的图片文件时，如果使用了<code>crossorigin</code>话也会报错，解决办法是判断图片的地址是否是以<code>http</code>开头的，即：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (path.substring(<span class="number">0</span>, <span class="number">4</span>).toLowerCase() === <span class="string">'http'</span>) &#123;</div><div class="line">  img.crossOrigin = <span class="string">'anonymous'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      html5中img元素的crossorign属性
+    
+    </summary>
+    
+      <category term="html" scheme="http://ilucas.me/categories/html/"/>
+    
+    
+      <category term="crossorign" scheme="http://ilucas.me/tags/crossorign/"/>
+    
+      <category term="img" scheme="http://ilucas.me/tags/img/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TDD与BDD的差别</title>
+    <link href="http://ilucas.me/2016/03/07/difference-between-tdd-and-bdd/"/>
+    <id>http://ilucas.me/2016/03/07/difference-between-tdd-and-bdd/</id>
+    <published>2016-03-07T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果你了解最新的软件开发实践，那么你就会经常听到<code>unit test</code>、<code>TDD</code>和<code>BDD</code>这些词汇。很多Javascript开发者对这些术语都不是很清楚，这篇文章将解释它们分别是什么，以及它们之间的区别在哪里。<a id="more"></a></p>
+<h4 id="Unit-testing（单元测试）"><a href="#Unit-testing（单元测试）" class="headerlink" title="Unit testing（单元测试）"></a>Unit testing（单元测试）</h4><p>单元测试往往只关注于一个代码片段，通常是一个模块或函数，测试代码应该比较简单，可以快速实现和运行。这也意味着你会写很多的单元测试用例来保证代码的功能正常。单元测试应该没有什么依赖，比如通过网络请求获取数据库数据。现在有很多工具都可以模拟Api的响应数据来运行测试文件。单元测试的基本原则就是：多个测试用例，每个测试不同的功能并且相互之间没有依赖。也有一部分人认为任何的自动化测试都是单元测试，这是不正确的，这里有不同类型的自动化测试，每种类型的功能都不一样。</p>
+<ul>
+<li>Unit tests：单一的代码片段测试（通常是一个函数），测试用例之间相互独立</li>
+<li>Integration tests：同时关联多个测试用例，比如通过测试数据库测试数据的获取</li>
+<li>Acceptance tests（also called Functional tests）：测试整个应用</li>
+</ul>
+<h4 id="TDD（测试驱动开发）"><a href="#TDD（测试驱动开发）" class="headerlink" title="TDD（测试驱动开发）"></a>TDD（测试驱动开发）</h4><p><code>TDD</code>就是用测试来驱动软件开发，它有如下五个步骤：</p>
+<ul>
+<li>开发者首先写一些测试</li>
+<li>开发者运行这些测试，但这些测试明显都会失败，因为你并没有实现代码细节</li>
+<li>开发者实现代码细节</li>
+<li>如果开发者顺利实现代码的话，运行所有测试就会通过</li>
+<li>开发者可以重构代码，如果新代码功能不正确的话，对应的测试文件也会失败</li>
+</ul>
+<p>开发者可以基于这种流程实现更多的需求，如下面的流程图：<br><img src="/images/tdd-flowchart.png" alt=""></p>
+<p><strong>示例</strong></p>
+<p>假如开发者写了一个函数来计算阶乘，那么常规<code>TDD</code>模式就是使用这个函数，输入一个特定值判断输出是否正确。这个例子中使用<a href="http://mochajs.org/" target="_blank" rel="external">Mocha</a>作为测试框架：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>),</div><div class="line">    factorial = <span class="built_in">require</span>(<span class="string">'../index'</span>);</div><div class="line"></div><div class="line">suite(<span class="string">'Test'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">  setup(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// Create any objects that we might need</span></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  suite(<span class="string">'#factorial()'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    test(<span class="string">'equals 1 for sets of zero length'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      assert.equal(<span class="number">1</span>, factorial(<span class="number">0</span>));</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    test(<span class="string">'equals 1 for sets of length one'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      assert.equal(<span class="number">1</span>, factorial(<span class="number">1</span>));</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    test(<span class="string">'equals 2 for sets of length two'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      assert.equal(<span class="number">2</span>, factorial(<span class="number">2</span>));</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    test(<span class="string">'equals 6 for sets of length three'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      assert.equal(<span class="number">6</span>, factorial(<span class="number">3</span>));</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>在实现代码前，这个测试肯定会失败的，我们现在实现这个函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (n &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">NaN</span>;</div><div class="line">  <span class="keyword">if</span> (n === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> n * factorial(n - <span class="number">1</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>现在运行这个测试文件就会全部通过，这就是<code>TDD</code>开发模式，现在我们来看下<code>BDD</code>有什么不同的地方。</p>
+<h4 id="BDD（行为驱动开发）"><a href="#BDD（行为驱动开发）" class="headerlink" title="BDD（行为驱动开发）"></a>BDD（行为驱动开发）</h4><p>很多人都认为<code>BDD</code>跟<code>TDD</code>很接近，跟<code>TDD</code>相比，<code>BDD</code>就是基于我们写的需求行为和文档来驱动开发，这些文档描述跟我们的测试代码很相像。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>),</div><div class="line">    factorial = <span class="built_in">require</span>(<span class="string">'../index'</span>);</div><div class="line"></div><div class="line">describe(<span class="string">'Test'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">  before(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">// Stuff to do before the tests, like imports, what not</span></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  describe(<span class="string">'#factorial()'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    it(<span class="string">'should return 1 when given 0'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      factorial(<span class="number">0</span>).should.equal(<span class="number">1</span>);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">'should return 1 when given 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      factorial(<span class="number">1</span>).should.equal(<span class="number">1</span>);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">'should return 2 when given 2'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      factorial(<span class="number">2</span>).should.equal(<span class="number">2</span>);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">'should return 6 when given 3'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">      factorial(<span class="number">3</span>).should.equal(<span class="number">6</span>);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  after(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// Anything after the tests have finished</span></div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>主要区别就是在于测试的描述上，<code>BDD</code>使用一种更通俗易懂的文字来描述测试用例。尽管上面的例子很简单，但从中我们可以看出<code>BDD</code>更关注需求的功能，而不是实际结果，<code>BDD</code>相对于<code>TDD</code>而言更有利于帮助我们设计软件开发。</p>
+<h4 id="TDD-与-BDD"><a href="#TDD-与-BDD" class="headerlink" title="TDD 与 BDD"></a>TDD 与 BDD</h4><p>那到底是使用<code>TDD</code>或者<code>BDD</code>好呢？它取决于你所使用语言是否有一种合适的测试框架，你的同事们更倾向于使用哪种方式。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      TDD与BDD的差别
+    
+    </summary>
+    
+      <category term="test" scheme="http://ilucas.me/categories/test/"/>
+    
+    
+      <category term="unit test" scheme="http://ilucas.me/tags/unit-test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ESLint的使用</title>
+    <link href="http://ilucas.me/2016/03/01/eslint-guide/"/>
+    <id>http://ilucas.me/2016/03/01/eslint-guide/</id>
+    <published>2016-03-01T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在产品开发前，开放团队往往会制定一系列编码规范，在编码时遵循这些规范来避免出现低级Bug，而实用Lint工具和代码风格检测工具，则可以辅助编码规范的执行，有效的控制代码质量。<a id="more"></a></p>
+<p>之前比较流行的工具有JSHint和JSCS的结合使用。最近React比较流行，而JSHint不支持JSX语法，所以有了ESLint这个工具的出现。</p>
+<p>ESLint主要特点有：</p>
+<ul>
+<li>默认规则包含所有 JSLint、JSHint 中存在的规则，易迁移；</li>
+<li>规则可配置性高：可设置「警告」、「错误」两个 error 等级，或者直接禁用；</li>
+<li>包含代码风格检测的规则（可以丢掉 JSCS 了）；</li>
+<li>支持插件扩展、自定义规则。</li>
+</ul>
+<h4 id="使用ESLint"><a href="#使用ESLint" class="headerlink" title="使用ESLint"></a>使用ESLint</h4><ul>
+<li>通过npm安装：<code>npm install -g eslint</code></li>
+<li>通过<code>eslint --init</code>命令在当前目录下生成<code>.eslintrc.js</code>文件。如果没有 package.json 文件的话，需要先创建这个文件，eslint会根据你的安装向导写入对应的插件到 devDependencies 里面。</li>
+</ul>
+<p>设置规则：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">"rules": &#123;</div><div class="line">  "semi": [2, "always"],</div><div class="line">  "quotes": [2, "double"]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>规则有3种配置：</p>
+<ul>
+<li>0：禁止使用该规则</li>
+<li>1：将该规则定义为警告等级（不影响exit code）</li>
+<li>2：将该规则定义为错误等级（exit code为1）</li>
+</ul>
+<p>如果配置了<code>&quot;extends&quot;: &quot;eslint:recommended&quot;</code>，则 <a href="http://eslint.org/docs/rules/" target="_blank" rel="external">ESLint Rules</a> 页面所有打勾的规则都会被生效。</p>
+<p>如果使用了<code>eslint --fix ***</code>，则ESLint将会为我们修复这一报错，如将多个semiicolons变为一个semiicolon。</p>
+<h4 id="配置ESLint"><a href="#配置ESLint" class="headerlink" title="配置ESLint"></a>配置ESLint</h4><p>两种方式来配置ESLint:</p>
+<ul>
+<li>在文件中使用js comment方式来添加配置规则</li>
+<li>通过配置文件： <code>.eslingrc.xx</code> 或在 <code>package.json</code> 中添加 <code>eslintConfig</code>属性，或者在命令模式下指定配置文件：<code>eslint -c ~/my-eslint.json file.js</code>。</li>
+</ul>
+<p>配置的内容包括：</p>
+<ul>
+<li>环境：代码运行的环境，每个环境预置了一些全局变量。</li>
+<li>全局变量：代码所运用到的全局变量</li>
+<li>规则：运用哪些规则来检测以及规则的等级。</li>
+</ul>
+<h4 id="指定Parser的选项"><a href="#指定Parser的选项" class="headerlink" title="指定Parser的选项"></a>指定Parser的选项</h4><p>ESLint默认只支持ES5的语法，但你可以通过指定parser来支持检测ES6和JSX语法。具体是在<code>.eslintrc.*</code>文件中使用<code>parserOptions</code>属性。可以设置内容如下：</p>
+<ul>
+<li><code>ecmaVersion</code>：可以设置3，5（默认）和6来代表ECMAScript的版本</li>
+<li><code>sourceType</code>：可以设置“script”（默认）或”module”如果你的代码采用模块化的方式  </li>
+<li><code>ecmaFeatures</code>：设置features：<ul>
+<li><code>globalReturn</code>：在全局范围内允许使用<code>return</code>语句</li>
+<li><code>impliedStrict</code>：如果ecmaVersion为5及以上，使用全局的<strong> strict mode </strong></li>
+<li><code>jsx</code>：使用JSX语法</li>
+<li><code>experimentalObjectRestSpread</code></li>
+</ul>
+</li>
+</ul>
+<p>应用例子：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"parserOptions"</span>: &#123;</div><div class="line">      <span class="attr">"ecmaVersion"</span>: <span class="number">6</span>,</div><div class="line">      <span class="attr">"sourceType"</span>: <span class="string">"module"</span>,</div><div class="line">      <span class="attr">"ecmaFeatures"</span>: &#123;</div><div class="line">          <span class="attr">"jsx"</span>: <span class="literal">true</span></div><div class="line">      &#125;,</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"rules"</span>: &#123;</div><div class="line">      <span class="attr">"semi"</span>: <span class="number">2</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="指定Parser"><a href="#指定Parser" class="headerlink" title="指定Parser"></a>指定Parser</h4><p>ESLint默认使用<strong> Espree </strong>作为parser。如果你想指定其他的parser，也可以修改 <strong> parser </strong>值来生效。比如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"parser"</span>: <span class="string">"esprima"</span>,</div><div class="line">    <span class="attr">"rules"</span>: &#123;</div><div class="line">        <span class="attr">"semi"</span>: <span class="number">2</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>目前只有 <strong> Esprima </strong> 和 <strong> Babel-ESLint </strong> 两个parser兼容ESLint。</p>
+<h4 id="指定环境"><a href="#指定环境" class="headerlink" title="指定环境"></a>指定环境</h4><p>不同的环境预定义了一些全局变量，环境有如下选项：</p>
+<ul>
+<li><code>browser</code></li>
+<li><code>node</code></li>
+<li><code>commonjs</code></li>
+<li><code>shared-node-browser</code>：Node和Browser有相同的变量</li>
+<li><code>es6</code></li>
+<li><code>worker</code>：web workers全局变量</li>
+<li><code>amd</code>：定义<code>require()</code>和<code>define()</code>作为全局变量</li>
+<li><code>mocha</code></li>
+<li><code>jasmine</code></li>
+<li><code>jest</code></li>
+<li><code>phantomjs</code></li>
+<li><code>protractor</code></li>
+<li><code>qunit</code></li>
+<li><code>jquery</code></li>
+<li><code>prototypejs</code></li>
+<li><code>shelljs</code></li>
+<li><code>meteor</code></li>
+<li><code>mongo</code>：MongoDB</li>
+<li><code>applescript</code></li>
+<li><code>nashorn</code></li>
+<li><code>serviceworker</code></li>
+<li><code>atomtest</code></li>
+<li><code>embertest</code>：Ember test helper变量</li>
+<li><code>webextensions</code></li>
+<li><code>greasemonkey</code></li>
+</ul>
+<p>可以在文件内指定环境：<code>/*eslint-env node, mocha */</code>，也可以在命令模式下通过<code>--env</code>参数来指定。</p>
+<p>配置文件设置如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"env"</span>: &#123;</div><div class="line">    <span class="attr">"browser"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">"node"</span>: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或在<strong> package.json </strong> 中：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"mypackage"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</div><div class="line">  <span class="attr">"eslintConfig"</span>: &#123;</div><div class="line">    <span class="attr">"env"</span>: &#123;</div><div class="line">      <span class="attr">"browser"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="attr">"node"</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML设置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">env:</div><div class="line">  browser: true</div><div class="line">  node: true</div></pre></td></tr></table></figure></p>
+<p>如果某个插件使用了不同的环境，则可以如下设置：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"plugins"</span>: [<span class="string">"example"</span>],</div><div class="line">  <span class="attr">"env"</span>: &#123;</div><div class="line">    <span class="attr">"example/environment_name"</span>: <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或在package.json中：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"mypackage"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</div><div class="line">  <span class="attr">"eslintConfig"</span>: &#123;</div><div class="line">    <span class="attr">"plugins"</span>: [<span class="string">"example"</span>],</div><div class="line">    <span class="attr">"env"</span>: &#123;</div><div class="line">      <span class="attr">"example/environment_name"</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或在YAML中：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">plugins:</div><div class="line">  - example</div><div class="line">env:</div><div class="line">  example/environment_name: true</div></pre></td></tr></table></figure></p>
+<h4 id="指定全局变量"><a href="#指定全局变量" class="headerlink" title="指定全局变量"></a>指定全局变量</h4><p>如果我们在文件中引用了未定义的变量，ESLint就会触发<code>no-undef</code>警告信息。但往往我们会引入一些全局变量，此时我们就可以在文件中添加注释或在配置文件中指定全局变量来避免出现警告信息。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/*global var1, var2*/</div></pre></td></tr></table></figure></p>
+<p>如果你认为这些全局变量是只读的，不可重新被覆盖的话，那么可以在每个变量上设置<code>false</code>标识。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/*global var1:false, var2:false*/</div></pre></td></tr></table></figure></p>
+<p>配置文件如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"globals"</span>: &#123;</div><div class="line">    <span class="attr">"var1"</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">"var2"</span>: <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML配置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">globals:</div><div class="line">    var1: true</div><div class="line">    var2: false</div></pre></td></tr></table></figure></p>
+<h4 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h4><p>ESLint支持第三方插件的使用，在使用插件前需要通过npm来安装。在配置文件中使用<code>plugins</code>来设置插件名称。带有<code>eslint-plugin-</code>前缀的插件名称可以省略其前缀。如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"plugins"</span>: [</div><div class="line">    <span class="string">"plugin1"</span>,</div><div class="line">    <span class="string">"eslint-plugin-plugin2"</span></div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">  plugins:</div><div class="line">    - plugin1</div><div class="line">    - eslint-plugin-plugin2</div></pre></td></tr></table></figure></p>
+<p>注意：如果是使用的全局安装的ESLint的话，则只能使用全局安装的ESlint插件。而使用本地安装的ESLint则可以使用全局和本地安装的ESLint插件。</p>
+<h4 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h4><p>ESLint有大量的规则，你可以在项目中通过添加注释的方式或者通过配置文件的方式来使用。</p>
+<ul>
+<li>0：停止使用该规则</li>
+<li>1：设置该规则为警告等级（不影响exit code）</li>
+<li>2：设置该规则为错误等级（此时exit code为1）</li>
+</ul>
+<p>用注释的方式设置如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*eslint eqeqeq:0, curly: 2*/</span></div></pre></td></tr></table></figure></p>
+<p>如果规则还有其他信息的话，则可以用如下方式设置：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*eslint quotes: [2, "double"], curly: 2*/</span></div></pre></td></tr></table></figure></p>
+<p>配置文件方式：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"rules"</span>: &#123;</div><div class="line">    <span class="attr">"eqeqeq"</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">"curly"</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">"quotes"</span>: [<span class="number">2</span>, <span class="string">"double"</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">  rules:</div><div class="line">    eqeqeq: 0</div><div class="line">    curly: 2</div><div class="line">    quotes:</div><div class="line">      - 2</div><div class="line">      - "double"</div></pre></td></tr></table></figure></p>
+<p>如果我们想为某个特定的插件配置规则的的话，想要如下设置：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"plugins"</span>: [</div><div class="line">    <span class="string">"plugin1"</span></div><div class="line">  ],</div><div class="line">  <span class="attr">"rules"</span>: &#123;</div><div class="line">    <span class="attr">"eqeqeq"</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">"curly"</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">"quotes"</span>: [<span class="number">2</span>, <span class="string">"double"</span>],</div><div class="line">    <span class="attr">"plugin1/rule1"</span>: <span class="number">2</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">  plugins:</div><div class="line">    - plugin1</div><div class="line">  rules:</div><div class="line">    eqeqeq: 0</div><div class="line">    curly: 2</div><div class="line">    quotes:</div><div class="line">      - 2</div><div class="line">      - "double"</div><div class="line">    plugin1/rule1: 2</div></pre></td></tr></table></figure></p>
+<p>同样我们也可以用注释的方式设置：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*eslint "plugin1/rule1": 2*/</span></div></pre></td></tr></table></figure></p>
+<p>注意：当指定特点插件规则时，需要去掉<code>eslint-plugin-</code>前缀。</p>
+<p>临时需要disable某个规则时，可以如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*eslint-disable */</span></div><div class="line"></div><div class="line"><span class="comment">//Disable all rules between comments</span></div><div class="line">alert(<span class="string">'foo'</span>);</div><div class="line"></div><div class="line"><span class="comment">/*eslint-enable */</span></div></pre></td></tr></table></figure></p>
+<p>也可以设置disable的某些具体规则：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*eslint-disable no-alert, no-console */</span></div><div class="line"></div><div class="line">alert(<span class="string">'foo'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'bar'</span>);</div><div class="line"></div><div class="line"><span class="comment">/*eslint-enable no-alert */</span></div></pre></td></tr></table></figure></p>
+<p>在某行上disable所有的规则：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'foo'</span>); <span class="comment">// eslint-disable-line</span></div><div class="line"></div><div class="line"><span class="comment">// eslint-disable-next-line</span></div><div class="line">alert(<span class="string">'foo'</span>);</div></pre></td></tr></table></figure></p>
+<p>在某行上disable特定的规则：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'foo'</span>); <span class="comment">// eslint-disable-line no-alert</span></div><div class="line"></div><div class="line"><span class="comment">// eslint-disable-next-line no-alert</span></div><div class="line">alert(<span class="string">'foo'</span>);</div></pre></td></tr></table></figure></p>
+<p>在某行上disable某些规则：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'foo'</span>); <span class="comment">// eslint-disable-line no-alert, quotes, semi</span></div><div class="line"></div><div class="line"><span class="comment">// eslint-disable-next-line no-alert, quotes, semi</span></div></pre></td></tr></table></figure></p>
+<h4 id="设置共享"><a href="#设置共享" class="headerlink" title="设置共享"></a>设置共享</h4><p>ESLint支持在配置文件中设置共享信息，你可以通过设置<code>settings</code>来让其他规则共享该信息，这对有些自定义的规则比较有用。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"settings"</span>: &#123;</div><div class="line">    <span class="attr">"sharedData"</span>: <span class="string">"Hello"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">  settings:</div><div class="line">    sharedData: "Hello"</div></pre></td></tr></table></figure></p>
+<h4 id="使用配置文件"><a href="#使用配置文件" class="headerlink" title="使用配置文件"></a>使用配置文件</h4><p>通过命令行可以使用某个路径下的配置文件：<code>eslint -c myconfig.json myfiletotest.js</code>。</p>
+<p>第二种方式是通过<code>.eslintrc.*</code>或<code>package.json</code>文件方式，ESlint会自动寻找当前目录下的这两个文件，如果没有就到它的父级目录寻找，直到文件系统的根目录。这种方式比较有用，特别是需要针对不同的部分应用不同的规则。最里面的配置规则要比它的父级权限大。</p>
+<h4 id="配置文件的格式"><a href="#配置文件的格式" class="headerlink" title="配置文件的格式"></a>配置文件的格式</h4><p>ESLint支持如下几种格式的配置文件：</p>
+<ul>
+<li>JavaScript：使用<code>.eslintrc.js</code>，通过export一个包含所有规则的对象</li>
+<li>YAML：使用<code>.eslintrc.yaml</code> 或 <code>.eslintrc.yml</code> 来定义规则</li>
+<li>JSON：使用<code>.eslintrc.json</code>来配置规则</li>
+<li>Deprecated：使用<code>.eslintrc</code>，其可以是JSON或YAML格式</li>
+<li>package.json：在<code>package.json</code>中定义<code>eslintConfig</code>来设置规则</li>
+</ul>
+<p>如果目录下有多个配置格式的文件，则ESLint只会使用其中一个，优先顺序为：<code>.eslintrc.js</code> &gt; <code>.eslintrc.yaml</code> &gt; <code>.eslintrc.yml</code> &gt; <code>.eslintrc.json</code> &gt; <code>.eslintrc</code> &gt; <code>package.json</code></p>
+<p>默认情况下，我们不需要应用跨项目的配置规则，即使项目在目录上有父子关系，此时我们可以通过在<code>package.json</code>的<code>eslintConfig</code>或<code>.eslintrc.*</code>中设置<code>&quot;root&quot;: true</code>来禁止ESLint继续向上级查找配置文件。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"root"</span>: <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>YAML：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">  root: true</div></pre></td></tr></table></figure></p>
+<p>比如下面：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">home</div><div class="line">└── user</div><div class="line">    ├── .eslintrc &lt;- Always skipped if other configs present</div><div class="line">    └── projectA</div><div class="line">        ├── .eslintrc  &lt;- Not used</div><div class="line">        └── lib</div><div class="line">            ├── .eslintrc  &lt;- &#123; "root": true &#125;</div><div class="line">            └── main.js</div></pre></td></tr></table></figure></p>
+<p>完整的配置链，从高到低如下：</p>
+<p>內联配置：</p>
+<ul>
+<li>/<em>eslint-disable</em>/ 和 /<em>eslint-enable</em>/</li>
+<li>/<em>global</em>/</li>
+<li>/<em>eslint</em>/</li>
+<li>/<em>eslint-env</em>/</li>
+</ul>
+<p>命令参数：</p>
+<ul>
+<li>–global</li>
+<li>–rule</li>
+<li>–env</li>
+<li>-c, –config</li>
+</ul>
+<p>项目级别的配置：</p>
+<ul>
+<li>目录下的<code>.eslintrc.*</code> 或 <code>package.json</code></li>
+<li>继续在父级目录中查找的<code>.eslintrc</code>和<code>package.json</code>文件，直到出现<code>&quot;root&quot;: true</code></li>
+<li>如果前两个都没有配置文件的话，就会用用户根目录下的<code>~/.eslintrc</code></li>
+</ul>
+<h4 id="继承配置文件"><a href="#继承配置文件" class="headerlink" title="继承配置文件"></a>继承配置文件</h4><p>如果你想继承某个特定的配置文件，可以使用<code>extends</code>属性，并且指定一个路径，可以是相对或绝对路径。被继承的配置可以是YAML、JSON、JS或可共享的配置包，继承的配置文件可以覆盖某些规则：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "extends": "./node_modules/coding-standard/.eslintrc",</div><div class="line"></div><div class="line">  "rules": &#123;</div><div class="line">    // Override any settings from the "parent" configuration</div><div class="line">    "eqeqeq": 1</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以继承多个文件，写在下面的配置规则覆盖上面配置中对应的规则。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "extends": [</div><div class="line">    "./node_modules/coding-standard/eslintDefaults.js",</div><div class="line">    // Override eslintDefaults.js</div><div class="line">    "./node_modules/coding-standard/.eslintrc-es6",</div><div class="line">    // Override .eslintrc-es6</div><div class="line">    "./node_modules/coding-standard/.eslintrc-jsx",</div><div class="line">  ],</div><div class="line"></div><div class="line">  "rules": &#123;</div><div class="line">    // Override any settings from the "parent" configuration</div><div class="line">    "eqeqeq": 1</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>被继承的文件里面同样可以使用<code>extends</code>来继承其他的配置文件，你也可以继承通过npm安装的配置包，比如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "extends": "eslint-config-myrules",</div><div class="line"></div><div class="line">  "rules": &#123;</div><div class="line">    // Override any settings from the "parent" configuration</div><div class="line">    "eqeqeq": 1</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同样这里也可以去掉<code>eslint-config-</code>前缀，ESLint会自动为你添加。</p>
+<p>ESLint同样支持继承某个插件中的配置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "extends": "plugin:eslint-plugin-myplugin/myConfig",</div><div class="line"></div><div class="line">  "rules": &#123;</div><div class="line">    // Override any settings from the "parent" configuration</div><div class="line">    "eqeqeq": 1</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个例子中，<code>eslint-plugin-myplugin</code>插件中包含一个名为<code>default</code>的配置。这里也可以去掉<code>eslint-plugin-</code>前缀。</p>
+<p>注意：在配置文件<code>extends</code>中指定的路径都是相对于项目的路径，而不是相对于该配置文件的路径。</p>
+<h4 id="配置文件中的注释"><a href="#配置文件中的注释" class="headerlink" title="配置文件中的注释"></a>配置文件中的注释</h4><p>JSON和YAML配置文件都支持JavaScript格式的注释，<code>package.json</code>不支持注释。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "env": &#123;</div><div class="line">    "browser": true</div><div class="line">  &#125;,</div><div class="line">  "rules": &#123;</div><div class="line">    // Override our default settings just for this directory</div><div class="line">    "eqeqeq": 1,</div><div class="line">    "strict": 0</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="指定哪些格式的文件被检测"><a href="#指定哪些格式的文件被检测" class="headerlink" title="指定哪些格式的文件被检测"></a>指定哪些格式的文件被检测</h4><p>目前唯一的方法是通过命令行的<code>--ext</code>来指定。</p>
+<h4 id="忽略文件或目录"><a href="#忽略文件或目录" class="headerlink" title="忽略文件或目录"></a>忽略文件或目录</h4><p>可以通过在项目的根目录下创建<code>.eslintignore</code>文件来告诉ESLint忽略哪些文件，每一行代表一个路径或文件。ESLint还始终忽略<code>/node_modules/**</code> 和 <code>/bower_components/**</code>文件。例子如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># /node_modules and /bower_components ignored by default</div><div class="line"></div><div class="line"># Ignore files compiled from TypeScript and CoffeeScript</div><div class="line">**/*.&#123;ts,coffee&#125;.js</div><div class="line"></div><div class="line"># Ignore built files except build/index.js</div><div class="line">build/</div><div class="line">!build/index.js</div></pre></td></tr></table></figure></p>
+<h4 id="使用其他对应的忽略文件"><a href="#使用其他对应的忽略文件" class="headerlink" title="使用其他对应的忽略文件"></a>使用其他对应的忽略文件</h4><p>你也可以通过设置<code>--ignore-path</code>使用其他的忽略文件，如：<code>eslint --ignore-path .jshintignore file.js</code></p>
+<p>或：<code>eslint --ignore-path .gitignore file.js</code></p>
+<p>如果指定了上面的规则，则当前的<code>.eslintignore</code>将不会被再使用。</p>
+<h4 id="关于忽略警告"><a href="#关于忽略警告" class="headerlink" title="关于忽略警告"></a>关于忽略警告</h4><p>如果你在忽略配置中指定了一个文件夹，则该文件夹下的文件及子文件夹都会被默默的忽略掉，如果你指定了一个具体的文件，则ESlint就会给出一个警告信息，如：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo.js</div></pre></td></tr></table></figure></p>
+<p>运行：<code>eslint foo.js</code></p>
+<p>得到警告信息：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">foo.js</div><div class="line">  0:0  warning  File ignored because of your .eslintignore file. Use --no-ignore to override.</div><div class="line"></div><div class="line">✖ 1 problem (0 errors, 1 warning)</div></pre></td></tr></table></figure></p>
+<p>之所以有这个信息，是ESLint不确定是否需要检测这个文件，你可以设置<code>--no-ignore</code>来覆盖之前的配置。</p>
+<h4 id="集成ESLint"><a href="#集成ESLint" class="headerlink" title="集成ESLint"></a>集成ESLint</h4><h5 id="pre-commit-hook"><a href="#pre-commit-hook" class="headerlink" title="pre-commit hook"></a>pre-commit hook</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#!/bin/zsh</div><div class="line"></div><div class="line">function lintit () &#123;</div><div class="line">  OUTPUT=$(git diff --name-only | grep -E '(.js)$')</div><div class="line">  a=("$&#123;(f)OUTPUT&#125;")</div><div class="line">  e=$(eslint -c eslint.json $a)</div><div class="line">  echo $e</div><div class="line">  if [[ "$e" != *"0 problems"* ]]; then</div><div class="line">    echo "ERROR: Check eslint hints."</div><div class="line">    exit 1 # reject</div><div class="line">  fi</div><div class="line">&#125;</div><div class="line">lintit</div></pre></td></tr></table></figure>
+<h5 id="gulp-eslint"><a href="#gulp-eslint" class="headerlink" title="gulp-eslint"></a><a href="https://www.npmjs.com/package/gulp-eslint" target="_blank" rel="external">gulp-eslint</a></h5><p>安装：<code>npm install gulp-eslint</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var gulp = require('gulp'),</div><div class="line">    eslint = require('gulp-eslint');</div><div class="line"> </div><div class="line">gulp.task('lint', function () &#123;</div><div class="line">  // ESLint ignores files with "node_modules" paths. </div><div class="line">  // So, it's best to have gulp ignore the directory as well. </div><div class="line">  // Also, Be sure to return the stream from the task; </div><div class="line">  // Otherwise, the task may end before the stream has finished. </div><div class="line">  return gulp.src(['**/*.js','!node_modules/**'])</div><div class="line">    // eslint() attaches the lint output to the "eslint" property </div><div class="line">    // of the file object so it can be used by other modules. </div><div class="line">    .pipe(eslint())</div><div class="line">    // eslint.format() outputs the lint results to the console. </div><div class="line">    // Alternatively use eslint.formatEach() (see Docs). </div><div class="line">    .pipe(eslint.format())</div><div class="line">    // To have the process exit with an error code (1) on </div><div class="line">    // lint error, return the stream and pipe to failAfterError last. </div><div class="line">    .pipe(eslint.failAfterError());</div><div class="line">&#125;);</div><div class="line"></div><div class="line">gulp.task('default', ['lint'], function () &#123;</div><div class="line">  // This will only run if the lint task is successful... </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>或者使用插件api：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">gulp.src(['**/*.js','!node_modules/**'])</div><div class="line">  .pipe(eslint(&#123;</div><div class="line">    extends: 'eslint:recommended',</div><div class="line">    ecmaFeatures: &#123;</div><div class="line">        'modules': true</div><div class="line">    &#125;,</div><div class="line">    rules: &#123;</div><div class="line">      'my-custom-rule': 1,</div><div class="line">      'strict': 2</div><div class="line">    &#125;,</div><div class="line">    globals: &#123;</div><div class="line">      'jQuery':false,</div><div class="line">      '$':true</div><div class="line">    &#125;,</div><div class="line">    envs: [</div><div class="line">      'browser'</div><div class="line">    ]</div><div class="line">  &#125;))</div><div class="line">  .pipe(eslint.formatEach('compact', process.stderr));</div></pre></td></tr></table></figure></p>
+<h5 id="webpack-eslint-loader"><a href="#webpack-eslint-loader" class="headerlink" title="webpack(eslint-loader)"></a>webpack(<a href="https://www.npmjs.com/package/eslint-loader" target="_blank" rel="external">eslint-loader</a>)</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install eslint-loader</div></pre></td></tr></table></figure>
+<p>使用：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  // ... </div><div class="line">  module: &#123;</div><div class="line">    loaders: [</div><div class="line">      &#123;test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/&#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  // ... </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果你使用了<code>babel-loader</code>的话，要注意写的顺序：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  // ... </div><div class="line">  module: &#123;</div><div class="line">    loaders: [</div><div class="line">      &#123;test: /\.js$/, loader: "babel-loader", exclude: /node_modules/&#125;,</div><div class="line">      &#123;test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/&#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  // ... </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者安全起见，可以使用<code>preLoaders</code>：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">module.exports = &#123;</div><div class="line">  // ... </div><div class="line">  module: &#123;</div><div class="line">    preLoaders: [</div><div class="line">      &#123;test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/&#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  // ... </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="Ember-ember-cli-eslint"><a href="#Ember-ember-cli-eslint" class="headerlink" title="Ember(ember-cli-eslint)"></a>Ember(<a href="https://www.npmjs.com/package/ember-cli-eslint" target="_blank" rel="external">ember-cli-eslint</a>)</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ember install ember-cli-eslint</div></pre></td></tr></table></figure>
+<p>运行后会在你的项目目录下生成一个<code>.eslintrc</code>文件。 如果代码中应用到了ECMA最新的一些特性，需要在该文件中加入parser：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">"parser": "babel-eslint",</div></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">// ember-cli-build.js (or Brocfile.js on older versions of ember-cli) </div><div class="line"></div><div class="line">var path = require('path');</div><div class="line">var EmberApp = require('ember-cli/lib/broccoli/ember-app');</div><div class="line">// `npm install --save-dev js-string-escape` </div><div class="line">var jsStringEscape = require('js-string-escape');</div><div class="line"></div><div class="line">var app = new EmberApp(&#123;</div><div class="line">  eslint: &#123;</div><div class="line">    testGenerator: eslintTestGenerator</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">function render(errors) &#123;</div><div class="line">  if (!errors) &#123; return ''; &#125;</div><div class="line">  return errors.map(function(error) &#123;</div><div class="line">    return error.line + ':' + error.column + ' ' +</div><div class="line">        ' - ' + error.message + ' (' + error.ruleId +')';</div><div class="line">  &#125;).join('\n');</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Qunit test generator </div><div class="line">function eslintTestGenerator(relativePath, errors) &#123;</div><div class="line">  var pass = !errors || errors.length === 0;</div><div class="line">  return "import &#123; module, test &#125; from 'qunit';\n" +</div><div class="line">    "module('ESLint - " + path.dirname(relativePath) + "');\n" +</div><div class="line">    "test('" + relativePath + " should pass ESLint', function(assert) &#123;\n" +</div><div class="line">    "  assert.ok(" + pass + ", '" + relativePath + " should pass ESLint." +</div><div class="line">    jsStringEscape("\n" + render(errors)) + "');\n" +</div><div class="line">  "&#125;);\n";</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Mocha test generator </div><div class="line">function eslintTestGenerator(relativePath, errors) &#123;</div><div class="line">  var pass = !errors || errors.length === 0;</div><div class="line">  return "import &#123; describe, it &#125; from 'mocha';\n" +</div><div class="line">    "import &#123; assert &#125; from 'chai';\n" +</div><div class="line">    "describe('ESLint - " + path.dirname(relativePath) + "', function() &#123;\n" +</div><div class="line">    "  it('" + relativePath + " should pass ESLint', function() &#123;\n" +</div><div class="line">    "    assert.ok(" + pass + ", '" + relativePath + " should pass ESLint." +</div><div class="line">    jsStringEscape("\n" + render(errors)) + "');\n" +</div><div class="line">  "  &#125;);\n&#125;);\n";</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g phantomjs;</div><div class="line">ember test</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      ESLint的使用方法及规则
+    
+    </summary>
+    
+      <category term="build" scheme="http://ilucas.me/categories/build/"/>
+    
+    
+      <category term="ESLint" scheme="http://ilucas.me/tags/ESLint/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>对Ember Data的一点理解</title>
+    <link href="http://ilucas.me/2016/02/23/ember-data-for-the-curious/"/>
+    <id>http://ilucas.me/2016/02/23/ember-data-for-the-curious/</id>
+    <published>2016-02-23T04:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于项目的后端采用的是Ruby来开发，因此前端也就采用了Ember这一mvc框架，相比较于其他mvc框架而言，Ember内置了强大的Ember Data，它是介于你的应用和持久层之间的一个数据模型。<a id="more"></a>在没有后端提供API数据时，它能够模拟后端的响应数据从而可以让前后端并行开发，同时它也能帮我们优化处理底层的HTTP请求、缓存响应数据来提升我们的产品性能。</p>
+<p>在没有使用Ember Data来获取数据时，我们通常按照下面的方式来请求数据：<br><code>app/components/list-of-drafts.js</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Component.extend(&#123;</div><div class="line">  willRender() &#123;</div><div class="line">    $.getJSON(<span class="string">'/drafts'</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">this</span>.set(<span class="string">'drafts'</span>, data);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>对应组件的模版：<br><code>app/templates/components/list-of-drafts.hbs</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">  &#123;&#123;#each drafts key="id" as |draft|&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;draft.title&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">  &#123;&#123;/each&#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这是没有什么问题的，但当你的应用中其他地方也需要获取这个请求的数据时，如：<br><code>app/components/drafts-button.js</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Component.extend(&#123;</div><div class="line">  willRender() &#123;</div><div class="line">    $.getJSON(<span class="string">'/drafts'</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">this</span>.set(<span class="string">'drafts'</span>, data);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>对应的模版：<br><code>app/templates/components/drafts-button.hbs</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#link-to 'drafts' tagName="button"&#125;&#125;</div><div class="line">Drafts (&#123;&#123;drafts.length&#125;&#125;)</div><div class="line">&#123;&#123;/link-to&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>现在我们的应用对于获取同样的数据需要向后端发送两个不同的请求，这既浪费了我们的带宽资源，也影响了应用的用户体验。而Ember Data提供了一个所有models集合的store对象，组件只展示更新model的数据，至于如何获取model则交给store来处理。这就意味着，对于两个不同组件对同样的一个请求，它只会向后端发送一个请求。当store第一次获取到数据时，它会对其进行缓存。你的所有组件和routes都可以访问这个公有的store对象。当你需要展示或修改一个model时，也都是通过这个store对象来操作。</p>
+<h4 id="Ember-Data的几个核心概念"><a href="#Ember-Data的几个核心概念" class="headerlink" title="Ember Data的几个核心概念"></a>Ember Data的几个核心概念</h4><p>首先我们来看下Ember Data由哪些部分组成：</p>
+<p><code>store</code>：store就是一个数据容器，它存储从持久层获得的响应数据，同时它也扮演着数据请求的一个中间件角色，在Chrome浏览器上，可以通过安装<code>Ember Inspector</code>插件来查看store里面的数据。store也是一个Service，默认在Routes和Controllers中可以直接调用。</p>
+<p><code>adapter</code>：adapter定义了如何向持久层发送请求，它有一些内置的方法，开发人员可以自定义重置这些方法。比如你需要获取id为123的<code>Person</code>数据，Ember怎么知道这个请求的url？是<code>/person/123</code> 还是<code>/resources/people/123</code>?  一般来说，每个应用有一个<code>ApplicationAdapter</code>，其他自定义的adapter都可以继承于它。你也可以针对每个对应的model写一个adapter，如果你想这么做的话，那么就要遵循它的命名规范，比如有一个<code>BigWidget</code> model，那个它对于的adapter就应该为<code>BigWidgetAdapter</code>。</p>
+<p><code>serializer</code>：serializer其实就是Ember Data和持久层中间的一个数据转换器。</p>
+<p>下面以一个例子来介绍下Ember Data的工作流程：</p>
+<p>比如我们想查找一条数据记录，Ember Data提供了<code>findRecord</code>方法，这个方法希望你提供一个model名称和数据记录的id号。</p>
+<p>store将会检查这条数据是否已经存在于store中，如果数据存在则继续检查<code>shouldReloadRecord</code>属性（默认是false），如果这个值为false，则直接返回缓存的数据，否则即使数据在缓存中，也会向持久层发送一个请求。</p>
+<p>当store向持久层发送请求时，首先会找到对应的adapter(如果有的话)，其内置的<code>buildURL</code>将提供针对不同的情况如何构建这个请求的url，最后才通过AJAX请求将这个构建好的url发送出去。</p>
+<p>当请求获取到响应数据时，serializer将会调用<code>mormalize</code>方法来转换原始数据，并将格式转换好的数据存储到Ember Data中，同时也存储在store里面。</p>
+<p><img src="/images/ember-data-flow.png" alt=""></p>
+<p><img src="/images/finding-unloaded-record-step1-diagram.png" alt=""></p>
+<p><img src="/images/finding-unloaded-record-step2-diagram.png" alt=""></p>
+<p><img src="/images/finding-loaded-record-diagram.png" alt=""></p>
+<h4 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h4><p>Models就是应用展现给用户的数据对象，它的数据有时也需要保存到持久层。当从store获取到数据并加载到model对象里面时，components就会自动将数据更新到UI界面上。在Ember Data中，每个自定义的model对象都继承于<code>Model</code>，里面包含了所有的属性、model之间的关联关系以及展现给用户的一些数据行为处理。如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DS.Model.extend(&#123;</div><div class="line">  <span class="attr">firstName</span>: DS.attr(<span class="string">'string'</span>),</div><div class="line">  <span class="attr">birthday</span>:  DS.attr(<span class="string">'date'</span>),</div><div class="line">  <span class="attr">lineItems</span>: DS.hasMany(<span class="string">'line-item'</span>),</div><div class="line">  <span class="attr">order</span>: DS.belongsTo(<span class="string">'order'</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="Records"><a href="#Records" class="headerlink" title="Records"></a>Records</h4><p>一个record就是一个包含数据的model实例，在应用中也可以创建新的record并保存到服务端。一个record通常是根据它的model类型和ID来查找，比如有一个<code>Person</code> model，查找id为1的person数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.store.findRecord(<span class="string">'person'</span>, <span class="number">1</span>); <span class="comment">// =&gt; &#123; id: 1, name: 'steve-buscemi'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Ember Data的工作流程和原理
+    
+    </summary>
+    
+      <category term="mvc" scheme="http://ilucas.me/categories/mvc/"/>
+    
+    
+      <category term="Ember" scheme="http://ilucas.me/tags/Ember/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ember 2.0中的五个重要思想</title>
+    <link href="http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/"/>
+    <id>http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/</id>
+    <published>2016-02-18T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>从Ember 2.x开始，它的模型在概念上比以前清晰明了的多，你不用再纠结于<code>template</code>，<code>route</code>，<code>view</code>，<code>controller</code>，<code>model</code>和<code>component</code>等概念。<a id="more"></a></p>
+<h4 id="新版本的框架"><a href="#新版本的框架" class="headerlink" title="新版本的框架"></a>新版本的框架</h4><p>在Ember 2.x的版本中我们需要注意其中的五个概念：<code>object model</code>，<code>routing</code>，<code>models</code>，<code>services</code>和<code>components</code>。<br><img src="/images/ember-new-framework.png" alt=""></p>
+<p>Ember的<code>routing</code>层会根据URL来指定一个<code>model</code>来处理对应的<code>component</code>用于展示和交互，其中也许会用到<code>service</code>来获取<code>models</code>。<br>如下是一个详细的示例图：<br><img src="/images/ember-simplified.png" alt=""></p>
+<p>处理流程如下：</p>
+<ul>
+<li><code>Router</code>解析URL<code>/items/2</code>，并且委派给对应的route：<code>ItemRoute</code>来处理，同时携带参数：<code>item_id=2</code></li>
+<li><code>ItemRoute</code>调用它的<code>model()</code>方法，这个方法会通过service来获取数据并返回一个model对象</li>
+<li>renderComponent()方法会渲染对应的一个component：<code>ItemDisplayComponent</code></li>
+<li><code>ItemDisplayComponent</code>主要用来处理渲染页面，用户交互等逻辑处理</li>
+</ul>
+<p>这就是Ember新版本的一个基本处理流程。下面我们探讨下它的五个基本概念。</p>
+<h4 id="Object对象"><a href="#Object对象" class="headerlink" title="Object对象"></a>Object对象</h4><p>Javascript的原生object对象缺乏observe的功能，Ember引入了<code>Ember.Object</code>，它在原生object对象的基础上增加了observers，计算属性，继承，mixins和其他有用的功能。<br>这也是为什么我们需要使用<code>object.set(&#39;id&#39;, &quot;value&quot;)</code>而不是<code>object.id = &quot;value&quot;</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fullName: Ember.computed(<span class="string">'firstName'</span>, <span class="string">'lastName'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'firstName'</span>) + <span class="string">" "</span> + <span class="keyword">this</span>.get(<span class="string">'lastName'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">fullNameDidChange: Ember.observer(<span class="string">'fullName'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.send(<span class="string">'fullNameChanged'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>自动监控对象的改变并更新对应的展现给我们的应用带来了极大的便利。Ember中的大多数对象，包括routes，Ember data models，services和components都继承了<code>Ember.Object</code>。</p>
+<h4 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h4><p>Ember是基于URL驱动的框架，如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app/router.js</span></div><div class="line">...</div><div class="line">this.route(<span class="string">'item'</span>, &#123; <span class="attr">path</span>: <span class="string">'/items/:item_id'</span> &#125;);</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>需要注意的是，在Ember中，规范比配置更重要。当我们无论何时指定一个<code>item</code> route时，Ember就会默认指向<code>ItemRoute</code>这个类，且它的路径为<code>app/routes/item.js</code>，如果没有找到这个类，它就会自动给我们创建一个。<br><code>ItemRoute</code>会调用<code>model()</code>方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app/routes/item.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line">  model(params) &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">id</span>: params.item_id,</div><div class="line">      <span class="attr">text</span>: <span class="string">"This is item "</span> + params.item_id</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>一旦<code>model()</code>有返回后，我们的<code>renderComponent()</code>就会用这个model数据来调用<code>ItemDisplayComponent</code>。<br>routes不仅仅是把数据传下去，同时它也接受actions，actions来自于components或其他的routes，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line">  <span class="attr">actions</span>: &#123;</div><div class="line">    remove(item) &#123;</div><div class="line">      item.remove().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">this</span>.transitionTo(<span class="string">'index'</span>);</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>我们更新下流程图来反应<code>remove</code> action：<br><img src="/images/ember-simplified2.png" alt=""></p>
+<p>这个图也反应了Ember的<code>data down, actions up</code>设计思想。</p>
+<h4 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h4><p>上面model中只返回了原始的javascrip对象数据，实际上它还可以用来处理更复杂的情形。</p>
+<p>model可以通过<code>$.getJSON()</code>来获取数据。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line">  model() &#123;</div><div class="line">    <span class="keyword">return</span> $.getJSON(<span class="string">'/items.json'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这是一个异步的请求，并且返回<code>Promise</code>对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line">  model(params) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.store.findRecord(<span class="string">'item'</span>, params.item_id);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>上面的请求会返回一个<code>DS.Model</code>实例，所有的Ember Data models都继承于它。</p>
+<h4 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h4><p>上面我们调用了<code>this.store</code>，但route是如何获取<code>store</code>的呢？实际上Ember是通过它的Injection API将它的store service注入到应用中的所有routes中。<br>我们也可以创建自己的service，然后通过注入的方式来调用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line">  <span class="attr">crypto</span>: Ember.inject.service()</div><div class="line">  ...</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>Ember会自动的查找<code>app/services/crypto.js</code>文件，并且可以通过<code>this.get(&#39;crypto&#39;)</code>来使用这个service。</p>
+<h4 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h4><p>Components分为两部分：模版和逻辑处理文件。当前是通过如<code>NaN</code>方式来加载component，后面我们会使用<code>&lt;my-component&gt;</code>方式来加载。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app/components/item-display.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Component.extend(&#123;</div><div class="line">  <span class="attr">isModelTwo</span>: Ember.computed(<span class="string">'model.id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'model.id'</span>) == <span class="number">2</span>;</div><div class="line">  &#125;)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>模版：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;!-- app/templates/components/item-display.hbs  --&#125;&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; model.text &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"></div><div class="line">&#123;&#123;#if isModelTwo&#125;&#125;</div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>OMG MODEL TWO!<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">&#123;&#123;/if&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>Components中可以嵌套包含其他的components：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;i18n-display text=model.text&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"></div><div class="line">&#123;&#123;#if isModelTwo&#125;&#125;</div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>OMG MODEL TWO!<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">&#123;&#123;/if&#125;&#125;</div><div class="line"></div><div class="line">&#123;&#123;ad-items language="en" seed=model&#125;&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Ember2.0的五个重要思想
+    
+    </summary>
+    
+      <category term="mvc" scheme="http://ilucas.me/categories/mvc/"/>
+    
+    
+      <category term="Ember" scheme="http://ilucas.me/tags/Ember/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ember2.0是否还应该使用controller</title>
+    <link href="http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/"/>
+    <id>http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/</id>
+    <published>2016-02-17T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Ember 2.x以后Controllers将会被components和services取代。尽管如此，在此前的版本中controller仍然是Ember的一个核心概念。<a id="more"></a></p>
+<h4 id="controller是什么"><a href="#controller是什么" class="headerlink" title="controller是什么"></a>controller是什么</h4><p>controller是一个充满业务逻辑的用来装饰<code>model</code>的一个对象，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Controller.extend(&#123;</div><div class="line">  emphasizeName() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">`HEY <span class="subst">$&#123;<span class="keyword">this</span>.get(<span class="string">'model.firstName'</span>)&#125;</span> !!!`</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">isVisible</span>: Ember.computed.and(<span class="string">'model.firstName'</span>, <span class="string">'model.lastName'</span>)  </div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>你不用将<code>emphasizeName</code>放在<code>model</code>中，因为它是需要一定的逻辑处理。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#if isVisible&#125;&#125;</div><div class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; emphasizeName &#125;&#125; Kill the controller!<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">&#123;&#123;/if&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>我们应用中的每个template都对应有一个controller，模版中用到的property也都存在于它的controller中。<br>值得注意的是：如果controller是用来处理业务逻辑的，那么也许你会认为处理events和DOM交互的逻辑也是在controller中来处理，这是不正确的。在此之前，<code>View</code>是用来干这个事情的，但从Ember 2.0后，<code>View</code>也被<code>conponent</code>取代了。<code>ArrayController</code>和<code>ObjectController</code>曾经被我们用来作为model的代理，如<code>controller.firstName</code>会对应到<code>model.firstName</code>，但在2.0后就不会了，我们必须明确的指定<code>model.firstName</code>。<br>让我们看看之前版本的框架图：<br><img src="/images/ember-before.png" alt=""></p>
+<p><code>route</code>加载model并且同时默认调用<code>setupController</code>方法，默认处理如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Route.extend(&#123;</div><div class="line"></div><div class="line">  model() &#123;</div><div class="line">    <span class="comment">// returns a model</span></div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  setupController(controller, model) &#123;</div><div class="line">    controller.set(<span class="string">'model'</span>, model);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>controllers不仅仅用来维护模版的状态，同时他们也是单例模式，这在多个请求会话中同步状态很有用。<br>已经过时的<code>needs</code>允许我们加载其他的controller并且获取它们的属性，比如：<code>this.get(&#39;controllers.position.progress&#39;)</code><br>现在我们使用单例的<code>Services</code>来处理长连接会话，通过<code>Ember.inject.service()</code>这种方式来处理。</p>
+<h4 id="什么是component"><a href="#什么是component" class="headerlink" title="什么是component"></a>什么是component</h4><p>实际上controller很像component，在某种程度上，设计人员是按照component来组织页面的。因此，在Ember中component就是一个独立功能的template。<br><img src="/images/ember-component-service.png" alt=""></p>
+<h4 id="我们还需要使用controller吗"><a href="#我们还需要使用controller吗" class="headerlink" title="我们还需要使用controller吗"></a>我们还需要使用controller吗</h4><p>在Ember的最新官方文档中指出，controller将会完全被component所取代。<br>因此，为了以后Ember的升级，我们应该尽量减少controller的使用，现在是基于如下两点因素还在使用：</p>
+<ul>
+<li>支持query参数</li>
+<li>作为route和template/component的中间连接件</li>
+</ul>
+<p>在Ember 2.x中，component将会实现route的功能，新的框架图如下：<br> <img src="/images/ember-after.png" alt=""></p>
+<h4 id="如何转变"><a href="#如何转变" class="headerlink" title="如何转变"></a>如何转变</h4><p>对大多数的迁移，我们仅仅将<code>export default Ember.Controller.extend(...)</code>改成<code>export default Ember.Component.extend(...)</code>即可，下面给出一个例子：<br>之前：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">App.AlbumController = Ember.ObjectController.extend(&#123;</div><div class="line"></div><div class="line">  <span class="attr">needs</span>: [<span class="string">'audio'</span>],</div><div class="line"></div><div class="line">  <span class="attr">equalizer</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> genre = <span class="keyword">this</span>.get(<span class="string">'genre'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'controllers.audio'</span>).equalizerFor(genre);</div><div class="line">  &#125;.observes(<span class="string">'knob'</span>),</div><div class="line"></div><div class="line">  <span class="comment">// ...</span></div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>之后：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;!-- app/template/album.hbs --&#125;&#125;</div><div class="line"></div><div class="line">&#123;&#123; album-knobs model=model &#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>和js文件：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app/components/album-knobs.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Component.extend(&#123;</div><div class="line"></div><div class="line">  <span class="attr">audio</span>: Ember.inject.service(),</div><div class="line"></div><div class="line">  equalizer() &#123;</div><div class="line">    <span class="keyword">const</span> genre = <span class="keyword">this</span>.get(<span class="string">'model.genre'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'audio'</span>).equalizerFor(genre);</div><div class="line">  &#125;.observes(<span class="string">'knob'</span>)</div><div class="line"></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// app/services/audio.js</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Service.extend(&#123;</div><div class="line">  equalizerFor(genre) &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      Ember2.0是否还应该使用controller
+    
+    </summary>
+    
+      <category term="mvc" scheme="http://ilucas.me/categories/mvc/"/>
+    
+    
+      <category term="Ember" scheme="http://ilucas.me/tags/Ember/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用CSS3中的伪类实现自定义有序列表样式</title>
+    <link href="http://ilucas.me/2016/01/28/customize-ordered-lists-pseudo-element/"/>
+    <id>http://ilucas.me/2016/01/28/customize-ordered-lists-pseudo-element/</id>
+    <published>2016-01-28T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>当我们用<code>ol</code>标签写一组列表时，浏览器会自动给我们在每个列表前生成一个递增的数字，但往往这个数字的样式不是我们所想要的，下面介绍一种可以用css3的<code>::before</code>属性来自定义列表前缀及样式。<a id="more"></a><br>首先我们可以看下浏览器给我们生成的有序列表默认样式：<br><img src="/images/ol_default.jpg" alt=""></p>
+<p>具体代码实现如下：<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/oeh4bL0g/embedded/result,html,css/light" frameborder="0" allowfullscreen></iframe></p>
+<p>在css中为<code>counter-increment</code>属性自定义一个值，可以任意命名，同时给<code>::before</code>伪类中的<code>counter</code>赋以相同的名称，在这个伪类定义中还可以任意添加其他css样式。<br>当前例子中只是简单的给我们产生了列表编号，如果我们想要实现如<code>2.</code>这种样式的话，我们可以这样写：<code>counter(step-counter) &quot;.&quot;;</code>，里面可以写你所想要的任何内容。<br>用这种伪类实现的方式可以减少我们模版中的DOM节点，让css来为我们实现想要的样式，同时也能保证代码的简洁性。<br>最后提一点，<code>::before</code> 和 <code>counter-increment</code>在各个浏览器中支持都比较好，详见<a href="http://caniuse.com/#search=%3A%3Abefore" target="_blank" rel="external">::before</a> 和 <a href="http://caniuse.com/#search=counter-increment" target="_blank" rel="external">counter-increment</a>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      用css3中before伪类元素实现自定义有序列表样式
+    
+    </summary>
+    
+      <category term="css" scheme="http://ilucas.me/categories/css/"/>
+    
+    
+      <category term="css3" scheme="http://ilucas.me/tags/css3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SVG的用法</title>
+    <link href="http://ilucas.me/2016/01/20/using-svg/"/>
+    <id>http://ilucas.me/2016/01/20/using-svg/</id>
+    <published>2016-01-20T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>SVG是一种矢量图格式。SVG是Scalable Vector Graphics三个单词的首字母缩写。Adobe Illustrator是专门编辑、制作矢量图的软件工具。SVG是Adobe Illustrator的主要制作目标。你可以在轻松的网页上使用漂亮的SVG图，但SVG有很多的用法你可能还不知道。<a id="more"></a></p>
+<h4 id="SVG的优势"><a href="#SVG的优势" class="headerlink" title="SVG的优势"></a>SVG的优势</h4><ul>
+<li>文件体积小，能够被大量的压缩</li>
+<li>图片可无限放大而不失真(矢量图的基本特征)</li>
+<li>在retina屏幕上显示效果极佳</li>
+<li>能够实现互动和滤镜效果</li>
+</ul>
+<h4 id="SVG的制作方法"><a href="#SVG的制作方法" class="headerlink" title="SVG的制作方法"></a>SVG的制作方法</h4><p>用Adobe Illustrator设计制作。下面是一张新西兰鹬鸵鸟的图片。<br><img src="/images/kiwi.png" alt=""><br>Adobe Illustrator能直接把文件保存成SVG格式。<br><img src="/images/save-as-svg.png" alt=""></p>
+<h4 id="SVG图片的用法"><a href="#SVG图片的用法" class="headerlink" title="SVG图片的用法"></a>SVG图片的用法</h4><p>如果你把SVG保存成文件，你可以直接把它放到<img>标记里。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"kiwi.svg"</span> <span class="attr">alt</span>=<span class="string">"新西兰鹬鸵鸟"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>当然，你可以像PNG和JPG图片那样通过<code>width</code>和<code>height</code>改变它的大小。这种用法除了在IE8及以下和Android2.3及以下都是ok的。<br>如果你想要在所有浏览器中都支持SVG图片，你可以用Modernizr测试浏览器的支持情况，必要时以普通图片代替：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!Modernizr.svg) &#123;</div><div class="line">  $(<span class="string">".logo img"</span>).attr(<span class="string">"src"</span>, <span class="string">"images/logo.png"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.svg"</span> <span class="attr">onerror</span>=<span class="string">"this.onerror=null; this.src='image.png'"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="SVG背景图的用法"><a href="#SVG背景图的用法" class="headerlink" title="SVG背景图的用法"></a>SVG背景图的用法</h4><p>跟SVG图片用法相似，你也可以在背景图(<code>background-image</code>)中使用SVG。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span></div><div class="line">  新西兰鹬鸵鸟</div><div class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">  <span class="attribute">text-indent</span>: -<span class="number">9999px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">82px</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(kiwi.svg);</div><div class="line">  <span class="attribute">background-size</span>: <span class="number">100px</span> <span class="number">82px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>background-size</code>的长宽比例要和原图一致。但你可以使用<code>background-size</code>的常量值contain或cover来达到不同的效果。<br>同样，这中用法除了在IE8及以下和Android2.3及以下都是ok的。<br>Modernizr在这里也能起到作用，而且更高效。如果浏览器不支持SVG背景图时，SVG文件将不会被加载，因为Modernizr在检测到不支持SVG时，在HTML上加了”no-svg”CSS类，于是我们可以这样利用它：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.main-header</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(logo.svg) no-repeat top left;</div><div class="line">  <span class="attribute">background-size</span>: contain;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.main-header</span> &#123;</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(logo.png);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外一个更巧妙的方法是使用多背景图技术。因为各浏览器对SVG和对多背景图技术的支持情况很相似，如果支持多背景图，也会支持SVG，所以，我们的CSS声明可以这样写：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(fallback.png);</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(image.svg), none;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="“inline”-SVG的用法"><a href="#“inline”-SVG的用法" class="headerlink" title="“inline” SVG的用法"></a>“inline” SVG的用法</h4><p>你实际上可以把SVG代码从SVG文件里拷贝出来，直接粘贴掉HTML里使用，它们跟你直接使用普通图片的效果一样。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="comment">&lt;!-- paste in SVG code, image shows up!  --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这样做的好处是图片数据就在HTML页面里，不需要浏览器单独执行一次请求下载它。换句话说，它跟使用Data URI的优势一样。但不好的地方也是一样。比如“臃肿”的页面代码，缓存问题等。<br>你应该不会吃惊：用Adobe Illustrator保存的SVG文件并不是优化过的。里面有DOCTYPE、生成工具署名等无用的信息。SVG文件本身很小，但谁会嫌弃更小？Peter Collingridge有一个在线的<a href="http://petercollingridge.appspot.com/svg_optimiser" target="_blank" rel="external">SVG优化</a>工具。传上去大的，下载出小的。<br>你有没有感觉SVG代码跟HTML代码很相似？这是因为它们本质上都是XML。在我们的这个SVG文件中有两个元素，一个<code>&lt;ellipse&gt;</code> 和一个<code>&lt;path&gt;</code>。我们可以直接在SVG代码添加CSS类信息，就像跟编写HTML代码一样。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">ellipse</span> <span class="attr">class</span>=<span class="string">"ground"</span> <span class="attr">...</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">class</span>=<span class="string">"kiwi"</span> <span class="attr">...</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>现在，页面中的CSS样式对SVG里的元素同样有效。你不需要在SVG代码直接嵌入CSS代码，放在页面任何一个地方都可以，甚至可以放到单独的CSS文件里，使用<code>&lt;link&gt;</code>标记加载到页面上。你甚至可以对SVG元素使用:hover语法。但请注意，有个别的CSS属性对SVG是不起作用的。例如，<code>background-color</code>对SVG就是无效的，因为SVG里使用<code>fill</code>属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.kiwi</span> &#123;</div><div class="line">  <span class="attribute">fill</span>: <span class="number">#94d31b</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-class">.kiwi</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">fill</span>: <span class="number">#ace63c</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更绝妙的是，SVG里可以实现所有的滤镜效果。例如模糊处理。我们来试一下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">filter</span> <span class="attr">id</span>=<span class="string">"pictureFilter"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">feGaussianBlur</span> <span class="attr">stdDeviation</span>=<span class="string">"5"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>现在你可以对它运用任何的CSS样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ground</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">filter</span>: <span class="built_in">url</span>(#pictureFilter);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但基本来说和SVG图片一样。除了在IE8及以下和Android2.3及以下都是ok的。<br>一种对不支持inline SVG的浏览器的补救方法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fallback"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>仍然使用Modernizr：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.fallback</span> &#123; </div><div class="line">  <span class="attribute">display</span>: none;</div><div class="line">  <span class="comment">/* 确保尺寸是一样大小 */</span></div><div class="line">&#125;</div><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.fallback</span> &#123; </div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(logo.png); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="SVG对象-object-的用法"><a href="#SVG对象-object-的用法" class="headerlink" title="SVG对象(object)的用法"></a>SVG对象(object)的用法</h4><p>如果”inline” SVG不合你的胃口(它有自己的弊端，如缓存问题)，你可以使用HTML的<code>&lt;object&gt;</code>标记引用它，这样仍能在浏览器不支持的情况下用CSS进行弥补。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"kiwi.svg"</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span></div><div class="line">  新西兰鹬鸵鸟 <span class="comment">&lt;!-- 图片备份支持 --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>使用Modernizr检测浏览器的支持情况，用CSS进行挽救：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">164px</span>;</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(kiwi.png);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法能够很好的利用浏览器的缓存。但是，如果你想让CSS样式也起作用，你不能把这些样式放在外部的CSS样式文件里或防止在页面中的<code>&lt;style&gt;</code>标记内，你需要把<code>&lt;style&gt;</code>信息放在SVG文件内部。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">    <span class="comment">/* 把你的CSS放到SVG文件内部 */</span></div><div class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">  ...</div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="SVG-Data-URI的用法"><a href="#SVG-Data-URI的用法" class="headerlink" title="SVG Data URI的用法"></a>SVG Data URI的用法</h4><p>html的用法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/svg+xml;base64,[data]&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>css的用法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(data:image/svg+xml;base64,[data]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>object的用法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"data:image/svg+xml;base64,[data]&gt;</span></span></div><div class="line">  fallback</div><div class="line">&lt;/object&gt;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      全面解析SVG的各种用法
+    
+    </summary>
+    
+      <category term="css" scheme="http://ilucas.me/categories/css/"/>
+    
+    
+      <category term="SVG" scheme="http://ilucas.me/tags/SVG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>背景图案占满整个屏幕的完美解决方案</title>
+    <link href="http://ilucas.me/2016/01/07/perfect-full-page-background-image/"/>
+    <id>http://ilucas.me/2016/01/07/perfect-full-page-background-image/</id>
+    <published>2016-01-07T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章主要是讨论一种让背景图案始终布满整个浏览器的解决方案。主要有以下几点内容：<a id="more"></a></p>
+<ul>
+<li>让图片占满整个页面</li>
+<li>图片可以根据实际情况自动缩放</li>
+<li>保持图片原有的宽高比例</li>
+<li>避免呈现滚动条</li>
+<li>尽可能的实现浏览器兼容</li>
+<li>实现类似Flash般的效果</li>
+</ul>
+<p><img src="/images/fullpagebackground.jpg" alt=""></p>
+<h4 id="简单有效的CSS3实现方式"><a href="#简单有效的CSS3实现方式" class="headerlink" title="简单有效的CSS3实现方式"></a>简单有效的CSS3实现方式</h4><p>我们可以用css3的<code>background-size</code>属性来实现，但我们更倾向于将这个属性应用在<code>html</code>而不是<code>body</code>标签上，因为<code>html</code>的高度至少是和浏览器的高度一致。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">html</span> &#123; </div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(images/bg.jpg) no-repeat center center fixed; </div><div class="line">  <span class="attribute">-webkit-background-size</span>: cover;</div><div class="line">  <span class="attribute">-moz-background-size</span>: cover;</div><div class="line">  <span class="attribute">-o-background-size</span>: cover;</div><div class="line">  <span class="attribute">background-size</span>: cover;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种实现可以在如下浏览器中有效：</p>
+<ul>
+<li>Safari 3+</li>
+<li>Chrome Whatever+</li>
+<li>IE 9+</li>
+<li>Opera 10+(Opera 9.5支持<code>background-size</code>属性，但不支持<code>cover</code>值)</li>
+<li>Firefox 3.6+</li>
+</ul>
+<p>如果我们想让IE低版本也实现这种效果的话，可以采用如下写法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');</div><div class="line">-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";</div></pre></td></tr></table></figure></p>
+<h4 id="只用css的方式之一"><a href="#只用css的方式之一" class="headerlink" title="只用css的方式之一"></a>只用css的方式之一</h4><p>此外，我们可以用<code>&lt;img&gt;</code>标签来实现。我们设置<code>min-height</code>来保持垂直方向上始终占满浏览器，在水平方向上设置<code>width</code>为100%，同时我们设置<code>min-width</code>来保证浏览器缩小到一定程度时，图片不会再缩小。当浏览器缩小到比图片还小时，我们可以设置<code>left</code>和<code>margin-left</code>来让图片居中显示。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">img</span><span class="selector-class">.bg</span> &#123;</div><div class="line">  <span class="comment">/* Set rules to fill background */</span></div><div class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">min-width</span>: <span class="number">1024px</span>;</div><div class="line"></div><div class="line">  <span class="comment">/* Set up proportionate scaling   */</span></div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">height</span>: auto;</div><div class="line"></div><div class="line">  <span class="comment">/* Set up positioning */</span></div><div class="line">  <span class="attribute">positioningon</span>: fixed;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@<span class="keyword">media</span> screen and (max-width: <span class="number">1024px</span>) &#123; <span class="comment">/* Specific to this particular</span></div><div class="line">image */</div><div class="line">  <span class="selector-tag">img</span><span class="selector-class">.bg</span> &#123;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin-left</span>: -<span class="number">512px</span>;   <span class="comment">/* 50% */</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="只用css的方式之二"><a href="#只用css的方式之二" class="headerlink" title="只用css的方式之二"></a>只用css的方式之二</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/bg.jpg"</span> <span class="attr">id</span>=<span class="string">"bg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#bg</span> &#123;</div><div class="line">  <span class="attribute">position</span>: fixed; </div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>; </div><div class="line"></div><div class="line">  <span class="comment">/* Preserve aspet ratio */</span></div><div class="line">  <span class="attribute">min-width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是，这种方式并不能保证图片居中，所以我们可以在它的外面包裹一个div。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"bg"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/bg.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#bg</span> &#123;</div><div class="line">  <span class="attribute">position</span>: fixed; </div><div class="line">  <span class="attribute">top</span>: -<span class="number">50%</span>; </div><div class="line">  <span class="attribute">left</span>: -<span class="number">50%</span>; </div><div class="line">  <span class="attribute">width</span>: <span class="number">200%</span>; </div><div class="line">  <span class="attribute">height</span>: <span class="number">200%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#bg</span> <span class="selector-tag">img</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute; </div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>; </div><div class="line">  <span class="attribute">margin</span>: auto; </div><div class="line">  <span class="attribute">min-width</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">50%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="jQuery方式"><a href="#jQuery方式" class="headerlink" title="jQuery方式"></a>jQuery方式</h4><p>通过jQuery来获取图片的高宽比和浏览器的高宽比，从而设置图片相应的宽和高：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/bg.jpg"</span> <span class="attr">id</span>=<span class="string">"bg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#bg</span> &#123; <span class="attribute">position</span>: fixed; <span class="attribute">top</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; &#125;</div><div class="line"><span class="selector-class">.bgwidth</span> &#123; <span class="attribute">width</span>: <span class="number">100%</span>; &#125;</div><div class="line"><span class="selector-class">.bgheight</span> &#123; <span class="attribute">height</span>: <span class="number">100%</span>; &#125;</div></pre></td></tr></table></figure></p>
+<p>js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).load(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> theWindow = $(<span class="built_in">window</span>),</div><div class="line">      $bg = $(<span class="string">"#bg"</span>),</div><div class="line">      aspectRatio = $bg.width() / $bg.heightht();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resizeBg</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> ( (theWindow.width(<span class="keyword">var</span>) / theWindow.height()) &lt; aspectRatio ) &#123;</div><div class="line">        $bg</div><div class="line">          .removeClass()</div><div class="line">          .addClass(<span class="string">'bgheight'</span>);</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        $bg</div><div class="line">          .removeClass()</div><div class="line">          .addClass(<span class="string">'bgwidth'</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    theWindow.resize(resizeBg).trigger(<span class="string">"resize"</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      背景图片始终占满整个屏幕的解决办法
+    
+    </summary>
+    
+      <category term="css" scheme="http://ilucas.me/categories/css/"/>
+    
+    
+      <category term="image" scheme="http://ilucas.me/tags/image/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RESTful API</title>
+    <link href="http://ilucas.me/2015/12/29/restful-api-guidence/"/>
+    <id>http://ilucas.me/2015/12/29/restful-api-guidence/</id>
+    <published>2015-12-29T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>RESTful架构是一种流行的互联网软件架构，它结构清晰，符合标准，易于理解，扩展方便。<a id="more"></a><br>REST是Representational State Transfer的缩写，翻译为“表现层状态转化”。表现层其实就是资源，因此可以理解为“资源状态转化”。<br>网络应用上的任何实体都可以看作是一种资源，通过一个URI(统一资源定位符)指向它。  </p>
+<p><strong>表现层（Representation）</strong><br>“资源”是一种信息实体，它可以有多种外在表现形式。我们把“资源”具体呈现出来的形式叫做它的“表现层”。<br>例如，文本可以是txt格式表现，也可以用HTML格式，XML格式，JSON格式表现；图片可以是JPG格式也可以是PNG格式表现等。<br>URI之代表资源实体，不代表它的形式。URI应该之代表“资源”的位置，而它具体的表现形式应该在HTTP请求的头信息中用Accept和Content-Type字段指定，这两个字段才是对“表现层”的描述。  </p>
+<p><strong>状态转化（State Transfer）</strong><br>访问一个WEB应用就代表了客户端与服务短的一个互动过程。HTTP协议是一个无状态协议。因此所有的状态都保存在服务端。如果客户端想要操作服务器，就必须通过某种手段让服务端发生“状态变化”（State<br>Transfer）。而这种状化是建立在表现层之上的，所以就是“表现层状态转化”。  </p>
+<h3 id="RESTful设计准则"><a href="#RESTful设计准则" class="headerlink" title="RESTful设计准则"></a>RESTful设计准则</h3><ul>
+<li>统一的接口</li>
+<li>无状态</li>
+<li>可缓存</li>
+<li>CS结构</li>
+<li>分层系统</li>
+<li>按需编码</li>
+</ul>
+<p><strong>统一的接口</strong><br>统一接口定义了客户端和服务端之间通信的接口，它简化和解耦了架构，使接口的每个部分都相对独立，统一接口的四个原则是：</p>
+<ul>
+<li>基于每个资源<br>每个资源都可以用一个URI来表示。资源与它们最终的展现形态在概念上是独立的，比如服务端不会返回一个数据库，而是返回HTML。XML和JSON代表了一些数据记录。</li>
+<li>通过表现层修改资源<br>每个客户端可以操作（修改或删除等）服务端的资源。</li>
+<li>资源的自我定义<br>每个资源保护足够的信息来描述自己。如MIME类型，响应内容明确表示它们是否可以被缓存。</li>
+<li>资源相关性<br>除了传统上请求包含header和response外，REST还意味着可以在响应中包含其他相关资源的api链接。</li>
+</ul>
+<p><strong>无状态</strong><br>无状态是REST的核心。URI只定义一个资源，其他的查询状态可以作为URI的参数来传递，在服务端处理完成后，需要把这些查询状态通过header等方式返回给客户端。<br>我们习惯用<code>session</code>来维持通信的一些状态。但在REST中，客户端必须给服务端足够的信息来处理这个请求，即使在多个请求时也有必要发送重复的状态信息。无状态特性让服务端维护更加容易，不需要去管session的一些状态。<br>那么状态和资源之间有什么区别呢？资源时恒定不变的，它储存在数据库中，不论谁来请求它，都返回相同的内容。状态是变化的，不同的请求带上不同的状态信息，就会得到不同的数据。  </p>
+<p><strong>是否缓存</strong><br>每个响应需要指出是否可以被缓存。  </p>
+<p><strong>CS结构</strong><br>统一的接口让客户端和服务端得以分开，客户端不用考虑数据的存储，服务端不用考虑客户端的状态，它们两者之间可以独立开发。  </p>
+<p><strong>分层系统</strong><br>客户端不知道它是否直接和终端连接，或者是和代理服务器连接。代理服务器可以通过负载均衡和缓存来提升系统的性能和可扩展性。  </p>
+<p><strong>按需编码（可选）</strong><br>服务端可以临时扩展或自定义一些功能，并向客户端发送一些可执行的内容。比如Java  applet或客户端的js脚本。<br>总之，除了按需编码外，缺少上面原则中的任何一个在严格意义上都不算是RESTful。  </p>
+<h3 id="RESTful最佳实践"><a href="#RESTful最佳实践" class="headerlink" title="RESTful最佳实践"></a>RESTful最佳实践</h3><h4 id="使用RESTful标准的URL和action"><a href="#使用RESTful标准的URL和action" class="headerlink" title="使用RESTful标准的URL和action"></a>使用RESTful标准的URL和action</h4><p>每个资源或资源集合都对应着一个URL，URL中应该使用名称来描述，对于操作资源的行为可以使用HTTP请求中的<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code> 来定义。如下：  </p>
+<ul>
+<li>GET /tickets    - 获取tickets列表</li>
+<li>GET /tickets/12   - 获取指定的ticket</li>
+<li>POST /tickets   - 创建一个新的ticket</li>
+<li>PUT /tickets/12   - 更新指定ticket</li>
+<li>PATCH /tickets/12  - 更新指定ticket部分信息</li>
+<li>DELETE /tickets/12  - 删除指定ticket</li>
+</ul>
+<p>在定义URL时，对于资源名称我们应该尽量统一使用复数格式。对于有关联性的资源，RESTful也提供了有用的设计原则，如：  </p>
+<ul>
+<li>GET /tickets/12/messages    - 获取指定ticket下的message列表</li>
+<li>GET /tickets/12/messages/5   - 获取指定的ticket下的指定message</li>
+<li>POST /tickets/12/messages   - 在指定的ticket下创建一个新的message</li>
+<li>PUT /tickets/12/messages/5   - 在指定的ticket下更新指定message</li>
+<li>PATCH /tickets/12/messages/5  - 在指定的ticket下更新指定message部分信息</li>
+<li>DELETE /tickets/12/messages/5  - 在指定的ticket下删除指定message</li>
+</ul>
+<p>当然如果资源的关联性没那么强，那么我们也可以将依赖的资源单独独立成一个api，此时我们再请求管理资源时就会多发一个api请求去获取相关资源。</p>
+<h4 id="始终使用SSL"><a href="#始终使用SSL" class="headerlink" title="始终使用SSL"></a>始终使用SSL</h4><p>你的应用可能会被在任何地方使用，如图书馆，咖啡厅，机场等，这些公共场合都是不安全的，网络通信有可能被劫持。使用SSL的另外一个好处就是你不需要用户的登录来验证它的合法性，而是通过证书来验证。</p>
+<h4 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h4><p>一个好的api文档要让用户能够快速的找到他所需要的信息，明白各个api的用途。文档应该给出详细的request/response例子。此外如果某些api有更新或不再使用，也需要在文档中给用户明确的提示。  </p>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h4><p>始终给你的api加上版本号。api的每次更新都应该加上版本号，这样如果我们某些时候需要老版本的api数据，我们就可以请求对应版本的api。版本号可以放在URL中或http的和header中，但通常为了直观明了，将版本号放在URL中。</p>
+<ul>
+<li><a href="https://example.org/api/v1/*" target="_blank" rel="external">https://example.org/api/v1/*</a></li>
+<li><a href="https://api.example.com/v1/*" target="_blank" rel="external">https://api.example.com/v1/*</a></li>
+</ul>
+<h4 id="对资源进行过滤"><a href="#对资源进行过滤" class="headerlink" title="对资源进行过滤"></a>对资源进行过滤</h4><p>对资源定义的URL应该尽量简洁，而对资源进行的搜索、过滤、排序等行为可以通过URL的参数来传递。如：</p>
+<ul>
+<li>GET /tickets?state=open  </li>
+<li>GET /tickets?sort=-priority</li>
+<li>GET /tickets?sort=-priority,created_at</li>
+<li>GET /tickets?state=closed&amp;sort=-updated_at</li>
+<li>GET /tickets?q=return&amp;state=open&amp;sort=-priority,created_at</li>
+</ul>
+<h4 id="指定API返回哪些字段"><a href="#指定API返回哪些字段" class="headerlink" title="指定API返回哪些字段"></a>指定API返回哪些字段</h4><p>通常用户只需要api返回中的部分数据，而不是整个资源，此时可以使用<code>fields</code>来限制返回的数据。如下： </p>
+<ul>
+<li>GET /tickets?fields=id,subject,customer_name,updated_at&amp;state=open&amp;sort=-updated_at</li>
+</ul>
+<p>api返回数据的精简同样可以减少网络的请求时间，提升用户的体验。</p>
+<h4 id="尽量使用JSON"><a href="#尽量使用JSON" class="headerlink" title="尽量使用JSON"></a>尽量使用JSON</h4><p>尽量都适用json来传递数据，如果有使用XML的特殊场景，那么你应该在你的api后面追加<code>.json</code>或<code>.xml</code>来描述该api返回什么格式的数据。</p>
+<h4 id="使用驼峰形式给字段命名"><a href="#使用驼峰形式给字段命名" class="headerlink" title="使用驼峰形式给字段命名"></a>使用驼峰形式给字段命名</h4><p>如果你使用JSON，那么就应该使用javascript的命名规范：使用驼峰形式给字段命名。如果你使用的其他语言，则最好遵循它们自己的规范:c#和java采用驼峰形式，python和rugy采用下划线形式。  </p>
+<h4 id="API返回数据的可读性"><a href="#API返回数据的可读性" class="headerlink" title="API返回数据的可读性"></a>API返回数据的可读性</h4><p>api返回的数据可以展开以可读的方式呈现给用户，也可以压缩成一行数据传递。压缩后的数据确实能带来更少的网络负载，但如果开启了gzip功能后，api的压缩和未压缩前并未带来明显的效果，而未压缩的api能够提升它的可读性，因此尽量避免对api返回的数据进行压缩。  </p>
+<h4 id="不要采用信封的方式来封装数据"><a href="#不要采用信封的方式来封装数据" class="headerlink" title="不要采用信封的方式来封装数据"></a>不要采用信封的方式来封装数据</h4><p>尽量不要采用如下的格式来封装数据：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"data"</span> : &#123;</div><div class="line">    <span class="attr">"id"</span> : <span class="number">123</span>,</div><div class="line">    <span class="attr">"name"</span> : <span class="string">"John"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除非在使用<code>jsonp</code>来处理跨域请求时（通常url中带有<code>callback</code>或<code>jsonp</code>），这时可以采用如下的格式来封装数据：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">callback_function(&#123;</div><div class="line">  status_code: 200,</div><div class="line">  next_page: "https://..",</div><div class="line">  response: &#123;</div><div class="line">    ... actual JSON response body ... </div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h4><p>请求api时返回错误信息有时是不可避免的，在返回的信息中我们应该尽量包含完整的说明，如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"code"</span> : <span class="number">1234</span>,</div><div class="line">  <span class="attr">"message"</span> : <span class="string">"Something bad happened :("</span>,</div><div class="line">  <span class="attr">"description"</span> :<span class="number">1234</span> <span class="string">"More details about the error here"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对应<code>PUT</code>，<code>PATCH</code>，<code>POST</code>我们还需要给出更详细的错误信息，如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"code"</span> : <span class="number">1024</span>,</div><div class="line">  <span class="attr">"message"</span> : <span class="string">"Validation Failed"</span>,</div><div class="line">          <span class="attr">"errors"</span> : [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"code"</span> : <span class="number">5432</span>,</div><div class="line">      <span class="attr">"field"</span> : <span class="string">"fieldsrst_name"</span>,</div><div class="line">      <span class="attr">"message"</span> : <span class="string">"First name cannot have fancy characters"</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">       <span class="attr">"code"</span> : <span class="number">5622</span>,</div><div class="line">       <span class="attr">"field"</span> : <span class="string">"password"</span>,</div><div class="line">       <span class="attr">"message"</span> : <span class="string">"Password cannot be blank"</span></div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h4><p>HTTP中定义了许多状态码，api返回的状态码应该遵循既有的原则，让用户能够一目了然的明白当前的请求状态。常用状态码如下：</p>
+<ul>
+<li>200 - OK</li>
+<li>304 - Not Modified</li>
+<li>400 -Not Bad Request</li>
+<li>401 - Unauthorized</li>
+<li>403 - Forbidden</li>
+<li>404 - Not Found</li>
+<li>500 - Internal server error</li>
+</ul>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ul>
+<li>API的身份认证应该使用OAuth2.0框架</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      RESTful api设计准则及最佳实践
+    
+    </summary>
+    
+      <category term="other" scheme="http://ilucas.me/categories/other/"/>
+    
+    
+      <category term="RESTful" scheme="http://ilucas.me/tags/RESTful/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你所不知道的git技巧</title>
+    <link href="http://ilucas.me/2015/12/17/git-tips/"/>
+    <id>http://ilucas.me/2015/12/17/git-tips/</id>
+    <published>2015-12-17T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Git是我们在项目开发中所使用的版本管理工具，一些常见的基本命令也许我们很熟悉了，下面介绍一些你所不常见但很有用的git使用技巧。<a id="more"></a></p>
+<h4 id="在log中显示branch和tag"><a href="#在log中显示branch和tag" class="headerlink" title="在log中显示branch和tag"></a>在log中显示branch和tag</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log --oneline --decorate</div></pre></td></tr></table></figure>
+<p><img src="/images/git_log_branch_tag.png" alt=""></p>
+<h4 id="推送分支并关联"><a href="#推送分支并关联" class="headerlink" title="推送分支并关联"></a>推送分支并关联</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p>推送本地分支到远端并自动建立关联，如果是用<code>git pull</code>远端的分支，在做了修改后可以直接使用<code>git push</code>命令推送，而不需要加其他参数。然而，<code>git push</code> 会把所有的分支都推送到远端，并且赋以相同的分支名称。为了只推送当前的分支，可以如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global push.default tracking</div></pre></td></tr></table></figure></p>
+<h4 id="track远程分支"><a href="#track远程分支" class="headerlink" title="track远程分支"></a>track远程分支</h4><p>如果你想在远端某个现有分支上进行修改并提交，可以如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -t origin/feature</div></pre></td></tr></table></figure></p>
+<p>这会在你的本地创建一个关联的feature分支，完成操作后可以直接<code>git push</code>到远端。</p>
+<h4 id="找出修改属于哪个分支"><a href="#找出修改属于哪个分支" class="headerlink" title="找出修改属于哪个分支"></a>找出修改属于哪个分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch --contains 50f3754</div></pre></td></tr></table></figure>
+<p>这会帮你找出所有包含这个commit的分支，如果加上<code>-a</code>标识，则还会在远端分支中查找。</p>
+<h4 id="找出满足正则匹配的最后一条commit"><a href="#找出满足正则匹配的最后一条commit" class="headerlink" title="找出满足正则匹配的最后一条commit"></a>找出满足正则匹配的最后一条commit</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git show :/fix</div><div class="line">git show :/^Merge</div></pre></td></tr></table></figure>
+<h4 id="stash-未提交的内容"><a href="#stash-未提交的内容" class="headerlink" title="stash 未提交的内容"></a>stash 未提交的内容</h4><p>如果我们正在开发一个新的feature，现在需要我们修改一个紧急的bug，我们不想提交未完成的新feature，也不想丢失我们已经完成的那部分工作，此时我们可以用<code>stash</code>命令来临时保存我们的修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash</div></pre></td></tr></table></figure></p>
+<p>此时会隐藏我们所做的修改，并且保持一个干净的工作环境，现在我们可以基于这个分支创建一个新的分支来修改bug，当我们完成bug修改后，我们可以在切换到之前的干净分支，并且：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash pop</div></pre></td></tr></table></figure></p>
+<p>可以把你之前的部分工作还原回来。如果你想把之前stash的内容删除掉，可以:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash drop</div></pre></td></tr></table></figure></p>
+<p>此外，查看所有stash列表和清除所有stash如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git stash list</div><div class="line">git stash clear</div></pre></td></tr></table></figure></p>
+<h4 id="查看不同版本间的文件差异"><a href="#查看不同版本间的文件差异" class="headerlink" title="查看不同版本间的文件差异"></a>查看不同版本间的文件差异</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git diff $start_commit..$end_commit -- path/to/file</div></pre></td></tr></table></figure>
+<p>或者直接比较两次提交纪录之间的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git diff $start_commit..$end_commit</div></pre></td></tr></table></figure></p>
+<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><p>如果你需要撤销未提交的修改内容，可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD</div></pre></td></tr></table></figure></p>
+<p>或者撤销某个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout HEAD -- path/to/file</div></pre></td></tr></table></figure></p>
+<p>如果已经提交了文件修改，仍然想revert的话，可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --soft HEAD~1</div></pre></td></tr></table></figure></p>
+<h4 id="推送远端前清理提交纪录"><a href="#推送远端前清理提交纪录" class="headerlink" title="推送远端前清理提交纪录"></a>推送远端前清理提交纪录</h4><p>在推送远端前，本地的分支中可能有许多冗余的提交纪录，此时可以合并或删除部分提交纪录信息，让整个commit更干净。<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git log:</div><div class="line">Commit A</div><div class="line">Commit B</div><div class="line">Commit C</div><div class="line">Commit D</div><div class="line">Commit 0</div></pre></td></tr></table></figure></p>
+<p>比如要合并A，B，C，D为一个commit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rebase -i Commit 0</div></pre></td></tr></table></figure></p>
+<p>在B C D前面设s，退出rebase，编辑commit，这时就成了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Commit X</div><div class="line">Commit 0</div></pre></td></tr></table></figure></p>
+<h4 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h4><p>当我们使用git pull/push 或git merge时，有时会产生一些冲突，可能有些部分文件需要我们手动来解决，还有些冲突文件我们可以确定要么是保留我们local版本的修改，要么是使用remote/other分支的修改。<br>如果我们对所有的冲突文件都保留local或remote分支的修改，那么我们可以：<code>cd project-folder</code>，然后搜索所有的冲突文件：<code>grep -lr &#39;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&#39; ./</code>。执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout --ours PATH/FILE</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout --theirs PATH/FILE</div></pre></td></tr></table></figure></p>
+<p>也可以用如下的流处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -lr &apos;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&apos; . | xargs git checkout --ours</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -lr &apos;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&apos; . | xargs git checkout --theirs</div></pre></td></tr></table></figure></p>
+<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><p>在本地添加已经存在的远端仓库，并推送代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/sdaityari/my_git_project.git</div><div class="line">git push -u origin master</div></pre></td></tr></table></figure></p>
+<h4 id="基于某个commit创建一个新的分支"><a href="#基于某个commit创建一个新的分支" class="headerlink" title="基于某个commit创建一个新的分支"></a>基于某个commit创建一个新的分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b old_commit_branch cafb55d</div></pre></td></tr></table></figure>
+<h4 id="更改当前分支名称"><a href="#更改当前分支名称" class="headerlink" title="更改当前分支名称"></a>更改当前分支名称</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -m renamed_branch</div></pre></td></tr></table></figure>
+<h4 id="利用git-hooks"><a href="#利用git-hooks" class="headerlink" title="利用git hooks"></a>利用git hooks</h4><p>在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。</p>
+<h4 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">本地新建并切换到该分支：git checkout -b xxx</div><div class="line">切换到某个分支：git checkout xxx</div><div class="line">撤销本地工作区的所有文件修改：git checkout .</div><div class="line">撤销本地工作区的某个文件修改：git checkout xxx</div><div class="line">撤销暂存区的所有文件修改到工作区：git reset HEAD .</div><div class="line">撤销暂存区中某个文件修改到工作区：git reset HEAD xxx</div><div class="line">撤销上次提交记录但保留修改到暂存区: git reset --soft HEAD~1</div><div class="line">撤销暂存区和工作区的所有文件修改：git reset --hard HEAD</div><div class="line">撤回到上次提交版本(产生一个新的commit): git revert HEAD~1</div><div class="line">查看本地所有分支：git branch</div><div class="line">查看所有分支（包括远程分支）： git branch -a</div><div class="line">删除本地某个分支：git branch -d xxx</div><div class="line">强制删除本地某个分支：git branch -D xxx</div><div class="line">修改本地分支名称：git branch -m old_branch_name new_branch_name  </div><div class="line">删除远程的xxx分支： git push origin :xxx</div><div class="line">推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch</div><div class="line">--track test origin/test)</div><div class="line">推送本地分支到远程并track：git push -u origin test</div><div class="line">获取远程某个分支（clone）：先在master分支上git pull， 然后git checkout -b acl-624/zoro origin/acl-624（如果本地分支名已经存在，就不需要－b参数）</div><div class="line">获取远程某个分支（track）：git checkout --track origin/int06</div><div class="line">合并xxx分支到当前分支：git merge xxx</div><div class="line">查看本地分支与远程分支的差异：git diff master origin/master</div><div class="line">查看工作区和暂存区的diff：git diff</div><div class="line">查看暂存区和历史记录区的diff：git diff —cached</div><div class="line">查看工作区和历史记录区的diff：git diff HEAD</div><div class="line">查看某个commit id的修改内容：git show 19311ff5720ff3660f875</div><div class="line">清除非git管理的文件：git clean -fd</div><div class="line">修改当前分支名称：git branch -m newname</div><div class="line">拉取远端某个分支合并到当前分支：git pull origin test    (git pull会拉取所有的远端分支并合并到本地)</div><div class="line">应用某个特定stash：git stash apply stash@&#123;xxx&#125;</div><div class="line">删除某个特定stash：git stash drop stash@&#123;xxx&#125;</div><div class="line">撤销暂存区新创建且尚未提交的文件到本地：git rm --cached mistake_file</div><div class="line">本地和暂存区同时删除：git rm xxx</div><div class="line">修改最近一次的提交comment: git commit --amend -m &quot;New Message&quot;</div><div class="line">查看仓库中某个文件每行的提交信息：git blame my_file</div><div class="line">查看最近2次的提交历史记录：git log -2</div><div class="line">查看file1文件file2文件的提交记录：git log file1 file2</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      你所不知道的git使用技巧
+    
+    </summary>
+    
+      <category term="other" scheme="http://ilucas.me/categories/other/"/>
+    
+    
+      <category term="Git" scheme="http://ilucas.me/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Web Animation API（五）</title>
+    <link href="http://ilucas.me/2015/11/27/animations-part-5/"/>
+    <id>http://ilucas.me/2015/11/27/animations-part-5/</id>
+    <published>2015-11-27T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最后我们来看看WAAPI中的路径问题。<a id="more"></a></p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/4c993Lzv/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>上面这个例子需要在最新的Chrome浏览器中查看，<code>motion-path</code>定义了动画元素运行的路径：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#motioner</span> &#123;</div><div class="line">  <span class="attribute">motion-path</span>: <span class="built_in">path</span>(<span class="string">"M200 200 S 200.5 200.1 348.7 184.4z"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>motion-offset</code>设置了元素运行的起点和终点，用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> m = <span class="built_in">document</span>.getElementById(<span class="string">'motioner'</span>);</div><div class="line">m.animate([</div><div class="line">  &#123; <span class="attr">motionOffset</span>: <span class="number">0</span> &#125;,</div><div class="line">  &#123; <span class="attr">motionOffset</span>: <span class="string">'100%'</span> &#125;</div><div class="line">], <span class="number">1000</span>);</div></pre></td></tr></table></figure></p>
+<p>css实现：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#motioner &#123;</div><div class="line">  animation: path-animation 1s;</div><div class="line">&#125;</div><div class="line">@keyframes path-animation &#123;</div><div class="line">  0% &#123; </div><div class="line">    motion-offset: 0;</div><div class="line">  &#125;</div><div class="line">  100% &#123; </div><div class="line">    motion-offset: '100%';</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/08qpcycp/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>最后一个属性是<code>motion-rotation</code>， 它定义了元素在运行轨迹上的旋转特性。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/18p3suje/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Web Animation API（四）</title>
+    <link href="http://ilucas.me/2015/11/26/animations-part-4/"/>
+    <id>http://ilucas.me/2015/11/26/animations-part-4/</id>
+    <published>2015-11-26T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们继续讨论WAAPI中的多个动画效果，在polyfill中提供了<code>group</code>和<code>sequence</code>两个功能。下面主要讨论这两个功能的实现。<a id="more"></a></p>
+<h4 id="KeyframeEffects"><a href="#KeyframeEffects" class="headerlink" title="KeyframeEffects"></a>KeyframeEffects</h4><p><code>KeyframeEffects</code>接受三个参数：实现动画的元素，一个数组格式的动画帧效果和时间相关参数。这些参数在我们之前使用<code>element.animate()</code>时已经见过了。我们新定义的这个<code>KeyframeEffects</code>并不好马上执行，只是创建一个引用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">  <span class="attr">fill</span>: <span class="string">'both'</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings);</div></pre></td></tr></table></figure></p>
+<h4 id="GroupEffects"><a href="#GroupEffects" class="headerlink" title="GroupEffects"></a>GroupEffects</h4><p>尽管在浏览器中没有得到支持，但在<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>中提供一个<code>group</code>的功能，能够同时播放多个动画。<code>GroupEffects</code>这个功能在新的版本中会实现，它可以让多个<code>KeyframeEffects</code>同步执行。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/1et0faek/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> elem2 = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate2'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> kEffects = [</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings),</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem2, keyframes, timings)</div><div class="line">];</div><div class="line"><span class="keyword">var</span> group = <span class="keyword">new</span> GroupEffect(kEffects);</div><div class="line"><span class="built_in">document</span>.timeline.play(group);</div></pre></td></tr></table></figure></p>
+<h4 id="SequenceEffects"><a href="#SequenceEffects" class="headerlink" title="SequenceEffects"></a>SequenceEffects</h4><p>和<code>GroupEffect</code>相似，<code>SequenceEffect</code>可以让动画顺序执行，当然你也可以同时应用这两个功能来实现很酷的动画效果。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/gs1tdz16/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Web Animation API（三）</title>
+    <link href="http://ilucas.me/2015/11/26/animations-part-3/"/>
+    <id>http://ilucas.me/2015/11/26/animations-part-3/</id>
+    <published>2015-11-26T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上篇文章中我们谈论了WAAPI的各种状态，下面我们看看如何操作多个动画。<a id="more"></a></p>
+<h4 id="同一个元素上多个动画效果"><a href="#同一个元素上多个动画效果" class="headerlink" title="同一个元素上多个动画效果"></a>同一个元素上多个动画效果</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/7yrLon6t/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>在上面的例子中，每个矩形方块都应用了三种动画效果，你可以在每个元素上多次调用<code>animate()</code>，这跟css中允许多个动画效果一样：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: pulse <span class="number">1s</span>, activate <span class="number">3000ms</span>, have-fun-with-it <span class="number">2.5s</span>;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> pulse &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> activate &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> have-fun-with-it &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
+<p>用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animated = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> pulseKeyframes, <span class="comment">//defined the keyframes here.</span></div><div class="line">    activateKeyframes,</div><div class="line">    haveFunKeyframes;</div><div class="line"><span class="keyword">var</span> pulse = animated.animate(pulseKeyframes, <span class="number">1000</span>); <span class="comment">//the second</span></div><div class="line">parameter <span class="keyword">as</span> a number is a valid shorthand <span class="keyword">for</span> duration</div><div class="line"><span class="keyword">var</span> activate = animated.animate(activateKeyframes, <span class="number">3000</span>);</div><div class="line"><span class="keyword">var</span> haveFunWithIt = animated.animate(haveFunKeyframes, <span class="number">2500</span>);</div></pre></td></tr></table></figure></p>
+<p>在上面的例子中，可以改变每一个动画对象的状态等。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Web Animation API（二）</title>
+    <link href="http://ilucas.me/2015/11/25/animations-part-2/"/>
+    <id>http://ilucas.me/2015/11/25/animations-part-2/</id>
+    <published>2015-11-25T15:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在上篇文章中我们已经知道如何创建一个基本的动画，下面我们将会探讨下这个api中的状态控制，回调和时间线<a id="more"></a></p>
+<h4 id="状态控制"><a href="#状态控制" class="headerlink" title="状态控制"></a>状态控制</h4><p>当你调用<code>element.animate()</code>时，就会返回一个<code>AnimationPlayer</code>的对象，并且开始执行动画。可以通过检测只读属性<code>playState</code>来查看当前的状态，总共有5个状态。我们也可以通过调用其他四个方法来修改当前的动画状态：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = element.animate(<span class="comment">/* ... */</span>);</div><div class="line"><span class="built_in">console</span>.log(player.playState); <span class="comment">//"running"</span></div><div class="line"></div><div class="line">player.pause(); <span class="comment">//"paused"</span></div><div class="line">player.play();  <span class="comment">//"running"</span></div><div class="line">player.cancel(); <span class="comment">//"idle"... jump to original state</span></div><div class="line">player.finish(); <span class="comment">//"finished"...jump to end state</span></div></pre></td></tr></table></figure></p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/s7dzb5c2/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>在上面的例子中，有一个<code>2x</code>的按钮，点击它就会改变当前的动画频率，这是通过读写<code>playbackRate</code>属性来实现的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = element.animate(<span class="comment">/* ... */</span>);</div><div class="line"><span class="built_in">console</span>.log(player.playbackRate); <span class="comment">//1</span></div><div class="line"></div><div class="line">player.playbackRate = <span class="number">2</span>; <span class="comment">//double speed, can also be decimal to slow it</span></div><div class="line">down.</div></pre></td></tr></table></figure></p>
+<p>在css中当动画结束时会触发一个事件，同样，在WAAPI中，当动画结束或直接调用<code>finish()</code>函数时也会有一个<code>onfinish</code>函数来进行处理。当然在一个无限循环的动画中没有结束事件，它的<code>playbackRate</code>也不可能为0。下面这个例子使用<code>onfinish</code>来展示动画结束时的状态：</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/t7vdxane/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>每个AnimationPlayer有两个关于时间的读写属性：<code>currentTime</code>和<code>startTime</code>，现在我们先看看第一个属性。<br><code>currentTime</code>返回当前动画运行的时间。最大值是：<code>delay + (duration * iterations)</code>， 无限循环的动画没有最大值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = element.animate([</div><div class="line">  &#123;<span class="attr">opacity</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">opacity</span>: <span class="number">0</span>&#125;</div><div class="line">], &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">  <span class="attr">delay</span>: <span class="number">500</span>,</div><div class="line">  <span class="attr">iterations</span>: <span class="number">3</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line">player.onfinish = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(player.currentTime); <span class="comment">// 3500</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>由于<code>currentTime</code>是可写的，因此我们可以通过指定某个点来查看动画效果，它也同样可以让我们来保持两个动画的同步，如下面这个例子：</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/zz09fpwn/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>同样你也可以使用<code>reverse()</code>来产生相反的动画效果，但当相反的动画结束时，<code>currentTime</code>将会是0。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/1gup2944/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Web Animation API（一）</title>
+    <link href="http://ilucas.me/2015/11/25/animations-intro/"/>
+    <id>http://ilucas.me/2015/11/25/animations-intro/</id>
+    <published>2015-11-25T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在接下来的几篇文章中我们将讨论一下web浏览器自身实现的Animation API，长话短说，让我们直接进入正文：<a id="more"></a></p>
+<h4 id="什么是Web-Animations-API"><a href="#什么是Web-Animations-API" class="headerlink" title="什么是Web Animations API"></a>什么是Web Animations API</h4><p>Web Animations API 是什么？它主要实现什么功能？<br>在过去几年中，由于得到css和javascript的支持，动画应用得到更多的重视。但每种动画实现方式都有它自身的有缺点：</p>
+<ul>
+<li>浏览器可以运用硬件加速来提升动画的流畅性，但是样式规则需要在css中定义，并且需要javascript来获取动态变化的值；</li>
+<li><code>requestAnimationFrame</code>已经得到很好的支持，并且浏览器在动画运行时可以进行优化。但是如果有其他javascript运行时，动画仍然有可能出现卡顿，同时也需要大量的数学运算；</li>
+<li><code>setInterval</code>可以用来实现动画效果，但它并不准确而且卡顿现象也比较突出；</li>
+<li><code>jQuery.animate()</code>可以让开发者轻松实现动画效果，但同样也会有性能方面的影响；</li>
+<li>其他一下库，如<code>Velocity</code>和<code>GreenSock</code>对动画的性能进行了很多优化，尽管如此，它们仍需要加载类库并进行长期维护。</li>
+</ul>
+<p>总的来说，我们希望浏览器能够对它支持的越多越好。Web Animations API就是在浏览器层面对动画进行实现。</p>
+<p>Web Animations API刚出来不久，目前只在Chrome和Firefox得到支持，接下来我们看看它实际上能给我们开发者提供什么功能。</p>
+<h4 id="创建一个基本的动画"><a href="#创建一个基本的动画" class="headerlink" title="创建一个基本的动画"></a>创建一个基本的动画</h4><p>和CSS Animation 相比，WAAPI能够让开发者对动画进行更多的控制。下面我们通过这个API创建一个基本的动画：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate([</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(1)'</span>, <span class="attr">opacity</span>: <span class="number">1</span>, <span class="attr">offset</span>: <span class="number">0</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.5)'</span>, <span class="attr">opacity</span>: <span class="number">.5</span>, <span class="attr">offset</span>: <span class="number">.3</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.667)'</span>, <span class="attr">opacity</span>: <span class="number">.667</span>, <span class="attr">offset</span>: <span class="number">.7875</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.6)'</span>, <span class="attr">opacity</span>: <span class="number">.6</span>, <span class="attr">offset</span>: <span class="number">1</span> &#125;</div><div class="line">  ], &#123;</div><div class="line">    <span class="attr">duration</span>: <span class="number">700</span>, <span class="comment">//milliseconds</span></div><div class="line">    easing: <span class="string">'ease-in-out'</span>, <span class="comment">//'linear', a bezier curve, etc.</span></div><div class="line">    delay: <span class="number">10</span>, <span class="comment">//milliseconds</span></div><div class="line">    iterations: <span class="literal">Infinity</span>, <span class="comment">//or a number</span></div><div class="line">    direction: <span class="string">'alternate'</span>, <span class="comment">//'normal', 'reverse', etc.</span></div><div class="line">    fill: <span class="string">'forwards'</span> <span class="comment">//'backwards', 'both', 'none', 'auto'</span></div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<p>作为对比，用css实现方式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">keyframes</span> emphasis &#123;</div><div class="line">  0% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1); </div><div class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>; </div><div class="line">  &#125;</div><div class="line">  39% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.5); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">5</span>; </div><div class="line">  &#125;</div><div class="line">  78<span class="selector-class">.75</span>% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.667); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">667</span>; </div><div class="line">  &#125;</div><div class="line">  100% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.6);</div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">6</span>; </div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: emphasis <span class="number">700ms</span> ease-in-out <span class="number">10ms</span> infinite alternate</div><div class="line">forwards;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们依次解释下代码的含义。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate()</div></pre></td></tr></table></figure></p>
+<p>我们找到需要实现动画的dom节点并调用animate方法，由于animate是新实现的方法，在使用前你需要先测试是否有这个方法，或者使用<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>.<br><code>animate</code>接收两个参数，一个是数组格式的keyframe效果，一个是动画效果的持续时间及其他参数。于css实现的动画不同，这里可以用一个变量来应用当前的动画，在接下来的应用中，你可以重用或修改这个引用的动画效果。<br>下面这个图是分别用WAAPI和CSS实现的相同动画，左边是那一列是WAAPI实现的效果，右边是css实现的效果。<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/zt30wxk4/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe></p>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>根据背景色自动改变文字的颜色</title>
+    <link href="http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/"/>
+    <id>http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/</id>
+    <published>2015-10-29T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>设计人员往往会根据背景色来决定文字的颜色，如果背景为黑色，文字就会用相应的反色调。如果背景比较亮，则文字常用黑色。因为文字和背景色之间的颜色对比能够让阅读更加容易。<a id="more"></a><br>在Sass中我们如何根据给定的背景色来决定文字的颜色呢？<br>假如我们有如下的HTML:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-confirm"</span>&gt;</span>Confirmation<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-alert"</span>&gt;</span>Alert<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们有不同背景颜色的提醒条，我们可以用一个function来计算出对应合适的文字颜色：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@function set-notification-text-color(<span class="variable">$color</span>) &#123;</div><div class="line">  @<span class="keyword">if</span> (lightness(<span class="variable">$color</span>) &gt; 50) &#123;</div><div class="line">    @return <span class="number">#000000</span>; <span class="comment">// Lighter backgorund, return dark color</span></div><div class="line">  &#125; @<span class="keyword">else</span> &#123;</div><div class="line">    @return <span class="number">#ffffff</span>; <span class="comment">// Darker background, return light color</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>lightness()</code>是Sass中定义的一个function，它返回当前颜色的亮度（0-100），0是最暗的，100代表最亮。<br>下面看下完整的css代码：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$notification-confirm</span>: hsla(<span class="number">101</span>, <span class="number">72%</span>, <span class="number">37%</span>, <span class="number">1</span>);  <span class="comment">// Green</span></div><div class="line"><span class="variable">$notification-warning</span>: <span class="number">#ffc53a</span>;                 <span class="comment">// Yellow</span></div><div class="line"><span class="variable">$notification-alert</span>: rgb(<span class="number">172</span>, <span class="number">34</span>, <span class="number">34</span>);          <span class="comment">// Red</span></div><div class="line"></div><div class="line">%notification &#123;</div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">  <span class="attribute">font-size</span>: <span class="number">1.5em</span>;</div><div class="line">  <span class="attribute">font-family</span>: sans-serif;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">1em</span> <span class="number">2em</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> auto;</div><div class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</div><div class="line">  <span class="attribute">text-align</span>: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.notification</span> &#123;</div><div class="line">  @<span class="keyword">extend</span> %notification;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-confirm</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-confirm</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-confirm</span>);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-warning</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-warning</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-warning</span>);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-alert</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-alert</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-alert</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果我们改变背景色，对应的文字颜色也会相应的进行更新。</p>
+<p>在css3中，<code>mix-blend-mode</code>属性也可以根据背景色自动的改变文字的颜色，但这个属性目前还没有得到浏览器的普遍支持，下面这个例子需要打开chrome的experimental开关：<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/ad716vz2/embedded/html,css,result/light" frameborder="0" allowfullscreen></iframe></p>
+]]></content>
+    
+    <summary type="html">
+    
+      用css来根据不同的背景色调整对应的文字颜色
+    
+    </summary>
+    
+      <category term="css" scheme="http://ilucas.me/categories/css/"/>
+    
+    
+      <category term="css3" scheme="http://ilucas.me/tags/css3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chrome调试器中的13个技巧和窍门</title>
+    <link href="http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/"/>
+    <id>http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/</id>
+    <published>2015-10-12T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Chrome浏览器的调试功能十分强大，今天介绍其中的13个技巧，这能提高你debug页面的效率。<a id="more"></a></p>
+<h4 id="文件快速转换"><a href="#文件快速转换" class="headerlink" title="文件快速转换"></a>文件快速转换</h4><p>当DevTools打开时，按住<code>Ctrl+P</code>，mac上是<code>Cmd+P</code>，输入想要搜索的文件名称，就能打开对应项目中的文件。<br><img src="/images/quick_switch_file.gif" alt="quick_switch_file"></p>
+<h4 id="源码中搜索"><a href="#源码中搜索" class="headerlink" title="源码中搜索"></a>源码中搜索</h4><p>如果想要项目中某个文件中特定的字符串，可以按住<code>Ctrl + Shift + F</code>，mac是<code>Cmd + Opt + F</code>，这种搜索模式支持正则匹配。<br><img src="/images/search_within_source.gif" alt="search_within_source"></p>
+<h4 id="定位到某行"><a href="#定位到某行" class="headerlink" title="定位到某行"></a>定位到某行</h4><p>当你在Sources中打开一个文件时，你可以按住<code>Ctrl + G</code>，输入行号来定位。<br><img src="/images/go_to_line.gif" alt="go_to_line"></p>
+<h4 id="在console中选择元素"><a href="#在console中选择元素" class="headerlink" title="在console中选择元素"></a>在console中选择元素</h4><p>DevTools中的console支持DOM元素的选择：</p>
+<ul>
+<li><code>$()</code>，是<code>document.querySelector()</code>的简写，返回匹配css规则的第一个元素。</li>
+<li><code>$$()</code>，是<code>document.querySelectorAll()</code>的简写，返回匹配css规则的元素集合。</li>
+<li><code>$0 – $4</code>，选择元素的历史纪录，$0代表最近的选择元素。</li>
+</ul>
+<p><img src="/images/select_element_in_console.gif" alt="select_element_in_console"></p>
+<h4 id="多行编辑"><a href="#多行编辑" class="headerlink" title="多行编辑"></a>多行编辑</h4><p>当你打开一个文件时，可以按住<code>Ctrl</code>，mac上是<code>Cmd</code>，然后单击想要编辑的行，可以是多行，输入或删除文本。<br><img src="/images/use_multiple_carets.gif" alt="use_multiple_carets"></p>
+<h4 id="保留日志"><a href="#保留日志" class="headerlink" title="保留日志"></a>保留日志</h4><p>在Console中，勾选<code>Preserve Log</code>，当你在页面间跳转时，Console中之前的log就会被保留，这对于你想查看之前的日志非常有用。<br><img src="/images/preserve_log.gif" alt="preserve_log"></p>
+<h4 id="格式化压缩代码"><a href="#格式化压缩代码" class="headerlink" title="格式化压缩代码"></a>格式化压缩代码</h4><p>DevTools有一个功能可以格式化压缩后的代码，方便你调试线上的源码。<br><img src="/images/pretty_source_code.gif" alt="pretty_source_code"></p>
+<h4 id="设备仿真"><a href="#设备仿真" class="headerlink" title="设备仿真"></a>设备仿真</h4><p>在DevTools可以仿真移动设备，比如触摸，加速度计，甚至可以模拟定位。<br><img src="/images/device_emulation.gif" alt="device_emulation"></p>
+<h4 id="颜色拾取"><a href="#颜色拾取" class="headerlink" title="颜色拾取"></a>颜色拾取</h4><p>在Styles中可以打开color picker，浮动光标到页面上时，可以显示对应的颜色。<br><img src="/images/color_picker.gif" alt="color_picker"></p>
+<h4 id="改变元素状态"><a href="#改变元素状态" class="headerlink" title="改变元素状态"></a>改变元素状态</h4><p>在Styles中，可以勾选元素的各种状态来查看对应的样式。<br><img src="/images/force_element_state.gif" alt="force_element_state"></p>
+<h4 id="查看shadow-DOM"><a href="#查看shadow-DOM" class="headerlink" title="查看shadow DOM"></a>查看shadow DOM</h4><p><img src="/images/visualize_shadow_dom.gif" alt="visualize_shadow_dom"></p>
+<h4 id="同时操作重复变量"><a href="#同时操作重复变量" class="headerlink" title="同时操作重复变量"></a>同时操作重复变量</h4><p>当在Sources中编辑文件时，选择某个字符串后，多次按<code>Ctrl+D</code>，mac上是<code>Cmd+D</code>可以选择相邻的重复字符串，选定后可以同时进行编辑操作。<br><img src="/images/select_next_occurrence.gif" alt="select_next_occurrence"></p>
+<h4 id="改变颜色格式"><a href="#改变颜色格式" class="headerlink" title="改变颜色格式"></a>改变颜色格式</h4><p>在颜色预览框上，按住<code>Shift</code>，然后单击，可以在rgba，hsl和十六进制之间进行转换。<br><img src="/images/change_color_format.gif" alt="change_color_format"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      chrome调试器中的13个技巧和窍门
+    
+    </summary>
+    
+      <category term="other" scheme="http://ilucas.me/categories/other/"/>
+    
+    
+      <category term="debug" scheme="http://ilucas.me/tags/debug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>debounce和throttle的区别</title>
+    <link href="http://ilucas.me/2015/10/11/difference-debounce-throttle/"/>
+    <id>http://ilucas.me/2015/10/11/difference-debounce-throttle/</id>
+    <published>2015-10-11T14:52:13.000Z</published>
+    <updated>2017-08-02T03:04:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>debounce和throttle常被用来处理DOM相关事件，通过限制事件的执行频率来提升性能。但它们之间也有使用场景的差别。<a id="more"></a><br>throttle强调的是函数间隔多长时间执行一次。比如说在10秒中函数执行1000次，但是如果你通过throttle设置每隔100毫秒执行一次的话，那么它就最多会执行100次。<br>debounce则是在指定时间内如果没有执行该函数的话，则马上执行该函数，比如说100毫秒后如果还没有执行处理函数，那么就在100毫秒后马上执行。比如一个函数在3秒内执行1000次，然后停止执行。如果你通过debounce设置函数的执行时间为100毫秒，那么该函数只会在3.1秒的时候执行一次，在debounce设置的100毫秒内由于会触发函数的执行，因此它不断的重置这个timer。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>这两个函数常被用来处理DOM事件，比如滚动页面和resize页面大小。比如你在一个元素上绑定了scroll事件，想让元素向下滚动5000px，并且触发100次以上的scroll事件，如果你的处理函数涉及很大的计算量的话，你就会发现在滚动时页面会存在一定的性能问题，如果此时你减少scroll事件的执行次数，那么性能就会得到很大的提升。<br>常用的场景：</p>
+<ul>
+<li>等到resize结束时执行处理函数</li>
+<li>等用户停止输入时触发ajax调用</li>
+<li>考虑scroll的位置并设置最多50毫秒执行一次scroll事件</li>
+<li>当你在页面上拖动元素时</li>
+</ul>
+<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>这两个函数在<code>Underscore</code>和<code>Lodash</code>中都得到了实现。即使你在项目中不会使用到这两个库，你也可以把它们抽出来放在你自己的项目中使用。<br>jQuery使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"body"</span>).on(<span class="string">'scroll'</span>, _.throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
+<p>resize：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).on(<span class="string">'resize'</span>, _.debounce(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      理解debounce和throttle之间的差异
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="performance" scheme="http://ilucas.me/tags/performance/"/>
+    
+  </entry>
+  
+</feed>

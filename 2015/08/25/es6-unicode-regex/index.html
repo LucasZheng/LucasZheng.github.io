@@ -1,0 +1,702 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>ES6中的Unicode正则表达模式 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="ES6中正则表达式新添加的Unicode匹配模式">
+<meta name="keywords" content="javascript,ES6,RegExp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6中的Unicode正则表达模式">
+<meta property="og:url" content="http://ilucas.me/2015/08/25/es6-unicode-regex/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="ES6中正则表达式新添加的Unicode匹配模式">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6中的Unicode正则表达模式">
+<meta name="twitter:description" content="ES6中正则表达式新添加的Unicode匹配模式">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/25/es6-unicode-regex/" title="ES6中的Unicode正则表达模式" itemprop="url">ES6中的Unicode正则表达模式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-25T12:27:46.000Z" itemprop="datePublished"> 发表于 2015-08-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#语法上的改变"><span class="toc-number">1.</span> <span class="toc-text">语法上的改变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对-操作符的影响"><span class="toc-number">2.</span> <span class="toc-text">对.操作符的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对匹配数字的影响"><span class="toc-number">3.</span> <span class="toc-text">对匹配数字的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对字符集的影响"><span class="toc-number">4.</span> <span class="toc-text">对字符集的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对转义字符的影响"><span class="toc-number">5.</span> <span class="toc-text">对转义字符的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对i标识的影响"><span class="toc-number">6.</span> <span class="toc-text">对i标识的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结束"><span class="toc-number">7.</span> <span class="toc-text">结束</span></a></li></ol>
+		
+		</div>
+		
+		<p>ES6中正则表达式引入了两个新的feature：<a id="more"></a></p>
+<ul>
+<li><code>y</code>开启<a href="https://docs.webplatform.org/wiki/javascript/RegExp/sticky" target="_blank" rel="external">粘性匹配</a></li>
+<li><code>u</code>开启各种Unicode相关特性</li>
+</ul>
+<p>这篇文章将说明使用<code>u</code> flag所带来的影响。</p>
+<h4 id="语法上的改变"><a href="#语法上的改变" class="headerlink" title="语法上的改变"></a>语法上的改变</h4><p>在正则表达式中使用<code>u</code> flag 将开启ES6中的Unicode转义模式<code>\u{...}</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `a` is U+0061 LATIN SMALL LETTER A, a BMP symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/\u&#123;61&#125;/u</span>.test(<span class="string">'a'</span>));</div><div class="line"><span class="comment">// → true</span></div><div class="line"></div><div class="line"><span class="comment">// Note: `𝌆` is U+1D306 TETRAGRAM FOR CENTRE, an astral symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/\u&#123;1D306&#125;/u</span>.test(<span class="string">'𝌆'</span>));</div><div class="line"><span class="comment">// → true</span></div></pre></td></tr></table></figure>
+<p>如果没有这个标识，比如像<code>\u{1234}</code>，这也是一个合法的正则表达式，但它不会被当作Unicode转义。<code>/\u{1234}/</code>就相当于<code>/u{1234}/</code>，会匹配有1234个连续的<code>u</code>字符。<br>但是如果设置了<code>\u</code>，比如像<code>\a</code>（<code>a</code>是一个非转义字符）就不会再被当作<code>a</code>解释。即使<code>/\a/</code>会被当作<code>/a</code>，而<code>/\a/u</code>则会抛出一个错误，因为<code>\a</code>不是一个保留的转义序列。</p>
+<h4 id="对-操作符的影响"><a href="#对-操作符的影响" class="headerlink" title="对.操作符的影响"></a>对<code>.</code>操作符的影响</h4><p>如果没有设置<code>u</code>标识符，<code>.</code>将会匹配除折行外的任何BMP符号。当设置了ES6中的<code>u</code>，<code>.</code>同时也会匹配图形符号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `𝌆` is U+1D306 TETRAGRAM FOR CENTRE, an astral symbol.</span></div><div class="line"><span class="keyword">var</span> string = <span class="string">'a𝌆b'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/a.b/</span>.test(string));</div><div class="line"><span class="comment">// → false</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/a.b/u</span>.test(string));</div><div class="line"><span class="comment">// → true</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> match = string.match(<span class="regexp">/a(.)b/u</span>);</div><div class="line"><span class="built_in">console</span>.log(match[<span class="number">1</span>]);</div><div class="line"><span class="comment">// → '𝌆'</span></div></pre></td></tr></table></figure></p>
+<h4 id="对匹配数字的影响"><a href="#对匹配数字的影响" class="headerlink" title="对匹配数字的影响"></a>对匹配数字的影响</h4><p>在javascript的正则表达式中数字匹配符号一般有：<code>*</code>，<code>+</code>，<code>{2}</code>，<code>{2,}</code>，<code>{2,4}</code>之类的写法。如果没有<code>u</code>标识，紧跟着图形符号后面的数字就只会匹配图形转义的低位符号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `a` is a BMP symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/a&#123;2&#125;/</span>.test(<span class="string">'aa'</span>));</div><div class="line"><span class="comment">// → true</span></div><div class="line"></div><div class="line"><span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/𝌆&#123;2&#125;/</span>.test(<span class="string">'𝌆𝌆'</span>));</div><div class="line"><span class="comment">// → false</span></div><div class="line"></div><div class="line"><span class="comment">// Explanation: the previous example is equivalent to the following.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/\uD834\uDF06&#123;2&#125;/</span>.test(<span class="string">'\uD834\uDF06\uD834\uDF06'</span>));</div><div class="line"><span class="comment">// → false</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/\uD834\uDF06&#123;2&#125;/</span>.test(<span class="string">'\uD834\uDF06\uDF06\uD834'</span>));</div><div class="line"><span class="comment">// → true</span></div></pre></td></tr></table></figure></p>
+<p>设置ES6中的<code>u</code>标识后，数字将会匹配整个符号，包括图形符号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `a` is a BMP symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/a&#123;2&#125;/u</span>.test(<span class="string">'aa'</span>));</div><div class="line"><span class="comment">// → true</span></div><div class="line"></div><div class="line"><span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line"><span class="built_in">console</span>.log(<span class="regexp">/𝌆&#123;2&#125;/u</span>.test(<span class="string">'𝌆𝌆'</span>));</div><div class="line"><span class="comment">// → true</span></div></pre></td></tr></table></figure></p>
+<h4 id="对字符集的影响"><a href="#对字符集的影响" class="headerlink" title="对字符集的影响"></a>对字符集的影响</h4><p>如果没有设置<code>u</code>标识，任何给定的字符集仅仅匹配BMP字符，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^[bcd]$/</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'b'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'c'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'d'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'e'</span>)  <span class="comment">// false</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>但是，当字符集中有图形符号时，javascript就会把它当作两个字符来对待。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^[bc𝌆]$/</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'b'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'c'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'𝌆'</span>)  <span class="comment">// false</span></div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">// Explanation: the regular expression is equivalent to the following.</span></div><div class="line"><span class="comment">// var regex = /^[bc\uD834\uDF06]$/;</span></div></pre></td></tr></table></figure></p>
+<p>ES6中的<code>u</code>标识可以让字符集中正常匹配图形符号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^[bc𝌆]$/u</span>; <span class="comment">// Or, `/^[bc\u&#123;1D306&#125;]$/u`.</span></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'b'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'c'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'𝌆'</span>)  <span class="comment">// true</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>重要的是，整个图形字符集可以使用区间来匹配，只要设置了<code>u</code>标识。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Match any symbol from U+1F4A9 PILE OF POO to U+1F4AB DIZZY SYMBOL.</span></div><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/[💩-💫]/u</span>; <span class="comment">// Or, `/[\u&#123;1F4A9&#125;-\u&#123;1F4AB&#125;]/u`.</span></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">'💨'</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'💩'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'💪'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'💫'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'💬'</span>)  <span class="comment">// false</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p><code>u</code>标识同样对非某些字符匹配有影响。比如<code>/[^a]</code>就相当于<code>/[\0-\x60\x62-\uFFFF]</code>，匹配那些除了<code>a</code>之外的任何BMP字符。但是如果设置了<code>u</code>标识，<code>/[^a]/u</code>就还会匹配除了<code>a</code>之外的所有Unicode字符。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^[^a]$/u</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'b'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'☃'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'𝌆'</span>), <span class="comment">// true</span></div><div class="line">  regex.test(<span class="string">'💩'</span>)  <span class="comment">// true</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<h4 id="对转义字符的影响"><a href="#对转义字符的影响" class="headerlink" title="对转义字符的影响"></a>对转义字符的影响</h4><p><code>u</code>标识同样对现有的特殊转义字符有不同的解释，比如<code>\D</code>，<code>\S</code>和<code>\W</code>。如果没有设置<code>u</code>，<code>\D</code>，<code>\S</code>和<code>\W</code>分别匹配那些非<code>\d</code>，<code>\s</code>和<code>\w</code>的字符。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^\S$/</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">' '</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// true</span></div><div class="line">  <span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line">  regex.test(<span class="string">'𝌆'</span>)  <span class="comment">// false</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>如果你设置了<code>u</code>，<code>\D</code>，<code>\S</code>和<code>\W</code>同样会匹配图形符号。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> regex = <span class="regexp">/^\S$/u</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  regex.test(<span class="string">' '</span>), <span class="comment">// false</span></div><div class="line">  regex.test(<span class="string">'a'</span>), <span class="comment">// true</span></div><div class="line">  <span class="comment">// Note: `𝌆` is an astral symbol.</span></div><div class="line">  regex.test(<span class="string">'𝌆'</span>)  <span class="comment">// true</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>而它们相反的匹配<code>\d</code>，<code>\s</code>和<code>\w</code>则不会受<code>u</code>影响。</p>
+<h4 id="对i标识的影响"><a href="#对i标识的影响" class="headerlink" title="对i标识的影响"></a>对<code>i</code>标识的影响</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> es5regex = <span class="regexp">/[a-z]/i</span>;</div><div class="line"><span class="keyword">var</span> es6regex = <span class="regexp">/[a-z]/iu</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  es5regex.test(<span class="string">'s'</span>),      es6regex.test(<span class="string">'s'</span>),      <span class="comment">// true true</span></div><div class="line">  es5regex.test(<span class="string">'S'</span>),      es6regex.test(<span class="string">'S'</span>),      <span class="comment">// true true</span></div><div class="line">  <span class="comment">// Note: U+017F canonicalizes to `S`.</span></div><div class="line">  es5regex.test(<span class="string">'\u017F'</span>), es6regex.test(<span class="string">'\u017F'</span>), <span class="comment">// false true</span></div><div class="line">  <span class="comment">// Note: U+212A canonicalizes to `K`.</span></div><div class="line">  es5regex.test(<span class="string">'\u212A'</span>), es6regex.test(<span class="string">'\u212A'</span>)  <span class="comment">// false true</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>同样表达式也可以如下使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  <span class="regexp">/\u212A/iu</span>.test(<span class="string">'K'</span>), <span class="comment">// true</span></div><div class="line">  /\u212A/iu.test(<span class="string">'k'</span>), <span class="comment">// true</span></div><div class="line">  /\u017F/iu.test(<span class="string">'S'</span>), <span class="comment">// true</span></div><div class="line">  /\u017F/iu.test(<span class="string">'s'</span>)  <span class="comment">// true</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>这中行为在大多数情况下非常有用，但是也有一些例外让人比较迷惑。默认情况下，<code>\W</code>将会匹配任何非<code>\w</code>匹配的字符，但同时设置了<code>i</code>和<code>u</code>时，情况就会变的有点复杂：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> es5regex = <span class="regexp">/\W/i</span>;</div><div class="line"><span class="keyword">var</span> es6regex = <span class="regexp">/\W/iu</span>;</div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">  es5regex.test(<span class="string">'☃'</span>),     es6regex.test(<span class="string">'☃'</span>),      <span class="comment">// true true</span></div><div class="line">  es5regex.test(<span class="string">'S'</span>),      es6regex.test(<span class="string">'S'</span>),      <span class="comment">// false true</span></div><div class="line">  es5regex.test(<span class="string">'\u017F'</span>), es6regex.test(<span class="string">'\u017F'</span>), <span class="comment">// true true</span></div><div class="line">  es5regex.test(<span class="string">'K'</span>),      es6regex.test(<span class="string">'K'</span>),      <span class="comment">// false true</span></div><div class="line">  es5regex.test(<span class="string">'\u212A'</span>), es6regex.test(<span class="string">'\u212A'</span>)  <span class="comment">// true true</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>当<code>i</code>和<code>u</code>设置后，<code>\W</code>就不再是<code>\w</code>相反的含义。</p>
+<ul>
+<li><code>/\w/</code>和<code>/\w/i</code>等价于<code>/[0-9A-Z_a-z]/</code></li>
+<li><code>/\w/iu</code>同样匹配<code>U+017F</code>，因为<code>S</code>属于U+017F中。</li>
+<li><code>/\W/iu</code>奇怪的是同样匹配U+017F，<code>S</code>，因为<code>\W</code>包括U+017F中的符号。<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4>当前，ES6中的<code>u</code>特性还没有在主流浏览器的稳定版本中得到实现。一些浏览器的实验版本可以提供支持<a href="http://devchannel.modern.ie/" target="_blank" rel="external">IE Tech Preview</a>，在V8中也可以设置<code>--harmony-unicode-regexps</code>来支持。</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javascript/">javascript</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/javascript/">javascript</a><a href="/tags/ES6/">ES6</a><a href="/tags/RegExp/">RegExp</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/08/25/es6-unicode-regex/" data-title="ES6中的Unicode正则表达模式 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/09/07/vue-js-tutorial/" title="Vue.js基础教程">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Vue.js基础教程</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/08/05/new-regular-expression-es6/"  title="ES6中新的正则表达式规则">
+ <strong>下一篇：</strong><br/> 
+ <span>ES6中新的正则表达式规则
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#语法上的改变"><span class="toc-number">1.</span> <span class="toc-text">语法上的改变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对-操作符的影响"><span class="toc-number">2.</span> <span class="toc-text">对.操作符的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对匹配数字的影响"><span class="toc-number">3.</span> <span class="toc-text">对匹配数字的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对字符集的影响"><span class="toc-number">4.</span> <span class="toc-text">对字符集的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对转义字符的影响"><span class="toc-number">5.</span> <span class="toc-text">对转义字符的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对i标识的影响"><span class="toc-number">6.</span> <span class="toc-text">对i标识的影响</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结束"><span class="toc-number">7.</span> <span class="toc-text">结束</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

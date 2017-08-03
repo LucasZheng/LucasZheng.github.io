@@ -1,0 +1,707 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SVG的用法 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="全面解析SVG的各种用法">
+<meta name="keywords" content="SVG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVG的用法">
+<meta property="og:url" content="http://ilucas.me/2016/01/20/using-svg/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="全面解析SVG的各种用法">
+<meta property="og:image" content="http://ilucas.me/images/kiwi.png">
+<meta property="og:image" content="http://ilucas.me/images/save-as-svg.png">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SVG的用法">
+<meta name="twitter:description" content="全面解析SVG的各种用法">
+<meta name="twitter:image" content="http://ilucas.me/images/kiwi.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/20/using-svg/" title="SVG的用法" itemprop="url">SVG的用法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-20T14:52:13.000Z" itemprop="datePublished"> 发表于 2016-01-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG的优势"><span class="toc-number">1.</span> <span class="toc-text">SVG的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG的制作方法"><span class="toc-number">2.</span> <span class="toc-text">SVG的制作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG图片的用法"><span class="toc-number">3.</span> <span class="toc-text">SVG图片的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG背景图的用法"><span class="toc-number">4.</span> <span class="toc-text">SVG背景图的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#“inline”-SVG的用法"><span class="toc-number">5.</span> <span class="toc-text">“inline” SVG的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG对象-object-的用法"><span class="toc-number">6.</span> <span class="toc-text">SVG对象(object)的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG-Data-URI的用法"><span class="toc-number">7.</span> <span class="toc-text">SVG Data URI的用法</span></a></li></ol>
+		
+		</div>
+		
+		<p>SVG是一种矢量图格式。SVG是Scalable Vector Graphics三个单词的首字母缩写。Adobe Illustrator是专门编辑、制作矢量图的软件工具。SVG是Adobe Illustrator的主要制作目标。你可以在轻松的网页上使用漂亮的SVG图，但SVG有很多的用法你可能还不知道。<a id="more"></a></p>
+<h4 id="SVG的优势"><a href="#SVG的优势" class="headerlink" title="SVG的优势"></a>SVG的优势</h4><ul>
+<li>文件体积小，能够被大量的压缩</li>
+<li>图片可无限放大而不失真(矢量图的基本特征)</li>
+<li>在retina屏幕上显示效果极佳</li>
+<li>能够实现互动和滤镜效果</li>
+</ul>
+<h4 id="SVG的制作方法"><a href="#SVG的制作方法" class="headerlink" title="SVG的制作方法"></a>SVG的制作方法</h4><p>用Adobe Illustrator设计制作。下面是一张新西兰鹬鸵鸟的图片。<br><img src="/images/kiwi.png" alt=""><br>Adobe Illustrator能直接把文件保存成SVG格式。<br><img src="/images/save-as-svg.png" alt=""></p>
+<h4 id="SVG图片的用法"><a href="#SVG图片的用法" class="headerlink" title="SVG图片的用法"></a>SVG图片的用法</h4><p>如果你把SVG保存成文件，你可以直接把它放到<img>标记里。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"kiwi.svg"</span> <span class="attr">alt</span>=<span class="string">"新西兰鹬鸵鸟"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>当然，你可以像PNG和JPG图片那样通过<code>width</code>和<code>height</code>改变它的大小。这种用法除了在IE8及以下和Android2.3及以下都是ok的。<br>如果你想要在所有浏览器中都支持SVG图片，你可以用Modernizr测试浏览器的支持情况，必要时以普通图片代替：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!Modernizr.svg) &#123;</div><div class="line">  $(<span class="string">".logo img"</span>).attr(<span class="string">"src"</span>, <span class="string">"images/logo.png"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.svg"</span> <span class="attr">onerror</span>=<span class="string">"this.onerror=null; this.src='image.png'"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="SVG背景图的用法"><a href="#SVG背景图的用法" class="headerlink" title="SVG背景图的用法"></a>SVG背景图的用法</h4><p>跟SVG图片用法相似，你也可以在背景图(<code>background-image</code>)中使用SVG。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span></div><div class="line">  新西兰鹬鸵鸟</div><div class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>css:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">  <span class="attribute">text-indent</span>: -<span class="number">9999px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">82px</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(kiwi.svg);</div><div class="line">  <span class="attribute">background-size</span>: <span class="number">100px</span> <span class="number">82px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>background-size</code>的长宽比例要和原图一致。但你可以使用<code>background-size</code>的常量值contain或cover来达到不同的效果。<br>同样，这中用法除了在IE8及以下和Android2.3及以下都是ok的。<br>Modernizr在这里也能起到作用，而且更高效。如果浏览器不支持SVG背景图时，SVG文件将不会被加载，因为Modernizr在检测到不支持SVG时，在HTML上加了”no-svg”CSS类，于是我们可以这样利用它：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.main-header</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(logo.svg) no-repeat top left;</div><div class="line">  <span class="attribute">background-size</span>: contain;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.main-header</span> &#123;</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(logo.png);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另外一个更巧妙的方法是使用多背景图技术。因为各浏览器对SVG和对多背景图技术的支持情况很相似，如果支持多背景图，也会支持SVG，所以，我们的CSS声明可以这样写：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(fallback.png);</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(image.svg), none;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="“inline”-SVG的用法"><a href="#“inline”-SVG的用法" class="headerlink" title="“inline” SVG的用法"></a>“inline” SVG的用法</h4><p>你实际上可以把SVG代码从SVG文件里拷贝出来，直接粘贴掉HTML里使用，它们跟你直接使用普通图片的效果一样。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="comment">&lt;!-- paste in SVG code, image shows up!  --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这样做的好处是图片数据就在HTML页面里，不需要浏览器单独执行一次请求下载它。换句话说，它跟使用Data URI的优势一样。但不好的地方也是一样。比如“臃肿”的页面代码，缓存问题等。<br>你应该不会吃惊：用Adobe Illustrator保存的SVG文件并不是优化过的。里面有DOCTYPE、生成工具署名等无用的信息。SVG文件本身很小，但谁会嫌弃更小？Peter Collingridge有一个在线的<a href="http://petercollingridge.appspot.com/svg_optimiser" target="_blank" rel="external">SVG优化</a>工具。传上去大的，下载出小的。<br>你有没有感觉SVG代码跟HTML代码很相似？这是因为它们本质上都是XML。在我们的这个SVG文件中有两个元素，一个<code>&lt;ellipse&gt;</code> 和一个<code>&lt;path&gt;</code>。我们可以直接在SVG代码添加CSS类信息，就像跟编写HTML代码一样。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">ellipse</span> <span class="attr">class</span>=<span class="string">"ground"</span> <span class="attr">...</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">class</span>=<span class="string">"kiwi"</span> <span class="attr">...</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>现在，页面中的CSS样式对SVG里的元素同样有效。你不需要在SVG代码直接嵌入CSS代码，放在页面任何一个地方都可以，甚至可以放到单独的CSS文件里，使用<code>&lt;link&gt;</code>标记加载到页面上。你甚至可以对SVG元素使用:hover语法。但请注意，有个别的CSS属性对SVG是不起作用的。例如，<code>background-color</code>对SVG就是无效的，因为SVG里使用<code>fill</code>属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.kiwi</span> &#123;</div><div class="line">  <span class="attribute">fill</span>: <span class="number">#94d31b</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-class">.kiwi</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">fill</span>: <span class="number">#ace63c</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>更绝妙的是，SVG里可以实现所有的滤镜效果。例如模糊处理。我们来试一下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;<span class="name">filter</span> <span class="attr">id</span>=<span class="string">"pictureFilter"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">feGaussianBlur</span> <span class="attr">stdDeviation</span>=<span class="string">"5"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>现在你可以对它运用任何的CSS样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ground</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">filter</span>: <span class="built_in">url</span>(#pictureFilter);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但基本来说和SVG图片一样。除了在IE8及以下和Android2.3及以下都是ok的。<br>一种对不支持inline SVG的浏览器的补救方法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span> ... <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fallback"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>仍然使用Modernizr：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.fallback</span> &#123; </div><div class="line">  <span class="attribute">display</span>: none;</div><div class="line">  <span class="comment">/* 确保尺寸是一样大小 */</span></div><div class="line">&#125;</div><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.fallback</span> &#123; </div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(logo.png); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="SVG对象-object-的用法"><a href="#SVG对象-object-的用法" class="headerlink" title="SVG对象(object)的用法"></a>SVG对象(object)的用法</h4><p>如果”inline” SVG不合你的胃口(它有自己的弊端，如缓存问题)，你可以使用HTML的<code>&lt;object&gt;</code>标记引用它，这样仍能在浏览器不支持的情况下用CSS进行弥补。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"kiwi.svg"</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span></div><div class="line">  新西兰鹬鸵鸟 <span class="comment">&lt;!-- 图片备份支持 --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>使用Modernizr检测浏览器的支持情况，用CSS进行挽救：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.no-svg</span> <span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">164px</span>;</div><div class="line">  <span class="attribute">background-image</span>: <span class="built_in">url</span>(kiwi.png);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法能够很好的利用浏览器的缓存。但是，如果你想让CSS样式也起作用，你不能把这些样式放在外部的CSS样式文件里或防止在页面中的<code>&lt;style&gt;</code>标记内，你需要把<code>&lt;style&gt;</code>信息放在SVG文件内部。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">...</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line">    <span class="comment">/* 把你的CSS放到SVG文件内部 */</span></div><div class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">  ...</div><div class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="SVG-Data-URI的用法"><a href="#SVG-Data-URI的用法" class="headerlink" title="SVG Data URI的用法"></a>SVG Data URI的用法</h4><p>html的用法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/svg+xml;base64,[data]&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>css的用法：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(data:image/svg+xml;base64,[data]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>object的用法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">data</span>=<span class="string">"data:image/svg+xml;base64,[data]&gt;</span></span></div><div class="line">  fallback</div><div class="line">&lt;/object&gt;</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/css/">css</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SVG/">SVG</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2016/01/20/using-svg/" data-title="SVG的用法 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/01/28/customize-ordered-lists-pseudo-element/" title="用CSS3中的伪类实现自定义有序列表样式">
+  <strong>上一篇：</strong><br/>
+  <span>
+  用CSS3中的伪类实现自定义有序列表样式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/01/07/perfect-full-page-background-image/"  title="背景图案占满整个屏幕的完美解决方案">
+ <strong>下一篇：</strong><br/> 
+ <span>背景图案占满整个屏幕的完美解决方案
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG的优势"><span class="toc-number">1.</span> <span class="toc-text">SVG的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG的制作方法"><span class="toc-number">2.</span> <span class="toc-text">SVG的制作方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG图片的用法"><span class="toc-number">3.</span> <span class="toc-text">SVG图片的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG背景图的用法"><span class="toc-number">4.</span> <span class="toc-text">SVG背景图的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#“inline”-SVG的用法"><span class="toc-number">5.</span> <span class="toc-text">“inline” SVG的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG对象-object-的用法"><span class="toc-number">6.</span> <span class="toc-text">SVG对象(object)的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG-Data-URI的用法"><span class="toc-number">7.</span> <span class="toc-text">SVG Data URI的用法</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

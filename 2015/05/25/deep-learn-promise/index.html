@@ -1,0 +1,693 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>深入了解promise | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="开发过程中常见的promise问题">
+<meta name="keywords" content="promise">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入了解promise">
+<meta property="og:url" content="http://ilucas.me/2015/05/25/deep-learn-promise/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="开发过程中常见的promise问题">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入了解promise">
+<meta name="twitter:description" content="开发过程中常见的promise问题">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/25/deep-learn-promise/" title="深入了解promise" itemprop="url">深入了解promise</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-25T12:27:46.000Z" itemprop="datePublished"> 发表于 2015-05-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#三角形的代码模式"><span class="toc-number">1.</span> <span class="toc-text">三角形的代码模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何在forEach中使用promise"><span class="toc-number">2.</span> <span class="toc-text">如何在forEach中使用promise</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#忘记使用-catch"><span class="toc-number">3.</span> <span class="toc-text">忘记使用.catch()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用deferred"><span class="toc-number">4.</span> <span class="toc-text">使用deferred</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#忘记使用return"><span class="toc-number">5.</span> <span class="toc-text">忘记使用return</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#返回另外一个promise"><span class="toc-number">5.1.</span> <span class="toc-text">返回另外一个promise</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#返回一个值或undefined"><span class="toc-number">5.2.</span> <span class="toc-text">返回一个值或undefined</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#抛出一个错误"><span class="toc-number">5.3.</span> <span class="toc-text">抛出一个错误</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>Promise对很多有一定js开发经验的developer来说并不陌生，它解决了js中callback hell的问题，让我们的js代码更优雅、更容易阅读和维护。<a id="more"></a>虽然现实中developer在一定程度上会使用promise，但他们并没有真正的了解它的工作原理。如下面的代码，你能说出它们之间的差别吗？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">doSomething().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> doSomethingElse();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">doSomething().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  doSomethingElse();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">doSomething().then(doSomethingElse());</div><div class="line"></div><div class="line">doSomething().then(doSomethingElse);</div></pre></td></tr></table></figure>
+<p>如果你知道答案，那么恭喜你，你不用继续阅读下面的内容了。  </p>
+<h4 id="三角形的代码模式"><a href="#三角形的代码模式" class="headerlink" title="三角形的代码模式"></a>三角形的代码模式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">remotedb.allDocs(&#123;</div><div class="line">  <span class="attr">include_docs</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">attachments</span>: <span class="literal">true</span></div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> docs = result.rows;</div><div class="line">  docs.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">    localdb.put(element.doc).then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">      alert(<span class="string">"Pulled doc with id "</span> + element.doc._id + <span class="string">" and added to local db."</span>);</div><div class="line">    &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err.status == <span class="number">409</span>) &#123;</div><div class="line">        localdb.get(element.doc._id).then(<span class="function"><span class="keyword">function</span> (<span class="params">resp</span>) </span>&#123;</div><div class="line">          localdb.remove(resp._id, resp._rev).then(<span class="function"><span class="keyword">function</span> (<span class="params">resp</span>) </span>&#123;</div><div class="line"><span class="comment">// et cetera...</span></div></pre></td></tr></table></figure>
+<p>更好的一种实现方式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">remotedb.allDocs(...).then(<span class="function"><span class="keyword">function</span> (<span class="params">resultOfAllDocs</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> localdb.put(...);</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">resultOfPut</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> localdb.get(...);</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">resultOfGet</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> localdb.put(...);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(err);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这是一种比较好的实现方式，每个function只会在前一个promise <code>resolve</code>时触发，并且可以获取前一个promise的输出作为参数。  </p>
+<h4 id="如何在forEach中使用promise"><a href="#如何在forEach中使用promise" class="headerlink" title="如何在forEach中使用promise"></a>如何在forEach中使用promise</h4><p>这种情况也比较常见，当developer使用他们常见的forEach、for或while时，他们不清楚如何将promise融合进来使用，于是他们经常这样写：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// I want to remove() all docs</span></div><div class="line">db.allDocs(&#123;<span class="attr">include_docs</span>: <span class="literal">true</span>&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">  result.rows.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">row</span>) </span>&#123;</div><div class="line">    db.remove(row.doc);  </div><div class="line">  &#125;);</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// I naively believe all docs have been removed() now!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这种写法的问题在于forEach中的第一个function返回是<code>undefined</code>，第二个function并不会等待<code>db.remove</code>，实际上它并不会等待，它可以在任何时候执行。这时你可以使用<code>Promise.all</code>来解决这个问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">db.allDocs(&#123;<span class="attr">include_docs</span>: <span class="literal">true</span>&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.all(result.rows.map(<span class="function"><span class="keyword">function</span> (<span class="params">row</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> db.remove(row.doc);</div><div class="line">  &#125;));</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">arrayOfResults</span>) </span>&#123;</div><div class="line">  <span class="comment">// All docs have really been removed() now!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><code>Promise.all</code>使用<code>array</code>格式的promise作为输入，并且只有在包含的所有promise都<code>resolve</code>时才返回另外一个promise。<br><code>Promise.all</code>同样传递一个<code>array</code>格式的结果给下一个function。如果其中一个promise被<code>reject</code>，那么<code>all()</code>同样也会被<code>reject</code>。  </p>
+<h4 id="忘记使用-catch"><a href="#忘记使用-catch" class="headerlink" title="忘记使用.catch()"></a>忘记使用<code>.catch()</code></h4><p>这是另外一种常见的错误。developer通常认为他们的promise从来不会抛出错误，所以许多人在代码中忘记使用<code>.catch()</code>，这意味着抛出的错误将会被吞噬掉，你在console中也不会看到任何报错信息，这非常不利于debug代码。<br>为了避免这种情况，我们应该养成习惯在promise链中添加如下代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">somePromise().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> anotherPromise();</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> yetAnotherPromise();</div><div class="line">&#125;).catch(<span class="built_in">console</span>.log.bind(<span class="built_in">console</span>)); <span class="comment">// &lt;-- this is badass</span></div></pre></td></tr></table></figure></p>
+<h4 id="使用deferred"><a href="#使用deferred" class="headerlink" title="使用deferred"></a>使用<code>deferred</code></h4><p>Promise的发展经历了一段比较长的时间，在早些时候，<code>jQuery</code>和<code>Angular</code>曾经使用<code>deferred</code>模式，现在已经被ES6的规范所取代，或者被一些库所实现，如：<code>Q</code>，<code>When</code>，<code>RSVP</code>, <code>Bluebird</code>，<code>Lie</code>等。<br>许多情况下，你可以使用<code>import</code>来引入第三方promise库，比如Angular中的<code>$q</code>允许你使用<code>$q.when()</code>来包裹非<code>$q</code>promise的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$q.when(db.put(doc)).then(<span class="comment">/* ... */</span>); <span class="comment">// &lt;-- this is all the code you need</span></div></pre></td></tr></table></figure></p>
+<p>同样也可以使用如下的模式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">  fs.readFile(<span class="string">'myfile.txt'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, file</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (err) &#123;</div><div class="line">      <span class="keyword">return</span> reject(err);</div><div class="line">    &#125;</div><div class="line">    resolve(file);</div><div class="line">  &#125;);</div><div class="line">&#125;).then(<span class="comment">/* ... */</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="忘记使用return"><a href="#忘记使用return" class="headerlink" title="忘记使用return"></a>忘记使用<code>return</code></h4><p>看看下面的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">somePromise().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  someOtherPromise();</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Gee, I hope someOtherPromise() has resolved!</span></div><div class="line">  <span class="comment">// Spoiler alert: it hasn't.</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>promise的魅力在于它可以返回我们前一个的<code>return</code>和<code>throw</code>。每一个promise给你提供了<code>then()</code>方法（或者<code>catch()</code>，等同于<code>then(null, ...)</code>）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">somePromise().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// I'm inside a then() function!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>在上面的代码中我们可以做如下三件事情：<br>1、<code>return</code>另外一个promise<br>2、<code>return</code>一个值或者<code>undefined</code><br>3、<code>throw</code>一个错误  </p>
+<h5 id="返回另外一个promise"><a href="#返回另外一个promise" class="headerlink" title="返回另外一个promise"></a>返回另外一个promise</h5><p>这在promise结构中是一种比较常见的模式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">getUserByName(<span class="string">'nolan'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> getUserAccountById(user.id);</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">userAccount</span>) </span>&#123;</div><div class="line">  <span class="comment">// I got a user account!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure><br>这里<code>return</code>非常关键，如果没有使用return，则下一个function将会获取到<code>undefined</code>而不是<code>userAccount</code>。  </p>
+<h5 id="返回一个值或undefined"><a href="#返回一个值或undefined" class="headerlink" title="返回一个值或undefined"></a>返回一个值或<code>undefined</code></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">getUserByName(<span class="string">'nolan'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (inMemoryCache[user.id]) &#123;</div><div class="line">    <span class="keyword">return</span> inMemoryCache[user.id];    <span class="comment">// returning a synchronous value!</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> getUserAccountById(user.id); <span class="comment">// returning a promise!</span></div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">userAccount</span>) </span>&#123;</div><div class="line">  <span class="comment">// I got a user account!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>第二个function并不会关心<code>userAccount</code>是同步获取的还是异步获取的。在javascript中如果一个function没有return，则默认返回是<code>undefined</code>，但最好是在<code>then()</code>function中始终使用<code>return</code>或<code>throw</code>。  </p>
+<h5 id="抛出一个错误"><a href="#抛出一个错误" class="headerlink" title="抛出一个错误"></a>抛出一个错误</h5><p>比如当用户没有登录时，我们抛出一个错误：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">getUserByName(<span class="string">'nolan'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (user.isLoggedOut()) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'user logged out!'</span>); <span class="comment">// throwing a synchronous error!</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (inMemoryCache[user.id]) &#123;</div><div class="line">    <span class="keyword">return</span> inMemoryCache[user.id];       <span class="comment">// returning a synchronous value!</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> getUserAccountById(user.id);    <span class="comment">// returning a promise!</span></div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">userAccount</span>) </span>&#123;</div><div class="line">  <span class="comment">// I got a user account!</span></div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">  <span class="comment">// Boo, I got an error!</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>如果其中一个promise被<code>reject</code>了，则<code>.catch</code>将会获取到错误信息。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javascript/">javascript</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/promise/">promise</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/05/25/deep-learn-promise/" data-title="深入了解promise | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/01/css3-media-queries-for-specific-device-md/" title="CSS3 Media Queries在各种设备上的应用">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CSS3 Media Queries在各种设备上的应用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/29/repaint-reflow-md/"  title="web性能优化之－－reflow和repaint">
+ <strong>下一篇：</strong><br/> 
+ <span>web性能优化之－－reflow和repaint
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#三角形的代码模式"><span class="toc-number">1.</span> <span class="toc-text">三角形的代码模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何在forEach中使用promise"><span class="toc-number">2.</span> <span class="toc-text">如何在forEach中使用promise</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#忘记使用-catch"><span class="toc-number">3.</span> <span class="toc-text">忘记使用.catch()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用deferred"><span class="toc-number">4.</span> <span class="toc-text">使用deferred</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#忘记使用return"><span class="toc-number">5.</span> <span class="toc-text">忘记使用return</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#返回另外一个promise"><span class="toc-number">5.1.</span> <span class="toc-text">返回另外一个promise</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#返回一个值或undefined"><span class="toc-number">5.2.</span> <span class="toc-text">返回一个值或undefined</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#抛出一个错误"><span class="toc-number">5.3.</span> <span class="toc-text">抛出一个错误</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

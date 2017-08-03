@@ -1,0 +1,706 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>你所不知道的git技巧 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="你所不知道的git使用技巧">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你所不知道的git技巧">
+<meta property="og:url" content="http://ilucas.me/2015/12/17/git-tips/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="你所不知道的git使用技巧">
+<meta property="og:image" content="http://ilucas.me/images/git_log_branch_tag.png">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你所不知道的git技巧">
+<meta name="twitter:description" content="你所不知道的git使用技巧">
+<meta name="twitter:image" content="http://ilucas.me/images/git_log_branch_tag.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/17/git-tips/" title="你所不知道的git技巧" itemprop="url">你所不知道的git技巧</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-17T14:52:13.000Z" itemprop="datePublished"> 发表于 2015-12-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#在log中显示branch和tag"><span class="toc-number">1.</span> <span class="toc-text">在log中显示branch和tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推送分支并关联"><span class="toc-number">2.</span> <span class="toc-text">推送分支并关联</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#track远程分支"><span class="toc-number">3.</span> <span class="toc-text">track远程分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#找出修改属于哪个分支"><span class="toc-number">4.</span> <span class="toc-text">找出修改属于哪个分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#找出满足正则匹配的最后一条commit"><span class="toc-number">5.</span> <span class="toc-text">找出满足正则匹配的最后一条commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stash-未提交的内容"><span class="toc-number">6.</span> <span class="toc-text">stash 未提交的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看不同版本间的文件差异"><span class="toc-number">7.</span> <span class="toc-text">查看不同版本间的文件差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撤销修改"><span class="toc-number">8.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推送远端前清理提交纪录"><span class="toc-number">9.</span> <span class="toc-text">推送远端前清理提交纪录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决冲突"><span class="toc-number">10.</span> <span class="toc-text">解决冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加远程仓库"><span class="toc-number">11.</span> <span class="toc-text">添加远程仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于某个commit创建一个新的分支"><span class="toc-number">12.</span> <span class="toc-text">基于某个commit创建一个新的分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改当前分支名称"><span class="toc-number">13.</span> <span class="toc-text">更改当前分支名称</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#利用git-hooks"><span class="toc-number">14.</span> <span class="toc-text">利用git hooks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他常用命令"><span class="toc-number">15.</span> <span class="toc-text">其他常用命令</span></a></li></ol>
+		
+		</div>
+		
+		<p>Git是我们在项目开发中所使用的版本管理工具，一些常见的基本命令也许我们很熟悉了，下面介绍一些你所不常见但很有用的git使用技巧。<a id="more"></a></p>
+<h4 id="在log中显示branch和tag"><a href="#在log中显示branch和tag" class="headerlink" title="在log中显示branch和tag"></a>在log中显示branch和tag</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log --oneline --decorate</div></pre></td></tr></table></figure>
+<p><img src="/images/git_log_branch_tag.png" alt=""></p>
+<h4 id="推送分支并关联"><a href="#推送分支并关联" class="headerlink" title="推送分支并关联"></a>推送分支并关联</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p>推送本地分支到远端并自动建立关联，如果是用<code>git pull</code>远端的分支，在做了修改后可以直接使用<code>git push</code>命令推送，而不需要加其他参数。然而，<code>git push</code> 会把所有的分支都推送到远端，并且赋以相同的分支名称。为了只推送当前的分支，可以如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global push.default tracking</div></pre></td></tr></table></figure></p>
+<h4 id="track远程分支"><a href="#track远程分支" class="headerlink" title="track远程分支"></a>track远程分支</h4><p>如果你想在远端某个现有分支上进行修改并提交，可以如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -t origin/feature</div></pre></td></tr></table></figure></p>
+<p>这会在你的本地创建一个关联的feature分支，完成操作后可以直接<code>git push</code>到远端。</p>
+<h4 id="找出修改属于哪个分支"><a href="#找出修改属于哪个分支" class="headerlink" title="找出修改属于哪个分支"></a>找出修改属于哪个分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch --contains 50f3754</div></pre></td></tr></table></figure>
+<p>这会帮你找出所有包含这个commit的分支，如果加上<code>-a</code>标识，则还会在远端分支中查找。</p>
+<h4 id="找出满足正则匹配的最后一条commit"><a href="#找出满足正则匹配的最后一条commit" class="headerlink" title="找出满足正则匹配的最后一条commit"></a>找出满足正则匹配的最后一条commit</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git show :/fix</div><div class="line">git show :/^Merge</div></pre></td></tr></table></figure>
+<h4 id="stash-未提交的内容"><a href="#stash-未提交的内容" class="headerlink" title="stash 未提交的内容"></a>stash 未提交的内容</h4><p>如果我们正在开发一个新的feature，现在需要我们修改一个紧急的bug，我们不想提交未完成的新feature，也不想丢失我们已经完成的那部分工作，此时我们可以用<code>stash</code>命令来临时保存我们的修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash</div></pre></td></tr></table></figure></p>
+<p>此时会隐藏我们所做的修改，并且保持一个干净的工作环境，现在我们可以基于这个分支创建一个新的分支来修改bug，当我们完成bug修改后，我们可以在切换到之前的干净分支，并且：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash pop</div></pre></td></tr></table></figure></p>
+<p>可以把你之前的部分工作还原回来。如果你想把之前stash的内容删除掉，可以:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash drop</div></pre></td></tr></table></figure></p>
+<p>此外，查看所有stash列表和清除所有stash如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git stash list</div><div class="line">git stash clear</div></pre></td></tr></table></figure></p>
+<h4 id="查看不同版本间的文件差异"><a href="#查看不同版本间的文件差异" class="headerlink" title="查看不同版本间的文件差异"></a>查看不同版本间的文件差异</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git diff $start_commit..$end_commit -- path/to/file</div></pre></td></tr></table></figure>
+<p>或者直接比较两次提交纪录之间的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git diff $start_commit..$end_commit</div></pre></td></tr></table></figure></p>
+<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><p>如果你需要撤销未提交的修改内容，可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD</div></pre></td></tr></table></figure></p>
+<p>或者撤销某个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout HEAD -- path/to/file</div></pre></td></tr></table></figure></p>
+<p>如果已经提交了文件修改，仍然想revert的话，可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --soft HEAD~1</div></pre></td></tr></table></figure></p>
+<h4 id="推送远端前清理提交纪录"><a href="#推送远端前清理提交纪录" class="headerlink" title="推送远端前清理提交纪录"></a>推送远端前清理提交纪录</h4><p>在推送远端前，本地的分支中可能有许多冗余的提交纪录，此时可以合并或删除部分提交纪录信息，让整个commit更干净。<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git log:</div><div class="line">Commit A</div><div class="line">Commit B</div><div class="line">Commit C</div><div class="line">Commit D</div><div class="line">Commit 0</div></pre></td></tr></table></figure></p>
+<p>比如要合并A，B，C，D为一个commit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rebase -i Commit 0</div></pre></td></tr></table></figure></p>
+<p>在B C D前面设s，退出rebase，编辑commit，这时就成了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Commit X</div><div class="line">Commit 0</div></pre></td></tr></table></figure></p>
+<h4 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h4><p>当我们使用git pull/push 或git merge时，有时会产生一些冲突，可能有些部分文件需要我们手动来解决，还有些冲突文件我们可以确定要么是保留我们local版本的修改，要么是使用remote/other分支的修改。<br>如果我们对所有的冲突文件都保留local或remote分支的修改，那么我们可以：<code>cd project-folder</code>，然后搜索所有的冲突文件：<code>grep -lr &#39;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&#39; ./</code>。执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout --ours PATH/FILE</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout --theirs PATH/FILE</div></pre></td></tr></table></figure></p>
+<p>也可以用如下的流处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -lr &apos;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&apos; . | xargs git checkout --ours</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grep -lr &apos;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&apos; . | xargs git checkout --theirs</div></pre></td></tr></table></figure></p>
+<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><p>在本地添加已经存在的远端仓库，并推送代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/sdaityari/my_git_project.git</div><div class="line">git push -u origin master</div></pre></td></tr></table></figure></p>
+<h4 id="基于某个commit创建一个新的分支"><a href="#基于某个commit创建一个新的分支" class="headerlink" title="基于某个commit创建一个新的分支"></a>基于某个commit创建一个新的分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b old_commit_branch cafb55d</div></pre></td></tr></table></figure>
+<h4 id="更改当前分支名称"><a href="#更改当前分支名称" class="headerlink" title="更改当前分支名称"></a>更改当前分支名称</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -m renamed_branch</div></pre></td></tr></table></figure>
+<h4 id="利用git-hooks"><a href="#利用git-hooks" class="headerlink" title="利用git hooks"></a>利用git hooks</h4><p>在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。</p>
+<h4 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">本地新建并切换到该分支：git checkout -b xxx</div><div class="line">切换到某个分支：git checkout xxx</div><div class="line">撤销本地工作区的所有文件修改：git checkout .</div><div class="line">撤销本地工作区的某个文件修改：git checkout xxx</div><div class="line">撤销暂存区的所有文件修改到工作区：git reset HEAD .</div><div class="line">撤销暂存区中某个文件修改到工作区：git reset HEAD xxx</div><div class="line">撤销上次提交记录但保留修改到暂存区: git reset --soft HEAD~1</div><div class="line">撤销暂存区和工作区的所有文件修改：git reset --hard HEAD</div><div class="line">撤回到上次提交版本(产生一个新的commit): git revert HEAD~1</div><div class="line">查看本地所有分支：git branch</div><div class="line">查看所有分支（包括远程分支）： git branch -a</div><div class="line">删除本地某个分支：git branch -d xxx</div><div class="line">强制删除本地某个分支：git branch -D xxx</div><div class="line">修改本地分支名称：git branch -m old_branch_name new_branch_name  </div><div class="line">删除远程的xxx分支： git push origin :xxx</div><div class="line">推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch</div><div class="line">--track test origin/test)</div><div class="line">推送本地分支到远程并track：git push -u origin test</div><div class="line">获取远程某个分支（clone）：先在master分支上git pull， 然后git checkout -b acl-624/zoro origin/acl-624（如果本地分支名已经存在，就不需要－b参数）</div><div class="line">获取远程某个分支（track）：git checkout --track origin/int06</div><div class="line">合并xxx分支到当前分支：git merge xxx</div><div class="line">查看本地分支与远程分支的差异：git diff master origin/master</div><div class="line">查看工作区和暂存区的diff：git diff</div><div class="line">查看暂存区和历史记录区的diff：git diff —cached</div><div class="line">查看工作区和历史记录区的diff：git diff HEAD</div><div class="line">查看某个commit id的修改内容：git show 19311ff5720ff3660f875</div><div class="line">清除非git管理的文件：git clean -fd</div><div class="line">修改当前分支名称：git branch -m newname</div><div class="line">拉取远端某个分支合并到当前分支：git pull origin test    (git pull会拉取所有的远端分支并合并到本地)</div><div class="line">应用某个特定stash：git stash apply stash@&#123;xxx&#125;</div><div class="line">删除某个特定stash：git stash drop stash@&#123;xxx&#125;</div><div class="line">撤销暂存区新创建且尚未提交的文件到本地：git rm --cached mistake_file</div><div class="line">本地和暂存区同时删除：git rm xxx</div><div class="line">修改最近一次的提交comment: git commit --amend -m &quot;New Message&quot;</div><div class="line">查看仓库中某个文件每行的提交信息：git blame my_file</div><div class="line">查看最近2次的提交历史记录：git log -2</div><div class="line">查看file1文件file2文件的提交记录：git log file1 file2</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/other/">other</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Git/">Git</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2015/12/17/git-tips/" data-title="你所不知道的git技巧 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/12/29/restful-api-guidence/" title="RESTful API">
+  <strong>上一篇：</strong><br/>
+  <span>
+  RESTful API</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/11/27/animations-part-5/"  title="Web Animation API（五）">
+ <strong>下一篇：</strong><br/> 
+ <span>Web Animation API（五）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#在log中显示branch和tag"><span class="toc-number">1.</span> <span class="toc-text">在log中显示branch和tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推送分支并关联"><span class="toc-number">2.</span> <span class="toc-text">推送分支并关联</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#track远程分支"><span class="toc-number">3.</span> <span class="toc-text">track远程分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#找出修改属于哪个分支"><span class="toc-number">4.</span> <span class="toc-text">找出修改属于哪个分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#找出满足正则匹配的最后一条commit"><span class="toc-number">5.</span> <span class="toc-text">找出满足正则匹配的最后一条commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stash-未提交的内容"><span class="toc-number">6.</span> <span class="toc-text">stash 未提交的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看不同版本间的文件差异"><span class="toc-number">7.</span> <span class="toc-text">查看不同版本间的文件差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撤销修改"><span class="toc-number">8.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#推送远端前清理提交纪录"><span class="toc-number">9.</span> <span class="toc-text">推送远端前清理提交纪录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决冲突"><span class="toc-number">10.</span> <span class="toc-text">解决冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加远程仓库"><span class="toc-number">11.</span> <span class="toc-text">添加远程仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于某个commit创建一个新的分支"><span class="toc-number">12.</span> <span class="toc-text">基于某个commit创建一个新的分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改当前分支名称"><span class="toc-number">13.</span> <span class="toc-text">更改当前分支名称</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#利用git-hooks"><span class="toc-number">14.</span> <span class="toc-text">利用git hooks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他常用命令"><span class="toc-number">15.</span> <span class="toc-text">其他常用命令</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

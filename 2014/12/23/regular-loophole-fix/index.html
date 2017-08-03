@@ -1,0 +1,693 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>常规漏洞修复方案 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="前端开发中常见的漏洞，以及如何修复">
+<meta name="keywords" content="security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常规漏洞修复方案">
+<meta property="og:url" content="http://ilucas.me/2014/12/23/regular-loophole-fix/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="前端开发中常见的漏洞，以及如何修复">
+<meta property="og:updated_time" content="2017-08-02T03:04:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常规漏洞修复方案">
+<meta name="twitter:description" content="前端开发中常见的漏洞，以及如何修复">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/23/regular-loophole-fix/" title="常规漏洞修复方案" itemprop="url">常规漏洞修复方案</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-23T08:57:38.000Z" itemprop="datePublished"> 发表于 2014-12-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#管理后台对外"><span class="toc-number">1.</span> <span class="toc-text">管理后台对外</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XSS漏洞"><span class="toc-number">2.</span> <span class="toc-text">XSS漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#普通XSS"><span class="toc-number">2.1.</span> <span class="toc-text">普通XSS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#json-XSS"><span class="toc-number">2.2.</span> <span class="toc-text">json XSS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flash-xss"><span class="toc-number">2.3.</span> <span class="toc-text">flash xss</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sql注入"><span class="toc-number">3.</span> <span class="toc-text">Sql注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx解析漏洞"><span class="toc-number">4.</span> <span class="toc-text">Nginx解析漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#URL跳转"><span class="toc-number">5.</span> <span class="toc-text">URL跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVN信息泄露"><span class="toc-number">6.</span> <span class="toc-text">SVN信息泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件包含"><span class="toc-number">7.</span> <span class="toc-text">文件包含</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Strusts命令执行"><span class="toc-number">8.</span> <span class="toc-text">Strusts命令执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列目录"><span class="toc-number">9.</span> <span class="toc-text">列目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WEB-INF目录被访问"><span class="toc-number">10.</span> <span class="toc-text">WEB-INF目录被访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apache-httponly-cookie泄露"><span class="toc-number">11.</span> <span class="toc-text">apache httponly cookie泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本泄露"><span class="toc-number">12.</span> <span class="toc-text">版本泄露</span></a></li></ol>
+		
+		</div>
+		
+		<p>总结和收集了一些前后台漏洞修复的方案。<a id="more"></a></p>
+<h4 id="管理后台对外"><a href="#管理后台对外" class="headerlink" title="管理后台对外"></a>管理后台对外</h4><p>Apache 配置文件中修改: <code>vim /etc/httpd/conf.d/wp.conf</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&amp;lt;Directory /var/www/html/wp/wp-admin&gt;</div><div class="line">Order Deny,Allow</div><div class="line">Deny from all</div><div class="line">Allow from 61.135.165</div><div class="line">Allow from 220.181.50</div><div class="line">Allow from 61.135.169</div><div class="line">Allow from 220.181.38</div><div class="line">&amp;lt;/Directory&gt;</div></pre></td></tr></table></figure></p>
+<p>在…/admin/ 目录下设置 .htaccess文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">order deny,allow</div><div class="line">deny from all</div><div class="line">allow from 61.135.165.142/26</div><div class="line">allow from 220.181.50.206/26</div><div class="line">allow from 61.135.169.68/27</div><div class="line">allow from 220.181.38.100/27</div><div class="line">allow from 172.0.0.0/8</div><div class="line">allow from 10.0.0.0/8</div></pre></td></tr></table></figure></p>
+<p>Nignx配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">location /private/ &#123;</div><div class="line">    allow 192.168.1.0/24;</div><div class="line">    deny all;</div><div class="line">&#125;</div><div class="line">location ~ ^/private/.*\.php$ &#123;</div><div class="line">    allow 192.168.1.0/24;</div><div class="line">    deny all;</div><div class="line">    include conf/enable_php5.conf;</div><div class="line">&#125;</div><div class="line">location ~ \.php$ &#123;</div><div class="line">    include conf/enable_php5.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PHP文件中修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$laiyuanip=$_SERVER[&apos;REMOTE_ADDR&apos;];</div><div class="line">if ($ceshijieguo=ereg(&apos;^(220.181.50|61.135.165|61.135.169|123.125.64|123.125.113|220.181.38 |10. )&apos;, &quot;$laiyuanip&quot;) )&#123;</div><div class="line">    echo &quot;&quot;;</div><div class="line">&#125; else &#123;</div><div class="line">    echo &apos;IP 未授权&apos;;</div><div class="line">    exit;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="XSS漏洞"><a href="#XSS漏洞" class="headerlink" title="XSS漏洞"></a>XSS漏洞</h4><h5 id="普通XSS"><a href="#普通XSS" class="headerlink" title="普通XSS"></a>普通XSS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1、Htmlspecialchars、htmlentities</div><div class="line">$help_array = htmlspecialchars($params[&apos;help_array&apos;]);</div><div class="line">2、str_replace</div><div class="line">str_replace(array(&apos;&lt;&apos;,&apos;&gt;&apos;), array(&apos;&amp;lt;&apos;,&apos;&amp;gt;&apos;), $question[&apos;title&apos;]);</div><div class="line">3、如果是smarty ，参考利用Smarty自动转义来避免简单XSS</div></pre></td></tr></table></figure>
+<h5 id="json-XSS"><a href="#json-XSS" class="headerlink" title="json XSS"></a>json XSS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(1) 设置响应类型为 header(&quot;Content-Type:text/javascript; charset=UTF-8&quot;);</div><div class="line">(2) 白名单法：</div><div class="line">$score = $_REQUEST[&apos;score&apos;];</div><div class="line">if(preg_match(&apos;/[0-9]&#123;1,2&#125;/$&apos;, $score)!==1)&#123;</div><div class="line">    echo &quot;&quot;; return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="flash-xss"><a href="#flash-xss" class="headerlink" title="flash xss"></a>flash xss</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(1)将ExternalInterface.call参数写死</div><div class="line">(2)过滤法：</div><div class="line">_loc_1 = this.loaderInfo.parameters;</div><div class="line">ExternalInterface.addCallback(&quot;capture&quot;, this.capture);</div><div class="line">_loc_2 = /\W/g;</div><div class="line">ExternalInterface.call(_loc_2.test(_loc_1[&quot;loadedCallback&quot;]) ? (&quot;a&quot;) : (_loc_1[&quot;loadedCallback&quot;]));</div></pre></td></tr></table></figure>
+<h4 id="Sql注入"><a href="#Sql注入" class="headerlink" title="Sql注入"></a>Sql注入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1、对字符串 mysql_escape_string</div><div class="line">$paramStr = mysql_real_escape_string($paramStr);</div><div class="line">2、对数字 intval</div><div class="line">$param  = intval ($param);</div></pre></td></tr></table></figure>
+<h4 id="Nginx解析漏洞"><a href="#Nginx解析漏洞" class="headerlink" title="Nginx解析漏洞"></a>Nginx解析漏洞</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">（1）php.ini中 cgi.fix_pathinfo = 0</div><div class="line">（2）lighttpd增加rewrite规则：</div><div class="line">  &quot;\..*/.*\.php&quot; =&gt;&quot;/index.php&quot;,</div></pre></td></tr></table></figure>
+<h4 id="URL跳转"><a href="#URL跳转" class="headerlink" title="URL跳转"></a>URL跳转</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">（1）校验refer:</div><div class="line">if (strpos($_SERVER[&apos;HTTP_REFERER&apos;], &apos;baidu.com&apos;) ==false)&#123;</div><div class="line">    echo “非法跳转”;</div><div class="line">    exit();</div><div class="line">&#125;</div><div class="line">（2）校验url:</div><div class="line">if(strpos($red_url[0],&quot;baidu.com/&quot; ) === false)&#123;</div><div class="line">    echo “非法跳转”;</div><div class="line">    exit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="SVN信息泄露"><a href="#SVN信息泄露" class="headerlink" title="SVN信息泄露"></a>SVN信息泄露</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ./  -type d -name &quot;.svn&quot; |xargs rm –rf &#123;&#125;</div></pre></td></tr></table></figure>
+<h4 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(1)过滤法：</div><div class="line">$filename = $_GET(&quot;filename&quot;);</div><div class="line">$filter_tags = array(&apos;..&apos;,&apos;%00&apos;);</div><div class="line">$filename = str_replace($filter_tags,&apos;&apos;,$filename);</div><div class="line">(2)正则法：</div><div class="line">$filename = $_GET[&apos;filename&apos;];</div><div class="line">if(preg_match(&quot;/^[a-zA-Z0-9_-]+$/&quot;,$filename) || preg_match(&quot;/^[a-zA-Z0-9_-]*\.[a-zA-Z]&#123;3&#125;$/&quot;,$filename)) &#123;</div><div class="line">&#125; else &#123;</div><div class="line">    echo &quot;非法字符&quot;;</div><div class="line">    exit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Strusts命令执行"><a href="#Strusts命令执行" class="headerlink" title="Strusts命令执行"></a>Strusts命令执行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">1、升级版本</div><div class="line">2、在struts.xml中加入了excludeParams从而限制范围</div><div class="line">3、过滤法</div><div class="line">private String filterOnglString(String url)&#123;</div><div class="line">    if(url != null)&#123;</div><div class="line">        return url.replaceAll(&quot;%\\&#123;.*\\&#125;&quot;, &quot;&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        return url;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="列目录"><a href="#列目录" class="headerlink" title="列目录"></a>列目录</h4><p>修改Apache配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">已经对wm.baidu.com/kr目录进行权限控制</div><div class="line">&amp;lt;Directory &quot;/home/work/kr/kr&quot;&gt;</div><div class="line">Options Indexes FollowSymLinks</div><div class="line">AllowOverride None</div><div class="line">Order allow,deny</div><div class="line">deny from all</div><div class="line">&amp;lt;/Directory&gt;</div></pre></td></tr></table></figure><br>或者：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&amp;lt;Directory &quot;/home/work/kr/kr &quot;&gt;</div><div class="line">Options -Indexes -MultiViews FollowSymLinks</div><div class="line">AllowOverride None</div><div class="line">Order allow,deny</div><div class="line">Allow from all</div><div class="line">&amp;lt;/Directory&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="WEB-INF目录被访问"><a href="#WEB-INF目录被访问" class="headerlink" title="WEB-INF目录被访问"></a>WEB-INF目录被访问</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&amp;lt;Directory &quot;/home/work/local/apache/htdocs/WEB-INF&quot;&gt;</div><div class="line">    Deny from all</div><div class="line">&amp;lt;/Directory&gt;</div></pre></td></tr></table></figure>
+<h4 id="apache-httponly-cookie泄露"><a href="#apache-httponly-cookie泄露" class="headerlink" title="apache httponly cookie泄露"></a>apache httponly cookie泄露</h4><p>当apache接收到一个大于4k的cookie的时候，会返回一个400的错误，并且把所有的cookie完整的在页面当中显示出来，提示这个cookie过大，那么我们的攻击方式便是利用xss，给用户在正常的cookie的基础上再增加一些无用的cookie，使用户的cookie大于4k，然后js再发包请求一次网站，这时apache返回的响应就是400，并把cookie显示出来，这时我们只要用js正则匹配出正常的cookie即可，由于不是js直接获取cookie，而只是正则匹配出返回的字符串而已，便相当于绕过了cookie的httponly的属性，完整的攻击再加上把匹配的字符串再发送到自己的一个接受文件当中即可。<br>解决方案：<br>建议一：升级apache 版本 &gt; 2.2.22</p>
+<p>建议二：自定义400错误页面输出一个简单生硬的错误代码：</p>
+<p><code>ErrorDocument 400 &quot;Bad Request 400&quot;</code></p>
+<h4 id="版本泄露"><a href="#版本泄露" class="headerlink" title="版本泄露"></a>版本泄露</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(1) Nginx</div><div class="line">修改nginx配置文件nginx.conf中的server_tokens为off</div><div class="line">(2) Apache</div><div class="line">修改httpd.conf</div><div class="line">ServerSignature Off</div><div class="line">ServerTokens ProductOnly</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/security/">security</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/security/">security</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2014/12/23/regular-loophole-fix/" data-title="常规漏洞修复方案 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/12/25/page-route-security/" title="页面跳转的安全实现">
+  <strong>上一篇：</strong><br/>
+  <span>
+  页面跳转的安全实现</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/12/23/javascript_inherit_mechanism/"  title="JavaScript的继承机制">
+ <strong>下一篇：</strong><br/> 
+ <span>JavaScript的继承机制
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#管理后台对外"><span class="toc-number">1.</span> <span class="toc-text">管理后台对外</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XSS漏洞"><span class="toc-number">2.</span> <span class="toc-text">XSS漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#普通XSS"><span class="toc-number">2.1.</span> <span class="toc-text">普通XSS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#json-XSS"><span class="toc-number">2.2.</span> <span class="toc-text">json XSS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flash-xss"><span class="toc-number">2.3.</span> <span class="toc-text">flash xss</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sql注入"><span class="toc-number">3.</span> <span class="toc-text">Sql注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx解析漏洞"><span class="toc-number">4.</span> <span class="toc-text">Nginx解析漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#URL跳转"><span class="toc-number">5.</span> <span class="toc-text">URL跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVN信息泄露"><span class="toc-number">6.</span> <span class="toc-text">SVN信息泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件包含"><span class="toc-number">7.</span> <span class="toc-text">文件包含</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Strusts命令执行"><span class="toc-number">8.</span> <span class="toc-text">Strusts命令执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列目录"><span class="toc-number">9.</span> <span class="toc-text">列目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WEB-INF目录被访问"><span class="toc-number">10.</span> <span class="toc-text">WEB-INF目录被访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#apache-httponly-cookie泄露"><span class="toc-number">11.</span> <span class="toc-text">apache httponly cookie泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本泄露"><span class="toc-number">12.</span> <span class="toc-text">版本泄露</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/api/" title="api">api<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
