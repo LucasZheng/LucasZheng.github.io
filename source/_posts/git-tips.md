@@ -1,4 +1,4 @@
-title: 你所不知道的git技巧 
+title: 你所不知道的git技巧
 description: 你所不知道的git使用技巧
 date: 2015-12-17 22:52:13
 categories:
@@ -159,8 +159,8 @@ git branch -m renamed_branch
 查看所有分支（包括远程分支）： git branch -a
 删除本地某个分支：git branch -d xxx
 强制删除本地某个分支：git branch -D xxx
-修改本地分支名称：git branch -m old_branch_name new_branch_name  
-删除远程的xxx分支： git push origin :xxx
+修改本地分支名称：git branch -m old_branch_name new_branch_name
+删除远程的xxx分支： git push origin :xxx 或者 git push origin --delete xxx
 推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch
 --track test origin/test)
 推送本地分支到远程并track：git push -u origin test
@@ -183,4 +183,11 @@ git branch -m renamed_branch
 查看仓库中某个文件每行的提交信息：git blame my_file
 查看最近2次的提交历史记录：git log -2
 查看file1文件file2文件的提交记录：git log file1 file2
+显示所有tag：git tag
+当前分支新建tag：git tag -a v1.4 -m 'my version 1.4'
+查看某个tag：git show v1.4
+推送tag到远端服务器：git push origin v1.4
+推送本地所有的tag到远端服务器：git push origin --tags
+删除本地tag：git tag -d v1.4
+删除远程tag(需要删除权限)：git push origin :refs/tags/v1.4
 ```
