@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>debounce和throttle的区别 | Lucas</title>
+    <title>将footer固定在页面底部的实现方法 | Lucas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lucas">
     
 
     
-    <meta name="description" content="理解debounce和throttle之间的差异">
-<meta name="keywords" content="performance">
+    <meta name="description" content="将footer固定在页面底部的实现方法">
+<meta name="keywords" content="html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="debounce和throttle的区别">
-<meta property="og:url" content="http://ilucas.me/2015/10/11/difference-debounce-throttle/index.html">
+<meta property="og:title" content="将footer固定在页面底部的实现方法">
+<meta property="og:url" content="http://ilucas.me/2015/04/23/html-footer-bottom/index.html">
 <meta property="og:site_name" content="Lucas">
-<meta property="og:description" content="理解debounce和throttle之间的差异">
-<meta property="og:updated_time" content="2018-06-06T12:48:22.000Z">
+<meta property="og:description" content="将footer固定在页面底部的实现方法">
+<meta property="og:updated_time" content="2018-09-04T07:27:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="debounce和throttle的区别">
-<meta name="twitter:description" content="理解debounce和throttle之间的差异">
+<meta name="twitter:title" content="将footer固定在页面底部的实现方法">
+<meta name="twitter:description" content="将footer固定在页面底部的实现方法">
 
     
     <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/11/difference-debounce-throttle/" title="debounce和throttle的区别" itemprop="url">debounce和throttle的区别</a>
+      <a href="/2015/04/23/html-footer-bottom/" title="将footer固定在页面底部的实现方法" itemprop="url">将footer固定在页面底部的实现方法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-11T14:52:13.000Z" itemprop="datePublished"> 发表于 2015-10-11</time>
+    <time datetime="2015-04-23T14:54:13.000Z" itemprop="datePublished"> 发表于 2015-04-23</time>
     
   </p>
 </header>
@@ -97,20 +97,25 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-number">1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何使用"><span class="toc-number">2.</span> <span class="toc-text">如何使用</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一：footer高度固定-绝对定位"><span class="toc-number">1.</span> <span class="toc-text">方法一：footer高度固定+绝对定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二：footer高度固定-margin负值"><span class="toc-number">2.</span> <span class="toc-text">方法二：footer高度固定+margin负值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法三：footer高度任意-js"><span class="toc-number">3.</span> <span class="toc-text">方法三：footer高度任意+js</span></a></li></ol>
 		
 		</div>
 		
-		<p>debounce和throttle常被用来处理DOM相关事件，通过限制事件的执行频率来提升性能。但它们之间也有使用场景的差别。<a id="more"></a><br>throttle强调的是函数间隔多长时间执行一次。比如说在10秒中函数执行1000次，但是如果你通过throttle设置每隔100毫秒执行一次的话，那么它就最多会执行100次。<br>debounce则是在指定时间内如果没有执行该函数的话，则马上执行该函数，比如说100毫秒后如果还没有执行处理函数，那么就在100毫秒后马上执行。比如一个函数在3秒内执行1000次，然后停止执行。如果你通过debounce设置函数的执行时间为100毫秒，那么该函数只会在3.1秒的时候执行一次，在debounce设置的100毫秒内由于会触发函数的执行，因此它不断的重置这个timer。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>这两个函数常被用来处理DOM事件，比如滚动页面和resize页面大小。比如你在一个元素上绑定了scroll事件，想让元素向下滚动5000px，并且触发100次以上的scroll事件，如果你的处理函数涉及很大的计算量的话，你就会发现在滚动时页面会存在一定的性能问题，如果此时你减少scroll事件的执行次数，那么性能就会得到很大的提升。<br>常用的场景：</p>
-<ul>
-<li>等到resize结束时执行处理函数</li>
-<li>等用户停止输入时触发ajax调用</li>
-<li>考虑scroll的位置并设置最多50毫秒执行一次scroll事件</li>
-<li>当你在页面上拖动元素时</li>
-</ul>
-<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>这两个函数在<code>Underscore</code>和<code>Lodash</code>中都得到了实现。即使你在项目中不会使用到这两个库，你也可以把它们抽出来放在你自己的项目中使用。<br>jQuery使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"body"</span>).on(<span class="string">'scroll'</span>, _.throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
-<p>resize：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).on(<span class="string">'resize'</span>, _.debounce(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
+		<p>在前端开发中，需要将共用的footer组件始终置于页面的底部，下面介绍几种实现方法<a id="more"></a></p>
+<h4 id="方法一：footer高度固定-绝对定位"><a href="#方法一：footer高度固定-绝对定位" class="headerlink" title="方法一：footer高度固定+绝对定位"></a>方法一：footer高度固定+绝对定位</h4><p>HTML结构：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span>header<span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">main</span>&gt;</span>main content<span class="tag">&lt;/<span class="name">main</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span>footer<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>css设置：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">html</span>&#123;<span class="attribute">height</span>:<span class="number">100%</span>;&#125;</div><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">min-height</span>:<span class="number">100%</span>;<span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">position</span>:relative;&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">header</span>&#123;<span class="attribute">background-color</span>: <span class="number">#ffe4c4</span>;&#125;</div><div class="line"><span class="selector-tag">main</span>&#123;<span class="attribute">padding-bottom</span>:<span class="number">100px</span>;<span class="attribute">background-color</span>: <span class="number">#bdb76b</span>;&#125;<span class="comment">/* main的padding-bottom值要等于或大于footer的height值 */</span></div><div class="line"><span class="selector-tag">footer</span>&#123;<span class="attribute">position</span>:absolute;<span class="attribute">bottom</span>:<span class="number">0</span>;<span class="attribute">width</span>:<span class="number">100%</span>;<span class="attribute">height</span>:<span class="number">100px</span>;<span class="attribute">background-color</span>: <span class="number">#ffc0cb</span>;&#125;</div></pre></td></tr></table></figure>
+<h4 id="方法二：footer高度固定-margin负值"><a href="#方法二：footer高度固定-margin负值" class="headerlink" title="方法二：footer高度固定+margin负值"></a>方法二：footer高度固定+margin负值</h4><p>HTML结构：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span>header<span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">main</span>&gt;</span>main content<span class="tag">&lt;/<span class="name">main</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span>footer<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>css设置：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">html</span>,<span class="selector-tag">body</span>&#123;<span class="attribute">height</span>:<span class="number">100%</span>;<span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.container</span>&#123;<span class="attribute">min-height</span>:<span class="number">100%</span>;&#125;</div><div class="line"><span class="selector-tag">header</span>&#123;<span class="attribute">background-color</span>: <span class="number">#ffe4c4</span>;&#125;</div><div class="line"><span class="selector-tag">main</span>&#123;<span class="attribute">padding-bottom</span>:<span class="number">100px</span>;<span class="attribute">background-color</span>: <span class="number">#bdb76b</span>;&#125;<span class="comment">/* main的padding-bottom值要等于或大于footer的height值 */</span></div><div class="line"><span class="selector-tag">footer</span>&#123;<span class="attribute">height</span>:<span class="number">100px</span>;<span class="attribute">margin-top</span>:-<span class="number">100px</span>;<span class="attribute">background-color</span>: <span class="number">#ffc0cb</span>;&#125;<span class="comment">/* margin-top（负值的）高度等于footer的height*/</span></div></pre></td></tr></table></figure>
+<h4 id="方法三：footer高度任意-js"><a href="#方法三：footer高度任意-js" class="headerlink" title="方法三：footer高度任意+js"></a>方法三：footer高度任意+js</h4><p>HTML结构：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span>header<span class="tag">&lt;/<span class="name">header</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">main</span>&gt;</span>main content<span class="tag">&lt;/<span class="name">main</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span>footer<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>css设置：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">html</span>,<span class="selector-tag">body</span>&#123;<span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>: <span class="number">0</span>;&#125;</div><div class="line"><span class="selector-tag">header</span>&#123;<span class="attribute">background-color</span>: <span class="number">#ffe4c4</span>;&#125;</div><div class="line"><span class="selector-tag">main</span>&#123;<span class="attribute">background-color</span>: <span class="number">#bdb76b</span>;&#125;</div><div class="line"><span class="selector-tag">footer</span>&#123;<span class="attribute">background-color</span>: <span class="number">#ffc0cb</span>;&#125;</div><div class="line"></div><div class="line"><span class="comment">/* 动态为footer添加类fixed-bottom */</span></div><div class="line"><span class="selector-class">.fixed-bottom</span> &#123;<span class="attribute">position</span>: fixed;<span class="attribute">bottom</span>: <span class="number">0</span>;<span class="attribute">width</span>:<span class="number">100%</span>;&#125;</div></pre></td></tr></table></figure>
+<p>js代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">footerPosition</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">"footer"</span>).removeClass(<span class="string">"fixed-bottom"</span>);</div><div class="line">    <span class="keyword">var</span> contentHeight = <span class="built_in">document</span>.body.scrollHeight,<span class="comment">//网页正文全文高度</span></div><div class="line">      winHeight = <span class="built_in">window</span>.innerHeight;<span class="comment">//可视窗口高度，不包括浏览器顶部工具栏</span></div><div class="line">    <span class="keyword">if</span>(!(contentHeight &gt; winHeight))&#123;</div><div class="line">      <span class="comment">//当网页正文高度小于可视窗口高度时，为footer添加类fixed-bottom</span></div><div class="line">      $(<span class="string">"footer"</span>).addClass(<span class="string">"fixed-bottom"</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  footerPosition();</div><div class="line">  $(<span class="built_in">window</span>).resize(footerPosition);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -118,13 +123,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  <a class="article-category-link" href="/categories/html/">html</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/performance/">performance</a>
+  <span></span> <a href="/tags/html/">html</a>
   </div>
 
 </div>
@@ -134,7 +139,7 @@
 	<div class="article-share" id="share">
 	
     <!--
-	  <div data-url="http://ilucas.me/2015/10/11/difference-debounce-throttle/" data-title="debounce和throttle的区别 | Lucas" data-tsina="null" class="share clearfix">
+	  <div data-url="http://ilucas.me/2015/04/23/html-footer-bottom/" data-title="将footer固定在页面底部的实现方法 | Lucas" data-tsina="null" class="share clearfix">
 	  </div>
     -->
 	
@@ -149,18 +154,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/12/13-must-know-chrome-devtools-tips-tricks/" title="chrome调试器中的13个技巧和窍门">
+ <a href="/2015/05/25/deep-learn-promise/" title="深入了解promise">
   <strong>上一篇：</strong><br/>
   <span>
-  chrome调试器中的13个技巧和窍门</span>
+  深入了解promise</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/10/10/flex-grammar/"  title="flex布局教程（转）">
+<a href="/2015/03/29/repaint-reflow-md/"  title="web性能优化之－－reflow和repaint">
  <strong>下一篇：</strong><br/> 
- <span>flex布局教程（转）
+ <span>web性能优化之－－reflow和repaint
 </span>
 </a>
 </div>
@@ -175,7 +180,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-number">1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何使用"><span class="toc-number">2.</span> <span class="toc-text">如何使用</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一：footer高度固定-绝对定位"><span class="toc-number">1.</span> <span class="toc-text">方法一：footer高度固定+绝对定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二：footer高度固定-margin负值"><span class="toc-number">2.</span> <span class="toc-text">方法二：footer高度固定+margin负值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法三：footer高度任意-js"><span class="toc-number">3.</span> <span class="toc-text">方法三：footer高度任意+js</span></a></li></ol>
  
   </div>
 
