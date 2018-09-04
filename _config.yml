@@ -71,5 +71,5 @@ stylus:
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com/LucasZheng/LucasZheng.github.io.git
+  repo: git@github.com:LucasZheng/LucasZheng.github.io.git
   branch: master
