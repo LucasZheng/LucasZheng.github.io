@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ilucas.me/2018/09/12/intersection-observer-api/</loc>
+    
+    <lastmod>2018-09-12T08:04:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ilucas.me/2015/04/23/html-footer-bottom/</loc>
     
     <lastmod>2018-09-04T07:27:32.000Z</lastmod>
@@ -16,20 +23,6 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2014/12/28/linux-remove-error-file/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
@@ -37,7 +30,28 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/</loc>
+    <loc>http://ilucas.me/2015/11/25/animations-part-2/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/11/26/animations-part-3/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/11/26/animations-part-4/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2017/08/03/css-focus-within/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -58,13 +72,6 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/03/22/css-modular-md/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ilucas.me/2015/07/21/css-vertical-align/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
@@ -72,21 +79,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2017/08/03/css-focus-within/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/06/01/css3-media-queries-for-specific-device-md/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2014/12/22/css3-advance-selector/</loc>
+    <loc>http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -100,6 +93,27 @@
   </url>
   
   <url>
+    <loc>http://ilucas.me/2015/03/22/css-modular-md/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/06/01/css3-media-queries-for-specific-device-md/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/05/25/deep-learn-promise/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ilucas.me/2016/03/07/difference-between-tdd-and-bdd/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
@@ -107,28 +121,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/08/25/es6-unicode-regex/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/10/11/difference-debounce-throttle/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2016/03/01/eslint-guide/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2014/12/25/frontend-optimize-basic/</loc>
+    <loc>http://ilucas.me/2014/12/22/css3-advance-selector/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -142,28 +135,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/10/10/flex-grammar/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/11/26/animations-part-3/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2014/12/23/javascript_inherit_mechanism/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/03/17/angular-backbone-ember-md/</loc>
+    <loc>http://ilucas.me/2016/03/01/eslint-guide/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -177,7 +149,42 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/11/25/animations-intro/</loc>
+    <loc>http://ilucas.me/2015/08/25/es6-unicode-regex/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/10/10/flex-grammar/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2014/12/25/frontend-optimize-basic/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/03/17/angular-backbone-ember-md/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2014/12/23/javascript_inherit_mechanism/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -191,6 +198,20 @@
   </url>
   
   <url>
+    <loc>http://ilucas.me/2014/12/28/linux-remove-error-file/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/11/25/animations-intro/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ilucas.me/2015/09/15/make-full-screen-sections-with-1-line-of-css/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
@@ -198,7 +219,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/11/26/animations-part-4/</loc>
+    <loc>http://ilucas.me/2014/12/25/page-route-security/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -206,13 +227,6 @@
   
   <url>
     <loc>http://ilucas.me/2015/08/05/new-regular-expression-es6/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2014/12/25/page-route-security/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -233,7 +247,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2014/12/23/regular-loophole-fix/</loc>
+    <loc>http://ilucas.me/2015/09/13/promises-in-javascript-unit-test/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -247,13 +261,6 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/03/29/repaint-reflow-md/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ilucas.me/2015/12/29/restful-api-guidence/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
@@ -261,7 +268,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/</loc>
+    <loc>http://ilucas.me/2014/12/23/regular-loophole-fix/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -275,63 +282,7 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/09/27/secure-single-page-app-problem/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/09/13/promises-in-javascript-unit-test/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2016/01/20/using-svg/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/03/16/why-webcomponent-important-md/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/05/25/deep-learn-promise/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/09/07/vue-js-tutorial/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/09/20/what-a-css-code-review-might-look-like/</loc>
-    
-    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ilucas.me/2015/08/03/window-fetch-api/</loc>
+    <loc>http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     
@@ -345,7 +296,63 @@
   </url>
   
   <url>
-    <loc>http://ilucas.me/2015/11/25/animations-part-2/</loc>
+    <loc>http://ilucas.me/2015/09/27/secure-single-page-app-problem/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2016/01/20/using-svg/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/09/20/what-a-css-code-review-might-look-like/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/09/07/vue-js-tutorial/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/03/16/why-webcomponent-important-md/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/10/11/difference-debounce-throttle/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/08/03/window-fetch-api/</loc>
+    
+    <lastmod>2018-06-06T12:48:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ilucas.me/2015/03/29/repaint-reflow-md/</loc>
     
     <lastmod>2018-06-06T12:48:22.000Z</lastmod>
     

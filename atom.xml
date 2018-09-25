@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ilucas.me/"/>
-  <updated>2018-06-06T12:48:22.000Z</updated>
+  <updated>2018-09-12T08:04:54.000Z</updated>
   <id>http://ilucas.me/</id>
   
   <author>
@@ -14,6 +14,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Intersection Observer API使用介绍</title>
+    <link href="http://ilucas.me/2018/09/12/intersection-observer-api/"/>
+    <id>http://ilucas.me/2018/09/12/intersection-observer-api/</id>
+    <published>2018-09-12T04:52:13.000Z</published>
+    <updated>2018-09-12T08:04:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Intersection observer API提供了一种基于异步的方式来观察目标元素与父元素或根元素相交的变化检测。<a id="more"></a>通俗的讲就是检测一个元素视图是否和它的父元素视图或根元素（浏览器视窗）重叠，重叠的比例有多少，但这种检测方式是异步实现的，不影响网站的使用体验。</p>
+<p>在日常开发中，有许多应用场景需要用到这种检测方式，比如：</p>
+<ul>
+<li>当页面滚动时，懒加载图片或其他内容；</li>
+<li>实现“可无限滚动”网站，也就是当用户滚动网页时直接加载更多内容，无需翻页；</li>
+<li>为计算广告收益，检测其广告元素的曝光情况；</li>
+<li>根据用户是否已滚动到相应区域来灵活开始执行任务或动画；</li>
+</ul>
+<p>可以通过<a href="https://caniuse.com/#search=intersection" target="_blank" rel="external">Can I Use</a>查询Intersection observer API的浏览器兼容情况，截止到目前各主流浏览器的兼容如下：<br><img src="/images/intersection_observer_browser_support.png" alt="intersection_observer_browser_support"></p>
+<p>过去，检测元素是否出现在特定区域内往往需要不断的监听scroll事件，根据计算的特定规则（文档高度 - 视口高度 - 滚动条滚动高度 &lt; 某个特定的值）来执行相应的任务（如向后端请求数据）。可是这些代码都在主线程上运行，任何一点计算开销都可能造成性能问题。当网页遍布这些代码时就显得比较丑陋了。</p>
+<h4 id="Intersection-observer用法"><a href="#Intersection-observer用法" class="headerlink" title="Intersection observer用法"></a>Intersection observer用法</h4><p>Intersection observer 允许你配置一个回调函数，每当target元素和设备视口或者其他指定元素发生交集的时候该回调函数将会被执行。如果设置root参数为null或者不设置则root默认为设备视口，每当tartget元素在root元素中的可见性交集数量发生变化(target元素的位置在root中发生变化)都会执行你提供的回调函数。</p>
+<p>创建一个 IntersectionObserver对象并传入相应参数和回调用函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> options = &#123;</div><div class="line">  <span class="attr">root</span>: <span class="built_in">document</span>.querySelector(<span class="string">'#scrollArea'</span>),</div><div class="line">  <span class="attr">rootMargin</span>: <span class="string">'0px'</span>,</div><div class="line">  <span class="attr">threshold</span>: <span class="number">1.0</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> callback = <span class="function">(<span class="params">entries, observer</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">/* 回调任务 */</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> IntersectionObserver(callback, options)</div></pre></td></tr></table></figure>
+<p>Intersection observer参数说明：</p>
+<p><code>root</code></p>
+<p>与target元素将要相交的父元素，如果root参数指定为null或者不指定的时候默认使用浏览器视口做为root。</p>
+<p><code>rootMargin</code></p>
+<p>root元素的外边距。如果有指定root参数，则rootMargin也可以使用百分比来取值。该属性值是用作root元素和target元素发生交集时候的计算交集的区域范围，使用该属性可以控制root元素每一边的收缩或者扩张。默认值为0。</p>
+<p><code>threshold</code></p>
+<p>可以是单一的number也可以是number数组，target元素和root元素相交程度达到该值的时候Intersection Observer注册的回调函数将会被执行。如果你只是想要探测当target元素的在root元素中的可见性超过50%的时候，你可以指定该属性值为0.5。如果你想要target元素在root元素的可见程度每多25%就执行一次回调，那么你可以指定一个数组[0, 0.25, 0.5, 0.75, 1]。默认值是0(意味着只要有一个target像素出现在root元素中，回调函数将会被执行)。该值为1.0含义是当target完全出现在root元素中时候回调才会被执行。</p>
+<p>配置观察者对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> target = <span class="built_in">document</span>.querySelector(<span class="string">'#listItem'</span>)</div><div class="line">observer.observe(target)</div><div class="line"></div><div class="line"><span class="comment">// 移除一个监听，移除之后，target元素的可视区域变化，将不再触发前面的回调函数</span></div><div class="line">observer.unobserve(target)</div><div class="line"></div><div class="line"><span class="comment">// 停止所有的监听</span></div><div class="line">observer.disconnect()</div></pre></td></tr></table></figure>
+<p>抽取公共组件(Observer.vue)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div class=&quot;observer&quot;/&gt;</div><div class="line">&lt;/template&gt;</div><div class="line">&lt;script&gt;</div><div class="line">export default &#123;</div><div class="line">  data: () =&gt; (&#123;</div><div class="line">    observer: null</div><div class="line">  &#125;),</div><div class="line">  mounted () &#123;</div><div class="line">    const options = &#123;</div><div class="line">      rootMargin: &apos;50px&apos;</div><div class="line">    &#125;</div><div class="line">    this.observer = new IntersectionObserver(([entry]) =&gt; &#123;</div><div class="line">      if (entry &amp;&amp; entry.isIntersecting) &#123;</div><div class="line">        this.$emit(&apos;intersect&apos;)</div><div class="line">      &#125;</div><div class="line">    &#125;, options)</div><div class="line">    this.observer.observe(this.$el)</div><div class="line">  &#125;,</div><div class="line">  destroyed () &#123;</div><div class="line">    this.observer.disconnect()</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>调用模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div&gt;</div><div class="line">    &lt;ul&gt;</div><div class="line">      &lt;li class=&quot;list-item&quot; v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;&#123;&#123; item.name &#125;&#125;&lt;/li&gt;</div><div class="line">    &lt;/ul&gt;</div><div class="line">    &lt;observer @intersect=&quot;intersected&quot;/&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">import Observer from &apos;./Observer&apos;</div><div class="line">export default &#123;</div><div class="line">  name: &apos;Demo4&apos;,</div><div class="line">  data: () =&gt; (&#123;</div><div class="line">    items: [],</div><div class="line">    page: 1</div><div class="line">  &#125;),</div><div class="line">  components: &#123;</div><div class="line">    Observer</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    async intersected () &#123;</div><div class="line">      const res = await fetch(`https://jsonplaceholder.typicode.com/comments?_page=$&#123;this.page&#125;&amp;_limit=30`)</div><div class="line">      this.page++</div><div class="line">      const items = await res.json()</div><div class="line">      this.items = [...this.items, ...items]</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;style scoped&gt;</div><div class="line">ul &#123;</div><div class="line">  padding: 0;</div><div class="line">  margin: 0;</div><div class="line">  list-style: none;</div><div class="line">&#125;</div><div class="line">li &#123;</div><div class="line">  text-align: left;</div><div class="line">  padding: 10px 20px;</div><div class="line">  counter-increment: step-counter;</div><div class="line">&#125;</div><div class="line">li::before &#123;</div><div class="line">  content: counter(step-counter);</div><div class="line">  margin-right: 5px;</div><div class="line">  font-size: 80%;</div><div class="line">  background-color: rgb(200,200,200);</div><div class="line">  color: white;</div><div class="line">  font-weight: bold;</div><div class="line">  padding: 3px 8px;</div><div class="line">  border-radius: 3px;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/dauwrqfc/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+]]></content>
+    
+    <summary type="html">
+    
+      Intersection Observer API使用方法及使用场景介绍
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://ilucas.me/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>css grid布局浅析与应用</title>
@@ -1019,19 +1068,18 @@
   </entry>
   
   <entry>
-    <title>Web Animation API（四）</title>
-    <link href="http://ilucas.me/2015/11/26/animations-part-4/"/>
-    <id>http://ilucas.me/2015/11/26/animations-part-4/</id>
+    <title>Web Animation API（三）</title>
+    <link href="http://ilucas.me/2015/11/26/animations-part-3/"/>
+    <id>http://ilucas.me/2015/11/26/animations-part-3/</id>
     <published>2015-11-26T14:52:13.000Z</published>
     <updated>2018-06-06T12:48:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>我们继续讨论WAAPI中的多个动画效果，在polyfill中提供了<code>group</code>和<code>sequence</code>两个功能。下面主要讨论这两个功能的实现。<a id="more"></a></p>
-<h4 id="KeyframeEffects"><a href="#KeyframeEffects" class="headerlink" title="KeyframeEffects"></a>KeyframeEffects</h4><p><code>KeyframeEffects</code>接受三个参数：实现动画的元素，一个数组格式的动画帧效果和时间相关参数。这些参数在我们之前使用<code>element.animate()</code>时已经见过了。我们新定义的这个<code>KeyframeEffects</code>并不好马上执行，只是创建一个引用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">  <span class="attr">fill</span>: <span class="string">'both'</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings);</div></pre></td></tr></table></figure></p>
-<h4 id="GroupEffects"><a href="#GroupEffects" class="headerlink" title="GroupEffects"></a>GroupEffects</h4><p>尽管在浏览器中没有得到支持，但在<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>中提供一个<code>group</code>的功能，能够同时播放多个动画。<code>GroupEffects</code>这个功能在新的版本中会实现，它可以让多个<code>KeyframeEffects</code>同步执行。</p>
-<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/1et0faek/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
-<p>js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> elem2 = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate2'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> kEffects = [</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings),</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem2, keyframes, timings)</div><div class="line">];</div><div class="line"><span class="keyword">var</span> group = <span class="keyword">new</span> GroupEffect(kEffects);</div><div class="line"><span class="built_in">document</span>.timeline.play(group);</div></pre></td></tr></table></figure></p>
-<h4 id="SequenceEffects"><a href="#SequenceEffects" class="headerlink" title="SequenceEffects"></a>SequenceEffects</h4><p>和<code>GroupEffect</code>相似，<code>SequenceEffect</code>可以让动画顺序执行，当然你也可以同时应用这两个功能来实现很酷的动画效果。</p>
-<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/gs1tdz16/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+    <content type="html"><![CDATA[<p>上篇文章中我们谈论了WAAPI的各种状态，下面我们看看如何操作多个动画。<a id="more"></a></p>
+<h4 id="同一个元素上多个动画效果"><a href="#同一个元素上多个动画效果" class="headerlink" title="同一个元素上多个动画效果"></a>同一个元素上多个动画效果</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/7yrLon6t/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>在上面的例子中，每个矩形方块都应用了三种动画效果，你可以在每个元素上多次调用<code>animate()</code>，这跟css中允许多个动画效果一样：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: pulse <span class="number">1s</span>, activate <span class="number">3000ms</span>, have-fun-with-it <span class="number">2.5s</span>;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> pulse &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> activate &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> have-fun-with-it &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
+<p>用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animated = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> pulseKeyframes, <span class="comment">//defined the keyframes here.</span></div><div class="line">    activateKeyframes,</div><div class="line">    haveFunKeyframes;</div><div class="line"><span class="keyword">var</span> pulse = animated.animate(pulseKeyframes, <span class="number">1000</span>); <span class="comment">//the second</span></div><div class="line">parameter <span class="keyword">as</span> a number is a valid shorthand <span class="keyword">for</span> duration</div><div class="line"><span class="keyword">var</span> activate = animated.animate(activateKeyframes, <span class="number">3000</span>);</div><div class="line"><span class="keyword">var</span> haveFunWithIt = animated.animate(haveFunKeyframes, <span class="number">2500</span>);</div></pre></td></tr></table></figure></p>
+<p>在上面的例子中，可以改变每一个动画对象的状态等。</p>
 ]]></content>
     
     <summary type="html">
@@ -1048,18 +1096,19 @@
   </entry>
   
   <entry>
-    <title>Web Animation API（三）</title>
-    <link href="http://ilucas.me/2015/11/26/animations-part-3/"/>
-    <id>http://ilucas.me/2015/11/26/animations-part-3/</id>
+    <title>Web Animation API（四）</title>
+    <link href="http://ilucas.me/2015/11/26/animations-part-4/"/>
+    <id>http://ilucas.me/2015/11/26/animations-part-4/</id>
     <published>2015-11-26T14:52:13.000Z</published>
     <updated>2018-06-06T12:48:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>上篇文章中我们谈论了WAAPI的各种状态，下面我们看看如何操作多个动画。<a id="more"></a></p>
-<h4 id="同一个元素上多个动画效果"><a href="#同一个元素上多个动画效果" class="headerlink" title="同一个元素上多个动画效果"></a>同一个元素上多个动画效果</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/7yrLon6t/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
-<p>在上面的例子中，每个矩形方块都应用了三种动画效果，你可以在每个元素上多次调用<code>animate()</code>，这跟css中允许多个动画效果一样：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: pulse <span class="number">1s</span>, activate <span class="number">3000ms</span>, have-fun-with-it <span class="number">2.5s</span>;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> pulse &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> activate &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> have-fun-with-it &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
-<p>用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animated = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> pulseKeyframes, <span class="comment">//defined the keyframes here.</span></div><div class="line">    activateKeyframes,</div><div class="line">    haveFunKeyframes;</div><div class="line"><span class="keyword">var</span> pulse = animated.animate(pulseKeyframes, <span class="number">1000</span>); <span class="comment">//the second</span></div><div class="line">parameter <span class="keyword">as</span> a number is a valid shorthand <span class="keyword">for</span> duration</div><div class="line"><span class="keyword">var</span> activate = animated.animate(activateKeyframes, <span class="number">3000</span>);</div><div class="line"><span class="keyword">var</span> haveFunWithIt = animated.animate(haveFunKeyframes, <span class="number">2500</span>);</div></pre></td></tr></table></figure></p>
-<p>在上面的例子中，可以改变每一个动画对象的状态等。</p>
+    <content type="html"><![CDATA[<p>我们继续讨论WAAPI中的多个动画效果，在polyfill中提供了<code>group</code>和<code>sequence</code>两个功能。下面主要讨论这两个功能的实现。<a id="more"></a></p>
+<h4 id="KeyframeEffects"><a href="#KeyframeEffects" class="headerlink" title="KeyframeEffects"></a>KeyframeEffects</h4><p><code>KeyframeEffects</code>接受三个参数：实现动画的元素，一个数组格式的动画帧效果和时间相关参数。这些参数在我们之前使用<code>element.animate()</code>时已经见过了。我们新定义的这个<code>KeyframeEffects</code>并不好马上执行，只是创建一个引用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">  <span class="attr">fill</span>: <span class="string">'both'</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings);</div></pre></td></tr></table></figure></p>
+<h4 id="GroupEffects"><a href="#GroupEffects" class="headerlink" title="GroupEffects"></a>GroupEffects</h4><p>尽管在浏览器中没有得到支持，但在<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>中提供一个<code>group</code>的功能，能够同时播放多个动画。<code>GroupEffects</code>这个功能在新的版本中会实现，它可以让多个<code>KeyframeEffects</code>同步执行。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/1et0faek/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>js:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> elem2 = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate2'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> kEffects = [</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings),</div><div class="line">  <span class="keyword">new</span> KeyframeEffect(elem2, keyframes, timings)</div><div class="line">];</div><div class="line"><span class="keyword">var</span> group = <span class="keyword">new</span> GroupEffect(kEffects);</div><div class="line"><span class="built_in">document</span>.timeline.play(group);</div></pre></td></tr></table></figure></p>
+<h4 id="SequenceEffects"><a href="#SequenceEffects" class="headerlink" title="SequenceEffects"></a>SequenceEffects</h4><p>和<code>GroupEffect</code>相似，<code>SequenceEffect</code>可以让动画顺序执行，当然你也可以同时应用这两个功能来实现很酷的动画效果。</p>
+<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/gs1tdz16/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
 ]]></content>
     
     <summary type="html">
@@ -1169,48 +1218,6 @@
     
     
       <category term="css3" scheme="http://ilucas.me/tags/css3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chrome调试器中的13个技巧和窍门</title>
-    <link href="http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/"/>
-    <id>http://ilucas.me/2015/10/12/13-must-know-chrome-devtools-tips-tricks/</id>
-    <published>2015-10-12T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Chrome浏览器的调试功能十分强大，今天介绍其中的13个技巧，这能提高你debug页面的效率。<a id="more"></a></p>
-<h4 id="文件快速转换"><a href="#文件快速转换" class="headerlink" title="文件快速转换"></a>文件快速转换</h4><p>当DevTools打开时，按住<code>Ctrl+P</code>，mac上是<code>Cmd+P</code>，输入想要搜索的文件名称，就能打开对应项目中的文件。<br><img src="/images/quick_switch_file.gif" alt="quick_switch_file"></p>
-<h4 id="源码中搜索"><a href="#源码中搜索" class="headerlink" title="源码中搜索"></a>源码中搜索</h4><p>如果想要项目中某个文件中特定的字符串，可以按住<code>Ctrl + Shift + F</code>，mac是<code>Cmd + Opt + F</code>，这种搜索模式支持正则匹配。<br><img src="/images/search_within_source.gif" alt="search_within_source"></p>
-<h4 id="定位到某行"><a href="#定位到某行" class="headerlink" title="定位到某行"></a>定位到某行</h4><p>当你在Sources中打开一个文件时，你可以按住<code>Ctrl + G</code>，输入行号来定位。<br><img src="/images/go_to_line.gif" alt="go_to_line"></p>
-<h4 id="在console中选择元素"><a href="#在console中选择元素" class="headerlink" title="在console中选择元素"></a>在console中选择元素</h4><p>DevTools中的console支持DOM元素的选择：</p>
-<ul>
-<li><code>$()</code>，是<code>document.querySelector()</code>的简写，返回匹配css规则的第一个元素。</li>
-<li><code>$$()</code>，是<code>document.querySelectorAll()</code>的简写，返回匹配css规则的元素集合。</li>
-<li><code>$0 – $4</code>，选择元素的历史纪录，$0代表最近的选择元素。</li>
-</ul>
-<p><img src="/images/select_element_in_console.gif" alt="select_element_in_console"></p>
-<h4 id="多行编辑"><a href="#多行编辑" class="headerlink" title="多行编辑"></a>多行编辑</h4><p>当你打开一个文件时，可以按住<code>Ctrl</code>，mac上是<code>Cmd</code>，然后单击想要编辑的行，可以是多行，输入或删除文本。<br><img src="/images/use_multiple_carets.gif" alt="use_multiple_carets"></p>
-<h4 id="保留日志"><a href="#保留日志" class="headerlink" title="保留日志"></a>保留日志</h4><p>在Console中，勾选<code>Preserve Log</code>，当你在页面间跳转时，Console中之前的log就会被保留，这对于你想查看之前的日志非常有用。<br><img src="/images/preserve_log.gif" alt="preserve_log"></p>
-<h4 id="格式化压缩代码"><a href="#格式化压缩代码" class="headerlink" title="格式化压缩代码"></a>格式化压缩代码</h4><p>DevTools有一个功能可以格式化压缩后的代码，方便你调试线上的源码。<br><img src="/images/pretty_source_code.gif" alt="pretty_source_code"></p>
-<h4 id="设备仿真"><a href="#设备仿真" class="headerlink" title="设备仿真"></a>设备仿真</h4><p>在DevTools可以仿真移动设备，比如触摸，加速度计，甚至可以模拟定位。<br><img src="/images/device_emulation.gif" alt="device_emulation"></p>
-<h4 id="颜色拾取"><a href="#颜色拾取" class="headerlink" title="颜色拾取"></a>颜色拾取</h4><p>在Styles中可以打开color picker，浮动光标到页面上时，可以显示对应的颜色。<br><img src="/images/color_picker.gif" alt="color_picker"></p>
-<h4 id="改变元素状态"><a href="#改变元素状态" class="headerlink" title="改变元素状态"></a>改变元素状态</h4><p>在Styles中，可以勾选元素的各种状态来查看对应的样式。<br><img src="/images/force_element_state.gif" alt="force_element_state"></p>
-<h4 id="查看shadow-DOM"><a href="#查看shadow-DOM" class="headerlink" title="查看shadow DOM"></a>查看shadow DOM</h4><p><img src="/images/visualize_shadow_dom.gif" alt="visualize_shadow_dom"></p>
-<h4 id="同时操作重复变量"><a href="#同时操作重复变量" class="headerlink" title="同时操作重复变量"></a>同时操作重复变量</h4><p>当在Sources中编辑文件时，选择某个字符串后，多次按<code>Ctrl+D</code>，mac上是<code>Cmd+D</code>可以选择相邻的重复字符串，选定后可以同时进行编辑操作。<br><img src="/images/select_next_occurrence.gif" alt="select_next_occurrence"></p>
-<h4 id="改变颜色格式"><a href="#改变颜色格式" class="headerlink" title="改变颜色格式"></a>改变颜色格式</h4><p>在颜色预览框上，按住<code>Shift</code>，然后单击，可以在rgba，hsl和十六进制之间进行转换。<br><img src="/images/change_color_format.gif" alt="change_color_format"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      chrome调试器中的13个技巧和窍门
-    
-    </summary>
-    
-      <category term="other" scheme="http://ilucas.me/categories/other/"/>
-    
-    
-      <category term="debug" scheme="http://ilucas.me/tags/debug/"/>
     
   </entry>
   
