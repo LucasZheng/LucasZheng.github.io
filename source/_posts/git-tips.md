@@ -190,4 +190,6 @@ git branch -m renamed_branch
 推送本地所有的tag到远端服务器：git push origin --tags
 删除本地tag：git tag -d v1.4
 删除远程tag(需要删除权限)：git push origin :refs/tags/v1.4
+// 如果remote删除了tag, 本地git push -t的时候还是会把本地的push上去, 所以最好在fetch之前把本地的tag删除掉:
+强制更新本地tag缓存: `git tag -l | xargs git tag -d` 然后 `git fetch -t -p -f`
 ```
