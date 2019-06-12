@@ -18,10 +18,13 @@
 <meta property="og:url" content="http://ilucas.me/2015/10/11/difference-debounce-throttle/index.html">
 <meta property="og:site_name" content="Lucas">
 <meta property="og:description" content="理解debounce和throttle之间的差异">
-<meta property="og:updated_time" content="2018-06-06T12:48:22.000Z">
+<meta property="og:image" content="http://ilucas.me/images/debounce.png">
+<meta property="og:image" content="http://ilucas.me/images/debounce_immediately.png">
+<meta property="og:updated_time" content="2019-06-12T03:23:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="debounce和throttle的区别">
 <meta name="twitter:description" content="理解debounce和throttle之间的差异">
+<meta name="twitter:image" content="http://ilucas.me/images/debounce.png">
 
     
     <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
@@ -97,20 +100,18 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-number">1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何使用"><span class="toc-number">2.</span> <span class="toc-text">如何使用</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debounce"><span class="toc-number">1.</span> <span class="toc-text">debounce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#throttle"><span class="toc-number">2.</span> <span class="toc-text">throttle</span></a></li></ol>
 		
 		</div>
 		
-		<p>debounce和throttle常被用来处理DOM相关事件，通过限制事件的执行频率来提升性能。但它们之间也有使用场景的差别。<a id="more"></a><br>throttle强调的是函数间隔多长时间执行一次。比如说在10秒中函数执行1000次，但是如果你通过throttle设置每隔100毫秒执行一次的话，那么它就最多会执行100次。<br>debounce则是在指定时间内如果没有执行该函数的话，则马上执行该函数，比如说100毫秒后如果还没有执行处理函数，那么就在100毫秒后马上执行。比如一个函数在3秒内执行1000次，然后停止执行。如果你通过debounce设置函数的执行时间为100毫秒，那么该函数只会在3.1秒的时候执行一次，在debounce设置的100毫秒内由于会触发函数的执行，因此它不断的重置这个timer。</p>
-<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>这两个函数常被用来处理DOM事件，比如滚动页面和resize页面大小。比如你在一个元素上绑定了scroll事件，想让元素向下滚动5000px，并且触发100次以上的scroll事件，如果你的处理函数涉及很大的计算量的话，你就会发现在滚动时页面会存在一定的性能问题，如果此时你减少scroll事件的执行次数，那么性能就会得到很大的提升。<br>常用的场景：</p>
-<ul>
-<li>等到resize结束时执行处理函数</li>
-<li>等用户停止输入时触发ajax调用</li>
-<li>考虑scroll的位置并设置最多50毫秒执行一次scroll事件</li>
-<li>当你在页面上拖动元素时</li>
-</ul>
-<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>这两个函数在<code>Underscore</code>和<code>Lodash</code>中都得到了实现。即使你在项目中不会使用到这两个库，你也可以把它们抽出来放在你自己的项目中使用。<br>jQuery使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"body"</span>).on(<span class="string">'scroll'</span>, _.throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
+		<p>debounce和throttle常被用来处理DOM相关事件，通过限制事件的执行频率来提升性能。但它们之间也有使用场景的差别。<a id="more"></a><br>debounce和throttle是两种相似（但不同！）的技术，用于控制允许函数随时间执行的次数。</p>
+<h4 id="debounce"><a href="#debounce" class="headerlink" title="debounce"></a>debounce</h4><p>debounce会将一系列连续发生的事件合并成一个事件执行。比如，想象一下，你在电梯里，门开始关闭，突然另一个人试图进入电梯，电梯没有启动，门再次打开。现在又有另一个人进入电梯，电梯再次打开，直到没有人进入电梯才开始运行。<br><img src="/images/debounce.png" alt=""></p>
+<p>从上图可以看出，事件处理始终是在一系列连续事件结束后执行，那能不能在连续事件一开始发生的时候就执行呢，如下：<br><img src="/images/debounce_immediately.png" alt=""></p>
+<p>在<code>underscore.js</code>里面有个<code>immediate</code>选项可以实现这个功能。</p>
+<p>debounce使用场景：resize事件、用户连续输入且发送请求</p>
 <p>resize：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).on(<span class="string">'resize'</span>, _.debounce(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure></p>
+<h4 id="throttle"><a href="#throttle" class="headerlink" title="throttle"></a>throttle</h4><p>throttle与debounce的区别在于，throttle保证在固定的时间里事件处理函数能够执行一次。比如，用户向下滚动页面，需要不断计算距离页面底部的距离，如果解决页面底部，则发送请求获取数据，且渲染页面。此时，debounce不适合用来处理这种情景。通过throttle可以让事件处理函数每隔xx毫秒执行一次计算。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"body"</span>).on(<span class="string">'scroll'</span>, _.throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// Do expensive things</span></div><div class="line">&#125;, <span class="number">100</span>));</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -175,7 +176,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用场景"><span class="toc-number">1.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何使用"><span class="toc-number">2.</span> <span class="toc-text">如何使用</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#debounce"><span class="toc-number">1.</span> <span class="toc-text">debounce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#throttle"><span class="toc-number">2.</span> <span class="toc-text">throttle</span></a></li></ol>
  
   </div>
 
@@ -274,6 +275,14 @@
 			
 		
 			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
 			
 		
@@ -283,14 +292,6 @@
 		
 			
 				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
 			
 		
 			
@@ -306,6 +307,14 @@
 			
 		
 			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
 			
 		
@@ -314,15 +323,7 @@
 			
 		
 			
-				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/grid/" title="grid">grid<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
 			
 		
 			
@@ -334,15 +335,11 @@
 			
 		
 			
-				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/html/" title="html">html<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
 			
 		
 			
@@ -350,11 +347,7 @@
 			
 		
 			
-				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
 			
 		
 			
@@ -374,15 +367,23 @@
 			
 		
 			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
 			
 		
 			
@@ -402,7 +403,7 @@
 			
 		
 			
-				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+				<li><a href="/tags/grid/" title="grid">grid<sup>1</sup></a></li>
 			
 		
 		</ul>

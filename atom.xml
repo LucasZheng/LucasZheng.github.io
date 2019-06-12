@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ilucas.me/"/>
-  <updated>2018-09-12T08:04:54.000Z</updated>
+  <updated>2018-09-25T06:30:52.000Z</updated>
   <id>http://ilucas.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ilucas.me/2018/09/12/intersection-observer-api/"/>
     <id>http://ilucas.me/2018/09/12/intersection-observer-api/</id>
     <published>2018-09-12T04:52:13.000Z</published>
-    <updated>2018-09-12T08:04:54.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>Intersection observer API提供了一种基于异步的方式来观察目标元素与父元素或根元素相交的变化检测。<a id="more"></a>通俗的讲就是检测一个元素视图是否和它的父元素视图或根元素（浏览器视窗）重叠，重叠的比例有多少，但这种检测方式是异步实现的，不影响网站的使用体验。</p>
 <p>在日常开发中，有许多应用场景需要用到这种检测方式，比如：</p>
@@ -69,7 +69,7 @@
     <link href="http://ilucas.me/2018/06/05/css-grid-practice/"/>
     <id>http://ilucas.me/2018/06/05/css-grid-practice/</id>
     <published>2018-06-05T13:54:52.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>之前我们开发页面时常用的布局方法有表格(table)、浮动(float)、 定位(position)和内联块(inline-block)，这些方法本质上来讲都是hacks，存留了很多需要实现的重要功能问题(例如，垂直居中)。Flexbox的出现起到一定的补救作用，但是它只可以实现简单的一维布局，并不适用于复杂的二维布局(实际上 Flexbox 和 Grid 可以一起结合使用起到最佳效果)。<a id="more"></a>css grid是一个二维的网格布局系统，它能同时处理columns和rows，让我们能够更灵活的处理页面布局。</p>
 <h4 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h4><p>以下属性设置在容器上。</p>
@@ -324,7 +324,7 @@
     <link href="http://ilucas.me/2017/08/03/css-focus-within/"/>
     <id>http://ilucas.me/2017/08/03/css-focus-within/</id>
     <published>2017-08-03T13:54:52.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>:focus-within</code>伪类能够在当前元素或其后代任何元素在<code>focus</code>状态时应用相应的规则。语言上比较难理解，可以直接看下面的例子：<a id="more"></a><br>CSS:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.name-container</span> &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.name-container</span><span class="selector-pseudo">:focus-within</span> &#123;</div><div class="line">  <span class="attribute">background</span>: yellow;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">input</span> &#123;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>HTML:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The div below will have a yellow background if</div><div class="line">    either input inside is focused.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"name-container"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"given_name"</span>&gt;</span></div><div class="line">    Given Name:</div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"given_name"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"family_name"</span>&gt;</span></div><div class="line">    Family Name:</div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"family_name"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -354,7 +354,7 @@
     <link href="http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/"/>
     <id>http://ilucas.me/2017/04/19/crossorign-attribute-img-tag/</id>
     <published>2017-04-19T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>img</code>是我们在web开发中比较常用的一个标签，它代表着文档中的一个图像元素。HTML5给这个标签新增加了一个<code>crossorigin</code>属性，这个属性决定了图片获取过程中是否开启<code>CORS</code>功能<a id="more"></a></p>
 <h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>在最近的项目开发中，有一个需求是让用户输入一个任意图片的url地址，在前端预览图片并让用户裁剪，再将裁剪好的图片上传到后端的服务器上。这里输入的图片地址很有可能来自第三方站点，这就涉及到一个跨域的问题，如果仅仅是展示预览图片的话是没有什么问题的，但这里裁剪图片时需要将裁剪好的图片进行base64编码，如果没有使用<code>crossorign</code>开启<code>CORS</code>功能的话，在使用<code>canvas</code>的<code>toBlob()</code>、<code>toDataURL()</code>和<code>getImageData()</code>方法时就会出现跨域的问题。</p>
@@ -382,7 +382,7 @@
     <link href="http://ilucas.me/2016/03/07/difference-between-tdd-and-bdd/"/>
     <id>http://ilucas.me/2016/03/07/difference-between-tdd-and-bdd/</id>
     <published>2016-03-07T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>如果你了解最新的软件开发实践，那么你就会经常听到<code>unit test</code>、<code>TDD</code>和<code>BDD</code>这些词汇。很多Javascript开发者对这些术语都不是很清楚，这篇文章将解释它们分别是什么，以及它们之间的区别在哪里。<a id="more"></a></p>
 <h4 id="Unit-testing（单元测试）"><a href="#Unit-testing（单元测试）" class="headerlink" title="Unit testing（单元测试）"></a>Unit testing（单元测试）</h4><p>单元测试往往只关注于一个代码片段，通常是一个模块或函数，测试代码应该比较简单，可以快速实现和运行。这也意味着你会写很多的单元测试用例来保证代码的功能正常。单元测试应该没有什么依赖，比如通过网络请求获取数据库数据。现在有很多工具都可以模拟Api的响应数据来运行测试文件。单元测试的基本原则就是：多个测试用例，每个测试不同的功能并且相互之间没有依赖。也有一部分人认为任何的自动化测试都是单元测试，这是不正确的，这里有不同类型的自动化测试，每种类型的功能都不一样。</p>
@@ -429,7 +429,7 @@
     <link href="http://ilucas.me/2016/03/01/eslint-guide/"/>
     <id>http://ilucas.me/2016/03/01/eslint-guide/</id>
     <published>2016-03-01T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>在产品开发前，开放团队往往会制定一系列编码规范，在编码时遵循这些规范来避免出现低级Bug，而实用Lint工具和代码风格检测工具，则可以辅助编码规范的执行，有效的控制代码质量。<a id="more"></a></p>
 <p>之前比较流行的工具有JSHint和JSCS的结合使用。最近React比较流行，而JSHint不支持JSX语法，所以有了ESLint这个工具的出现。</p>
@@ -626,7 +626,7 @@
     <link href="http://ilucas.me/2016/02/23/ember-data-for-the-curious/"/>
     <id>http://ilucas.me/2016/02/23/ember-data-for-the-curious/</id>
     <published>2016-02-23T04:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>由于项目的后端采用的是Ruby来开发，因此前端也就采用了Ember这一mvc框架，相比较于其他mvc框架而言，Ember内置了强大的Ember Data，它是介于你的应用和持久层之间的一个数据模型。<a id="more"></a>在没有后端提供API数据时，它能够模拟后端的响应数据从而可以让前后端并行开发，同时它也能帮我们优化处理底层的HTTP请求、缓存响应数据来提升我们的产品性能。</p>
 <p>在没有使用Ember Data来获取数据时，我们通常按照下面的方式来请求数据：<br><code>app/components/list-of-drafts.js</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Component.extend(&#123;</div><div class="line">  willRender() &#123;</div><div class="line">    $.getJSON(<span class="string">'/drafts'</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</div><div class="line">      <span class="keyword">this</span>.set(<span class="string">'drafts'</span>, data);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
@@ -669,7 +669,7 @@
     <link href="http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/"/>
     <id>http://ilucas.me/2016/02/18/5-essential-ember-2.0-concepts/</id>
     <published>2016-02-18T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>从Ember 2.x开始，它的模型在概念上比以前清晰明了的多，你不用再纠结于<code>template</code>，<code>route</code>，<code>view</code>，<code>controller</code>，<code>model</code>和<code>component</code>等概念。<a id="more"></a></p>
 <h4 id="新版本的框架"><a href="#新版本的框架" class="headerlink" title="新版本的框架"></a>新版本的框架</h4><p>在Ember 2.x的版本中我们需要注意其中的五个概念：<code>object model</code>，<code>routing</code>，<code>models</code>，<code>services</code>和<code>components</code>。<br><img src="/images/ember-new-framework.png" alt=""></p>
@@ -718,7 +718,7 @@
     <link href="http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/"/>
     <id>http://ilucas.me/2016/02/17/should-we-use-controllers-ember-2.0/</id>
     <published>2016-02-17T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>在Ember 2.x以后Controllers将会被components和services取代。尽管如此，在此前的版本中controller仍然是Ember的一个核心概念。<a id="more"></a></p>
 <h4 id="controller是什么"><a href="#controller是什么" class="headerlink" title="controller是什么"></a>controller是什么</h4><p>controller是一个充满业务逻辑的用来装饰<code>model</code>的一个对象，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Ember.Controller.extend(&#123;</div><div class="line">  emphasizeName() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">`HEY <span class="subst">$&#123;<span class="keyword">this</span>.get(<span class="string">'model.firstName'</span>)&#125;</span> !!!`</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">isVisible</span>: Ember.computed.and(<span class="string">'model.firstName'</span>, <span class="string">'model.lastName'</span>)  </div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
@@ -756,7 +756,7 @@
     <link href="http://ilucas.me/2016/01/28/customize-ordered-lists-pseudo-element/"/>
     <id>http://ilucas.me/2016/01/28/customize-ordered-lists-pseudo-element/</id>
     <published>2016-01-28T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>当我们用<code>ol</code>标签写一组列表时，浏览器会自动给我们在每个列表前生成一个递增的数字，但往往这个数字的样式不是我们所想要的，下面介绍一种可以用css3的<code>::before</code>属性来自定义列表前缀及样式。<a id="more"></a><br>首先我们可以看下浏览器给我们生成的有序列表默认样式：<br><img src="/images/ol_default.jpg" alt=""></p>
 <p>具体代码实现如下：<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/oeh4bL0g/embedded/result,html,css/light" frameborder="0" allowfullscreen></iframe></p>
@@ -781,7 +781,7 @@
     <link href="http://ilucas.me/2016/01/20/using-svg/"/>
     <id>http://ilucas.me/2016/01/20/using-svg/</id>
     <published>2016-01-20T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>SVG是一种矢量图格式。SVG是Scalable Vector Graphics三个单词的首字母缩写。Adobe Illustrator是专门编辑、制作矢量图的软件工具。SVG是Adobe Illustrator的主要制作目标。你可以在轻松的网页上使用漂亮的SVG图，但SVG有很多的用法你可能还不知道。<a id="more"></a></p>
 <h4 id="SVG的优势"><a href="#SVG的优势" class="headerlink" title="SVG的优势"></a>SVG的优势</h4><ul>
@@ -834,7 +834,7 @@
     <link href="http://ilucas.me/2016/01/07/perfect-full-page-background-image/"/>
     <id>http://ilucas.me/2016/01/07/perfect-full-page-background-image/</id>
     <published>2016-01-07T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>这篇文章主要是讨论一种让背景图案始终布满整个浏览器的解决方案。主要有以下几点内容：<a id="more"></a></p>
 <ul>
@@ -884,7 +884,7 @@
     <link href="http://ilucas.me/2015/12/29/restful-api-guidence/"/>
     <id>http://ilucas.me/2015/12/29/restful-api-guidence/</id>
     <published>2015-12-29T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>RESTful架构是一种流行的互联网软件架构，它结构清晰，符合标准，易于理解，扩展方便。<a id="more"></a><br>REST是Representational State Transfer的缩写，翻译为“表现层状态转化”。表现层其实就是资源，因此可以理解为“资源状态转化”。<br>网络应用上的任何实体都可以看作是一种资源，通过一个URI(统一资源定位符)指向它。  </p>
 <p><strong>表现层（Representation）</strong><br>“资源”是一种信息实体，它可以有多种外在表现形式。我们把“资源”具体呈现出来的形式叫做它的“表现层”。<br>例如，文本可以是txt格式表现，也可以用HTML格式，XML格式，JSON格式表现；图片可以是JPG格式也可以是PNG格式表现等。<br>URI之代表资源实体，不代表它的形式。URI应该之代表“资源”的位置，而它具体的表现形式应该在HTTP请求的头信息中用Accept和Content-Type字段指定，这两个字段才是对“表现层”的描述。  </p>
@@ -989,7 +989,7 @@
     <link href="http://ilucas.me/2015/12/17/git-tips/"/>
     <id>http://ilucas.me/2015/12/17/git-tips/</id>
     <published>2015-12-17T14:52:13.000Z</published>
-    <updated>2018-06-14T06:56:50.000Z</updated>
+    <updated>2019-04-12T10:02:40.000Z</updated>
     
     <content type="html"><![CDATA[<p>Git是我们在项目开发中所使用的版本管理工具，一些常见的基本命令也许我们很熟悉了，下面介绍一些你所不常见但很有用的git使用技巧。<a id="more"></a></p>
 <h4 id="在log中显示branch和tag"><a href="#在log中显示branch和tag" class="headerlink" title="在log中显示branch和tag"></a>在log中显示branch和tag</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log --oneline --decorate</div></pre></td></tr></table></figure>
@@ -1021,7 +1021,7 @@
 <h4 id="基于某个commit创建一个新的分支"><a href="#基于某个commit创建一个新的分支" class="headerlink" title="基于某个commit创建一个新的分支"></a>基于某个commit创建一个新的分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b old_commit_branch cafb55d</div></pre></td></tr></table></figure>
 <h4 id="更改当前分支名称"><a href="#更改当前分支名称" class="headerlink" title="更改当前分支名称"></a>更改当前分支名称</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -m renamed_branch</div></pre></td></tr></table></figure>
 <h4 id="利用git-hooks"><a href="#利用git-hooks" class="headerlink" title="利用git hooks"></a>利用git hooks</h4><p>在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。</p>
-<h4 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">本地新建并切换到该分支：git checkout -b xxx</div><div class="line">切换到某个分支：git checkout xxx</div><div class="line">撤销本地工作区的所有文件修改：git checkout .</div><div class="line">撤销本地工作区的某个文件修改：git checkout xxx</div><div class="line">撤销暂存区的所有文件修改到工作区：git reset HEAD .</div><div class="line">撤销暂存区中某个文件修改到工作区：git reset HEAD xxx</div><div class="line">撤销上次提交记录但保留修改到暂存区: git reset --soft HEAD~1</div><div class="line">撤销暂存区和工作区的所有文件修改：git reset --hard HEAD</div><div class="line">撤回到上次提交版本(产生一个新的commit): git revert HEAD~1</div><div class="line">查看本地所有分支：git branch</div><div class="line">查看所有分支（包括远程分支）： git branch -a</div><div class="line">删除本地某个分支：git branch -d xxx</div><div class="line">强制删除本地某个分支：git branch -D xxx</div><div class="line">修改本地分支名称：git branch -m old_branch_name new_branch_name</div><div class="line">删除远程的xxx分支： git push origin :xxx 或者 git push origin --delete xxx</div><div class="line">推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch</div><div class="line">--track test origin/test)</div><div class="line">推送本地分支到远程并track：git push -u origin test</div><div class="line">获取远程某个分支（clone）：先在master分支上git pull， 然后git checkout -b acl-624/zoro origin/acl-624（如果本地分支名已经存在，就不需要－b参数）</div><div class="line">获取远程某个分支（track）：git checkout --track origin/int06</div><div class="line">合并xxx分支到当前分支：git merge xxx</div><div class="line">查看本地分支与远程分支的差异：git diff master origin/master</div><div class="line">查看工作区和暂存区的diff：git diff</div><div class="line">查看暂存区和历史记录区的diff：git diff —cached</div><div class="line">查看工作区和历史记录区的diff：git diff HEAD</div><div class="line">查看某个commit id的修改内容：git show 19311ff5720ff3660f875</div><div class="line">清除非git管理的文件：git clean -fd</div><div class="line">修改当前分支名称：git branch -m newname</div><div class="line">拉取远端某个分支合并到当前分支：git pull origin test    (git pull会拉取所有的远端分支并合并到本地)</div><div class="line">应用某个特定stash：git stash apply stash@&#123;xxx&#125;</div><div class="line">删除某个特定stash：git stash drop stash@&#123;xxx&#125;</div><div class="line">撤销暂存区新创建且尚未提交的文件到本地：git rm --cached mistake_file</div><div class="line">本地和暂存区同时删除：git rm xxx</div><div class="line">修改最近一次的提交comment: git commit --amend -m &quot;New Message&quot;</div><div class="line">查看仓库中某个文件每行的提交信息：git blame my_file</div><div class="line">查看最近2次的提交历史记录：git log -2</div><div class="line">查看file1文件file2文件的提交记录：git log file1 file2</div><div class="line">显示所有tag：git tag</div><div class="line">当前分支新建tag：git tag -a v1.4 -m &apos;my version 1.4&apos;</div><div class="line">查看某个tag：git show v1.4</div><div class="line">推送tag到远端服务器：git push origin v1.4</div><div class="line">推送本地所有的tag到远端服务器：git push origin --tags</div><div class="line">删除本地tag：git tag -d v1.4</div><div class="line">删除远程tag(需要删除权限)：git push origin :refs/tags/v1.4</div></pre></td></tr></table></figure>
+<h4 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">本地新建并切换到该分支：git checkout -b xxx</div><div class="line">切换到某个分支：git checkout xxx</div><div class="line">撤销本地工作区的所有文件修改：git checkout .</div><div class="line">撤销本地工作区的某个文件修改：git checkout xxx</div><div class="line">撤销暂存区的所有文件修改到工作区：git reset HEAD .</div><div class="line">撤销暂存区中某个文件修改到工作区：git reset HEAD xxx</div><div class="line">撤销上次提交记录但保留修改到暂存区: git reset --soft HEAD~1</div><div class="line">撤销暂存区和工作区的所有文件修改：git reset --hard HEAD</div><div class="line">撤回到上次提交版本(产生一个新的commit): git revert HEAD~1</div><div class="line">查看本地所有分支：git branch</div><div class="line">查看所有分支（包括远程分支）： git branch -a</div><div class="line">删除本地某个分支：git branch -d xxx</div><div class="line">强制删除本地某个分支：git branch -D xxx</div><div class="line">修改本地分支名称：git branch -m old_branch_name new_branch_name</div><div class="line">删除远程的xxx分支： git push origin :xxx 或者 git push origin --delete xxx</div><div class="line">推送本地分支到远程分支：git push origin test:test       //提交本地test分支作为远程的test分支(并未关联，如果需要关联：git branch</div><div class="line">--track test origin/test)</div><div class="line">推送本地分支到远程并track：git push -u origin test</div><div class="line">获取远程某个分支（clone）：先在master分支上git pull， 然后git checkout -b acl-624/zoro origin/acl-624（如果本地分支名已经存在，就不需要－b参数）</div><div class="line">获取远程某个分支（track）：git checkout --track origin/int06</div><div class="line">合并xxx分支到当前分支：git merge xxx</div><div class="line">查看本地分支与远程分支的差异：git diff master origin/master</div><div class="line">查看工作区和暂存区的diff：git diff</div><div class="line">查看暂存区和历史记录区的diff：git diff —cached</div><div class="line">查看工作区和历史记录区的diff：git diff HEAD</div><div class="line">查看某个commit id的修改内容：git show 19311ff5720ff3660f875</div><div class="line">清除非git管理的文件：git clean -fd</div><div class="line">修改当前分支名称：git branch -m newname</div><div class="line">拉取远端某个分支合并到当前分支：git pull origin test    (git pull会拉取所有的远端分支并合并到本地)</div><div class="line">应用某个特定stash：git stash apply stash@&#123;xxx&#125;</div><div class="line">删除某个特定stash：git stash drop stash@&#123;xxx&#125;</div><div class="line">撤销暂存区新创建且尚未提交的文件到本地：git rm --cached mistake_file</div><div class="line">本地和暂存区同时删除：git rm xxx</div><div class="line">修改最近一次的提交comment: git commit --amend -m &quot;New Message&quot;</div><div class="line">查看仓库中某个文件每行的提交信息：git blame my_file</div><div class="line">查看最近2次的提交历史记录：git log -2</div><div class="line">查看file1文件file2文件的提交记录：git log file1 file2</div><div class="line">显示所有tag：git tag</div><div class="line">当前分支新建tag：git tag -a v1.4 -m &apos;my version 1.4&apos;</div><div class="line">查看某个tag：git show v1.4</div><div class="line">推送tag到远端服务器：git push origin v1.4</div><div class="line">推送本地所有的tag到远端服务器：git push origin --tags</div><div class="line">删除本地tag：git tag -d v1.4</div><div class="line">删除远程tag(需要删除权限)：git push origin :refs/tags/v1.4</div><div class="line">// 如果remote删除了tag, 本地git push -t的时候还是会把本地的push上去, 所以最好在fetch之前把本地的tag删除掉:</div><div class="line">强制更新本地tag缓存: `git tag -l | xargs git tag -d` 然后 `git fetch -t -p -f`</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -1042,7 +1042,7 @@
     <link href="http://ilucas.me/2015/11/27/animations-part-5/"/>
     <id>http://ilucas.me/2015/11/27/animations-part-5/</id>
     <published>2015-11-27T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>最后我们来看看WAAPI中的路径问题。<a id="more"></a></p>
 <iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/4c993Lzv/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
@@ -1068,39 +1068,11 @@
   </entry>
   
   <entry>
-    <title>Web Animation API（三）</title>
-    <link href="http://ilucas.me/2015/11/26/animations-part-3/"/>
-    <id>http://ilucas.me/2015/11/26/animations-part-3/</id>
-    <published>2015-11-26T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>上篇文章中我们谈论了WAAPI的各种状态，下面我们看看如何操作多个动画。<a id="more"></a></p>
-<h4 id="同一个元素上多个动画效果"><a href="#同一个元素上多个动画效果" class="headerlink" title="同一个元素上多个动画效果"></a>同一个元素上多个动画效果</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/7yrLon6t/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
-<p>在上面的例子中，每个矩形方块都应用了三种动画效果，你可以在每个元素上多次调用<code>animate()</code>，这跟css中允许多个动画效果一样：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: pulse <span class="number">1s</span>, activate <span class="number">3000ms</span>, have-fun-with-it <span class="number">2.5s</span>;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> pulse &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> activate &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> have-fun-with-it &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
-<p>用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animated = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> pulseKeyframes, <span class="comment">//defined the keyframes here.</span></div><div class="line">    activateKeyframes,</div><div class="line">    haveFunKeyframes;</div><div class="line"><span class="keyword">var</span> pulse = animated.animate(pulseKeyframes, <span class="number">1000</span>); <span class="comment">//the second</span></div><div class="line">parameter <span class="keyword">as</span> a number is a valid shorthand <span class="keyword">for</span> duration</div><div class="line"><span class="keyword">var</span> activate = animated.animate(activateKeyframes, <span class="number">3000</span>);</div><div class="line"><span class="keyword">var</span> haveFunWithIt = animated.animate(haveFunKeyframes, <span class="number">2500</span>);</div></pre></td></tr></table></figure></p>
-<p>在上面的例子中，可以改变每一个动画对象的状态等。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      让我们来谈一谈未来的Web Animation API
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
-    
-    
-      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Web Animation API（四）</title>
     <link href="http://ilucas.me/2015/11/26/animations-part-4/"/>
     <id>http://ilucas.me/2015/11/26/animations-part-4/</id>
     <published>2015-11-26T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>我们继续讨论WAAPI中的多个动画效果，在polyfill中提供了<code>group</code>和<code>sequence</code>两个功能。下面主要讨论这两个功能的实现。<a id="more"></a></p>
 <h4 id="KeyframeEffects"><a href="#KeyframeEffects" class="headerlink" title="KeyframeEffects"></a>KeyframeEffects</h4><p><code>KeyframeEffects</code>接受三个参数：实现动画的元素，一个数组格式的动画帧效果和时间相关参数。这些参数在我们之前使用<code>element.animate()</code>时已经见过了。我们新定义的这个<code>KeyframeEffects</code>并不好马上执行，只是创建一个引用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> timings = &#123;</div><div class="line">  <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">  <span class="attr">fill</span>: <span class="string">'both'</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> keyframes = [</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">1</span> &#125;.</div><div class="line">  &#123; <span class="attr">opacity</span>: <span class="number">0</span> &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect(elem, keyframes, timings);</div></pre></td></tr></table></figure></p>
@@ -1125,11 +1097,39 @@
   </entry>
   
   <entry>
+    <title>Web Animation API（三）</title>
+    <link href="http://ilucas.me/2015/11/26/animations-part-3/"/>
+    <id>http://ilucas.me/2015/11/26/animations-part-3/</id>
+    <published>2015-11-26T14:52:13.000Z</published>
+    <updated>2018-09-25T06:30:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上篇文章中我们谈论了WAAPI的各种状态，下面我们看看如何操作多个动画。<a id="more"></a></p>
+<h4 id="同一个元素上多个动画效果"><a href="#同一个元素上多个动画效果" class="headerlink" title="同一个元素上多个动画效果"></a>同一个元素上多个动画效果</h4><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/7yrLon6t/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>在上面的例子中，每个矩形方块都应用了三种动画效果，你可以在每个元素上多次调用<code>animate()</code>，这跟css中允许多个动画效果一样：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: pulse <span class="number">1s</span>, activate <span class="number">3000ms</span>, have-fun-with-it <span class="number">2.5s</span>;</div><div class="line">&#125;</div><div class="line">@<span class="keyword">keyframes</span> pulse &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> activate &#123; <span class="comment">/* ... */</span> &#125;</div><div class="line">@<span class="keyword">keyframes</span> have-fun-with-it &#123; <span class="comment">/* ... */</span> &#125;</div></pre></td></tr></table></figure>
+<p>用WAAPI实现如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animated = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>);</div><div class="line"><span class="keyword">var</span> pulseKeyframes, <span class="comment">//defined the keyframes here.</span></div><div class="line">    activateKeyframes,</div><div class="line">    haveFunKeyframes;</div><div class="line"><span class="keyword">var</span> pulse = animated.animate(pulseKeyframes, <span class="number">1000</span>); <span class="comment">//the second</span></div><div class="line">parameter <span class="keyword">as</span> a number is a valid shorthand <span class="keyword">for</span> duration</div><div class="line"><span class="keyword">var</span> activate = animated.animate(activateKeyframes, <span class="number">3000</span>);</div><div class="line"><span class="keyword">var</span> haveFunWithIt = animated.animate(haveFunKeyframes, <span class="number">2500</span>);</div></pre></td></tr></table></figure></p>
+<p>在上面的例子中，可以改变每一个动画对象的状态等。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      让我们来谈一谈未来的Web Animation API
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
+    
+    
+      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Web Animation API（二）</title>
     <link href="http://ilucas.me/2015/11/25/animations-part-2/"/>
     <id>http://ilucas.me/2015/11/25/animations-part-2/</id>
     <published>2015-11-25T15:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>在上篇文章中我们已经知道如何创建一个基本的动画，下面我们将会探讨下这个api中的状态控制，回调和时间线<a id="more"></a></p>
 <h4 id="状态控制"><a href="#状态控制" class="headerlink" title="状态控制"></a>状态控制</h4><p>当你调用<code>element.animate()</code>时，就会返回一个<code>AnimationPlayer</code>的对象，并且开始执行动画。可以通过检测只读属性<code>playState</code>来查看当前的状态，总共有5个状态。我们也可以通过调用其他四个方法来修改当前的动画状态：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = element.animate(<span class="comment">/* ... */</span>);</div><div class="line"><span class="built_in">console</span>.log(player.playState); <span class="comment">//"running"</span></div><div class="line"></div><div class="line">player.pause(); <span class="comment">//"paused"</span></div><div class="line">player.play();  <span class="comment">//"running"</span></div><div class="line">player.cancel(); <span class="comment">//"idle"... jump to original state</span></div><div class="line">player.finish(); <span class="comment">//"finished"...jump to end state</span></div></pre></td></tr></table></figure></p>
@@ -1162,7 +1162,7 @@
     <link href="http://ilucas.me/2015/11/25/animations-intro/"/>
     <id>http://ilucas.me/2015/11/25/animations-intro/</id>
     <published>2015-11-25T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>在接下来的几篇文章中我们将讨论一下web浏览器自身实现的Animation API，长话短说，让我们直接进入正文：<a id="more"></a></p>
 <h4 id="什么是Web-Animations-API"><a href="#什么是Web-Animations-API" class="headerlink" title="什么是Web Animations API"></a>什么是Web Animations API</h4><p>Web Animations API 是什么？它主要实现什么功能？<br>在过去几年中，由于得到css和javascript的支持，动画应用得到更多的重视。但每种动画实现方式都有它自身的有缺点：</p>
@@ -1199,7 +1199,7 @@
     <link href="http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/"/>
     <id>http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/</id>
     <published>2015-10-29T14:52:13.000Z</published>
-    <updated>2018-06-06T12:48:22.000Z</updated>
+    <updated>2018-09-25T06:30:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>设计人员往往会根据背景色来决定文字的颜色，如果背景为黑色，文字就会用相应的反色调。如果背景比较亮，则文字常用黑色。因为文字和背景色之间的颜色对比能够让阅读更加容易。<a id="more"></a><br>在Sass中我们如何根据给定的背景色来决定文字的颜色呢？<br>假如我们有如下的HTML:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-confirm"</span>&gt;</span>Confirmation<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-alert"</span>&gt;</span>Alert<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>我们有不同背景颜色的提醒条，我们可以用一个function来计算出对应合适的文字颜色：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@function set-notification-text-color(<span class="variable">$color</span>) &#123;</div><div class="line">  @<span class="keyword">if</span> (lightness(<span class="variable">$color</span>) &gt; 50) &#123;</div><div class="line">    @return <span class="number">#000000</span>; <span class="comment">// Lighter backgorund, return dark color</span></div><div class="line">  &#125; @<span class="keyword">else</span> &#123;</div><div class="line">    @return <span class="number">#ffffff</span>; <span class="comment">// Darker background, return light color</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
