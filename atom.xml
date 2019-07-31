@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ilucas.me/"/>
-  <updated>2018-09-25T06:30:52.000Z</updated>
+  <updated>2019-07-31T08:12:24.000Z</updated>
   <id>http://ilucas.me/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue开发记录之props属性</title>
+    <link href="http://ilucas.me/2019/07/31/vue-props-default/"/>
+    <id>http://ilucas.me/2019/07/31/vue-props-default/</id>
+    <published>2019-07-31T12:27:46.000Z</published>
+    <updated>2019-07-31T08:12:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在用VUE开发后台管理系统时，经常需要新增或修改一条记录，而它们的模板往往是复用的，只是新增时模板中的表单数据为空，而修改时表单中数据为该条记录已有的数据。<a id="more"></a><br>在项目开发中，我们抽取一个独立的子组件用来实现新增或编辑功能，在父级页面中引入该子组件，利用子组件中props属性下的default字段来判断是新增或修改，从而给子组件绑定数据。</p>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>如下图，我们在列表页面有一个<code>新增</code>按钮，每条记录的后面有个<code>修改</code>图标，点击它们都会弹出一个浮层用于新增或编辑记录。</p>
+<p>父级列表页面：<br><img src="/images/props_list.png" alt=""></p>
+<p>修改弹窗页面：<br><img src="/images/props_edit.png" alt=""></p>
+<p>新增弹窗页面：<br><img src="/images/props_add.png" alt=""></p>
+<p>列表页面大概逻辑如下：<br><img src="/images/props_list_vue.png" alt=""></p>
+<p>在初始和新增状态下，将<code>modifyData</code>设置为<code>undefined</code>，修改记录时<code>modifyData</code>为记录的详情数据，通过props方法将数据传递给<code>topic-dialog</code>子组件。</p>
+<p>子组件<code>topic-dialog</code>大概逻辑如下：<br><img src="/images/props_dialog_vue.png" alt=""></p>
+<p>由于我们不能直接编辑props传递的数据，故将<code>this.data</code>赋值给<code>formData</code>属性。同时props中的data字段设置default数据。当data为<code>undefined</code>即新增时，使用default中设置的数据，否则为记录的详情数据。</p>
+<p>此处需要注意，父组件中props传递的字段只能设置为<code>undefined</code>时，子组件中对应的字段才能使用<code>default</code>设置的数据。设置为空或为<code>null</code>时，<code>default</code>均不生效。通过查看如下的VUE源码<code>src\core\util\props.js</code>：</p>
+<p><img src="/images/props_source.png" alt=""></p>
+<p>当传递的字段值为<code>undefined</code>时，才会去获取defalut value。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      Vue开发记录之props属性。
+    
+    </summary>
+    
+      <category term="mvc" scheme="http://ilucas.me/categories/mvc/"/>
+    
+    
+      <category term="javascript" scheme="http://ilucas.me/tags/javascript/"/>
+    
+      <category term="vue" scheme="http://ilucas.me/tags/vue/"/>
+    
+  </entry>
   
   <entry>
     <title>Intersection Observer API使用介绍</title>
@@ -1191,33 +1227,6 @@
     
     
       <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>根据背景色自动改变文字的颜色</title>
-    <link href="http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/"/>
-    <id>http://ilucas.me/2015/10/29/reverse-text-color-mix-blend-mode/</id>
-    <published>2015-10-29T14:52:13.000Z</published>
-    <updated>2018-09-25T06:30:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>设计人员往往会根据背景色来决定文字的颜色，如果背景为黑色，文字就会用相应的反色调。如果背景比较亮，则文字常用黑色。因为文字和背景色之间的颜色对比能够让阅读更加容易。<a id="more"></a><br>在Sass中我们如何根据给定的背景色来决定文字的颜色呢？<br>假如我们有如下的HTML:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-confirm"</span>&gt;</span>Confirmation<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-warning"</span>&gt;</span>Warning<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"notification notification-alert"</span>&gt;</span>Alert<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>我们有不同背景颜色的提醒条，我们可以用一个function来计算出对应合适的文字颜色：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@function set-notification-text-color(<span class="variable">$color</span>) &#123;</div><div class="line">  @<span class="keyword">if</span> (lightness(<span class="variable">$color</span>) &gt; 50) &#123;</div><div class="line">    @return <span class="number">#000000</span>; <span class="comment">// Lighter backgorund, return dark color</span></div><div class="line">  &#125; @<span class="keyword">else</span> &#123;</div><div class="line">    @return <span class="number">#ffffff</span>; <span class="comment">// Darker background, return light color</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>lightness()</code>是Sass中定义的一个function，它返回当前颜色的亮度（0-100），0是最暗的，100代表最亮。<br>下面看下完整的css代码：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$notification-confirm</span>: hsla(<span class="number">101</span>, <span class="number">72%</span>, <span class="number">37%</span>, <span class="number">1</span>);  <span class="comment">// Green</span></div><div class="line"><span class="variable">$notification-warning</span>: <span class="number">#ffc53a</span>;                 <span class="comment">// Yellow</span></div><div class="line"><span class="variable">$notification-alert</span>: rgb(<span class="number">172</span>, <span class="number">34</span>, <span class="number">34</span>);          <span class="comment">// Red</span></div><div class="line"></div><div class="line">%notification &#123;</div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">  <span class="attribute">font-size</span>: <span class="number">1.5em</span>;</div><div class="line">  <span class="attribute">font-family</span>: sans-serif;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">1em</span> <span class="number">2em</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> auto;</div><div class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</div><div class="line">  <span class="attribute">text-align</span>: center;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.notification</span> &#123;</div><div class="line">  @<span class="keyword">extend</span> %notification;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-confirm</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-confirm</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-confirm</span>);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-warning</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-warning</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-warning</span>);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.notification-alert</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">$notification-alert</span>;</div><div class="line">  <span class="attribute">color</span>: set-notification-text-color(<span class="variable">$notification-alert</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果我们改变背景色，对应的文字颜色也会相应的进行更新。</p>
-<p>在css3中，<code>mix-blend-mode</code>属性也可以根据背景色自动的改变文字的颜色，但这个属性目前还没有得到浏览器的普遍支持，下面这个例子需要打开chrome的experimental开关：<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/ad716vz2/embedded/html,css,result/light" frameborder="0" allowfullscreen></iframe></p>
-]]></content>
-    
-    <summary type="html">
-    
-      用css来根据不同的背景色调整对应的文字颜色
-    
-    </summary>
-    
-      <category term="css" scheme="http://ilucas.me/categories/css/"/>
-    
-    
-      <category term="css3" scheme="http://ilucas.me/tags/css3/"/>
     
   </entry>
   
