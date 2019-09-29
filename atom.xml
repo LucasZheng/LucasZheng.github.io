@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ilucas.me/"/>
-  <updated>2019-07-31T08:12:24.000Z</updated>
+  <updated>2019-09-29T08:04:42.000Z</updated>
   <id>http://ilucas.me/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据可视化大屏开发实践总结</title>
+    <link href="http://ilucas.me/2019/09/29/big-data-visualize/"/>
+    <id>http://ilucas.me/2019/09/29/big-data-visualize/</id>
+    <published>2019-09-29T13:44:10.000Z</published>
+    <updated>2019-09-29T08:04:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>大屏的数据可视化能够让用户从全局的角度了解当前业务的各种核心指标，它的视觉冲击效果很强， 往往能给用户留下深刻的印象。关于可视化大屏的需求分析、视觉效果定位和设计准则可以参考简书上的<a href="https://www.jianshu.com/p/b755181a7cd2" target="_blank" rel="external">可视化大屏经验分享</a>。本文章总结了<a id="more"></a>在实际项目开发中所遇到的几个问题及解决办法，以供开发人员参考。</p>
+<h4 id="大屏需求"><a href="#大屏需求" class="headerlink" title="大屏需求"></a>大屏需求</h4><p>项目经过几轮迭代后，需要开发一个全国版的大屏首页用来展示一些核心的指标，设计图如下：<br><img src="/images/bigdata_index.png" alt=""></p>
+<p>页面分成5个部分，中间展示全国版的热力图，自动轮播展示两类核心指标数据。其余页面四个角用来展示不同分类的指标数据。<code>热点类容Top10</code>列表区域可以自动循环轮播。对应不同分类指标的详情数据则通过浮层来展示，如下：<br><img src="/images/bigdata_layer.png" alt=""></p>
+<p>浮层可以自动轮播，或者鼠标悬浮到某个分类区域时，对应浮层自动弹出。</p>
+<p>在开发过程中遇到的问题及解决办法如下：</p>
+<h4 id="兼容不同分辨率"><a href="#兼容不同分辨率" class="headerlink" title="兼容不同分辨率"></a>兼容不同分辨率</h4><ul>
+<li>使用<code>@media</code>规则来设置不同分辨率下的字体大小，间距；</li>
+<li>背景图如果是jpg、png的话，在大屏上需要准备一个大尺寸的图片，否则小图片拉伸会变得模糊；</li>
+</ul>
+<h4 id="使用RAF"><a href="#使用RAF" class="headerlink" title="使用RAF"></a>使用RAF</h4><p>由于不同分类指标的详情数据需要通过浮层轮播来展示，考虑到大面积UI界面动效的流畅性，使用<code>requestAnimationFrame</code>来实现，而非<code>setInterval</code>。<br><img src="/images/bigdata_raf.png" alt=""></p>
+<h4 id="独立浮层组件"><a href="#独立浮层组件" class="headerlink" title="独立浮层组件"></a>独立浮层组件</h4><p>由于不同模块有自己的浮层内容，且浮层的动效和交互都是一致的，故抽离出一个独立的浮层容器，用了控制动效和交互，浮层内的内容则由不同的动态组件来填充。<br><img src="/images/bigdata_layer_container.png" alt=""></p>
+<h4 id="缓存动态组件"><a href="#缓存动态组件" class="headerlink" title="缓存动态组件"></a>缓存动态组件</h4><p>每个浮层内容需要轮播展示，考虑到性能的问题，使用<code>keep-alive</code>来包裹组件，这样动态组件只需要在第一次有数据时渲染界面，后面就使用缓存的组件展示，减少页面的渲染开销。<br><img src="/images/bigdata_layer_alive.png" alt=""></p>
+<h4 id="避免echarts的内存泄露"><a href="#避免echarts的内存泄露" class="headerlink" title="避免echarts的内存泄露"></a>避免echarts的内存泄露</h4><p>由于浮层使用了<code>setInterval</code>来定时轮播各个动态组件，而每个组件内又使用到了<code>echarts</code>来渲染图表。如果按照之前的用法，将每个echarts对象放到<code>this</code>里面，则会导致echarts对象在组件切换时得不得释放，导致浏览器内存使用不断增加，最终导致页面崩溃。其解决办法是使用echarts的<code>getInstanceByDom</code>和<code>dispose</code>方法来管理。<br><img src="/images/bigdata_echarts.png" alt=""></p>
+<h4 id="slot嵌套使用"><a href="#slot嵌套使用" class="headerlink" title="slot嵌套使用"></a>slot嵌套使用</h4><p>在项目开发中，我们经常会抽象出一些独立的功能组件，并且使用<code>slot</code>来进行内容分发。对于一般的<code>slot</code>用法我们应该很熟悉，而对于多层嵌套的slot，我们可以使用下面的写法来实现。<br><img src="/images/vue_slot_multiple.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      数据可视化大屏开发实践总结
+    
+    </summary>
+    
+      <category term="performance" scheme="http://ilucas.me/categories/performance/"/>
+    
+    
+      <category term="vue" scheme="http://ilucas.me/tags/vue/"/>
+    
+      <category term="echarts" scheme="http://ilucas.me/tags/echarts/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue开发记录之props属性</title>
@@ -1178,43 +1216,6 @@
 <iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/zz09fpwn/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
 <p>同样你也可以使用<code>reverse()</code>来产生相反的动画效果，但当相反的动画结束时，<code>currentTime</code>将会是0。</p>
 <iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/1gup2944/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
-]]></content>
-    
-    <summary type="html">
-    
-      让我们来谈一谈未来的Web Animation API
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://ilucas.me/categories/javascript/"/>
-    
-    
-      <category term="Animation" scheme="http://ilucas.me/tags/Animation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Web Animation API（一）</title>
-    <link href="http://ilucas.me/2015/11/25/animations-intro/"/>
-    <id>http://ilucas.me/2015/11/25/animations-intro/</id>
-    <published>2015-11-25T14:52:13.000Z</published>
-    <updated>2018-09-25T06:30:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在接下来的几篇文章中我们将讨论一下web浏览器自身实现的Animation API，长话短说，让我们直接进入正文：<a id="more"></a></p>
-<h4 id="什么是Web-Animations-API"><a href="#什么是Web-Animations-API" class="headerlink" title="什么是Web Animations API"></a>什么是Web Animations API</h4><p>Web Animations API 是什么？它主要实现什么功能？<br>在过去几年中，由于得到css和javascript的支持，动画应用得到更多的重视。但每种动画实现方式都有它自身的有缺点：</p>
-<ul>
-<li>浏览器可以运用硬件加速来提升动画的流畅性，但是样式规则需要在css中定义，并且需要javascript来获取动态变化的值；</li>
-<li><code>requestAnimationFrame</code>已经得到很好的支持，并且浏览器在动画运行时可以进行优化。但是如果有其他javascript运行时，动画仍然有可能出现卡顿，同时也需要大量的数学运算；</li>
-<li><code>setInterval</code>可以用来实现动画效果，但它并不准确而且卡顿现象也比较突出；</li>
-<li><code>jQuery.animate()</code>可以让开发者轻松实现动画效果，但同样也会有性能方面的影响；</li>
-<li>其他一下库，如<code>Velocity</code>和<code>GreenSock</code>对动画的性能进行了很多优化，尽管如此，它们仍需要加载类库并进行长期维护。</li>
-</ul>
-<p>总的来说，我们希望浏览器能够对它支持的越多越好。Web Animations API就是在浏览器层面对动画进行实现。</p>
-<p>Web Animations API刚出来不久，目前只在Chrome和Firefox得到支持，接下来我们看看它实际上能给我们开发者提供什么功能。</p>
-<h4 id="创建一个基本的动画"><a href="#创建一个基本的动画" class="headerlink" title="创建一个基本的动画"></a>创建一个基本的动画</h4><p>和CSS Animation 相比，WAAPI能够让开发者对动画进行更多的控制。下面我们通过这个API创建一个基本的动画：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate([</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(1)'</span>, <span class="attr">opacity</span>: <span class="number">1</span>, <span class="attr">offset</span>: <span class="number">0</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.5)'</span>, <span class="attr">opacity</span>: <span class="number">.5</span>, <span class="attr">offset</span>: <span class="number">.3</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.667)'</span>, <span class="attr">opacity</span>: <span class="number">.667</span>, <span class="attr">offset</span>: <span class="number">.7875</span> &#125;,</div><div class="line">    &#123; <span class="attr">transform</span>: <span class="string">'scale(.6)'</span>, <span class="attr">opacity</span>: <span class="number">.6</span>, <span class="attr">offset</span>: <span class="number">1</span> &#125;</div><div class="line">  ], &#123;</div><div class="line">    <span class="attr">duration</span>: <span class="number">700</span>, <span class="comment">//milliseconds</span></div><div class="line">    easing: <span class="string">'ease-in-out'</span>, <span class="comment">//'linear', a bezier curve, etc.</span></div><div class="line">    delay: <span class="number">10</span>, <span class="comment">//milliseconds</span></div><div class="line">    iterations: <span class="literal">Infinity</span>, <span class="comment">//or a number</span></div><div class="line">    direction: <span class="string">'alternate'</span>, <span class="comment">//'normal', 'reverse', etc.</span></div><div class="line">    fill: <span class="string">'forwards'</span> <span class="comment">//'backwards', 'both', 'none', 'auto'</span></div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
-<p>作为对比，用css实现方式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">keyframes</span> emphasis &#123;</div><div class="line">  0% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1); </div><div class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>; </div><div class="line">  &#125;</div><div class="line">  39% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.5); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">5</span>; </div><div class="line">  &#125;</div><div class="line">  78<span class="selector-class">.75</span>% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.667); </div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">667</span>; </div><div class="line">  &#125;</div><div class="line">  100% &#123;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(.6);</div><div class="line">    <span class="attribute">opacity</span>: .<span class="number">6</span>; </div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="selector-id">#toAnimate</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: emphasis <span class="number">700ms</span> ease-in-out <span class="number">10ms</span> infinite alternate</div><div class="line">forwards;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我们依次解释下代码的含义。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="built_in">document</span>.getElementById(<span class="string">'toAnimate'</span>).animate()</div></pre></td></tr></table></figure></p>
-<p>我们找到需要实现动画的dom节点并调用animate方法，由于animate是新实现的方法，在使用前你需要先测试是否有这个方法，或者使用<a href="https://github.com/web-animations/web-animations-js" target="_blank" rel="external">polyfill</a>.<br><code>animate</code>接收两个参数，一个是数组格式的keyframe效果，一个是动画效果的持续时间及其他参数。于css实现的动画不同，这里可以用一个变量来应用当前的动画，在接下来的应用中，你可以重用或修改这个引用的动画效果。<br>下面这个图是分别用WAAPI和CSS实现的相同动画，左边是那一列是WAAPI实现的效果，右边是css实现的效果。<br><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/zt30wxk4/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe></p>
 ]]></content>
     
     <summary type="html">

@@ -1,0 +1,691 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>数据可视化大屏开发实践总结 | Lucas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lucas">
+    
+
+    
+    <meta name="description" content="数据可视化大屏开发实践总结">
+<meta name="keywords" content="vue,echarts">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据可视化大屏开发实践总结">
+<meta property="og:url" content="http://ilucas.me/2019/09/29/big-data-visualize/index.html">
+<meta property="og:site_name" content="Lucas">
+<meta property="og:description" content="数据可视化大屏开发实践总结">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_index.png">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_layer.png">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_raf.png">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_layer_container.png">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_layer_alive.png">
+<meta property="og:image" content="http://ilucas.me/images/bigdata_echarts.png">
+<meta property="og:image" content="http://ilucas.me/images/vue_slot_multiple.png">
+<meta property="og:updated_time" content="2019-09-29T08:04:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据可视化大屏开发实践总结">
+<meta name="twitter:description" content="数据可视化大屏开发实践总结">
+<meta name="twitter:image" content="http://ilucas.me/images/bigdata_index.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Lucas" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <meta name="baidu-site-verification" content="8svjq0FNAN" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lucas" title="Lucas"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lucas">Lucas</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/">关于</a></li>
+					
+					<li>
+ 					
+					
+           
+              <li><a target="_blank" href="/atom.xml" class="rss" title="RSS"><span>RSS</span></a></li>
+           
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/09/29/big-data-visualize/" title="数据可视化大屏开发实践总结" itemprop="url">数据可视化大屏开发实践总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lucas" target="_blank" itemprop="author">Lucas</a>
+		
+  <p class="article-time">
+    <time datetime="2019-09-29T13:44:10.000Z" itemprop="datePublished"> 发表于 2019-09-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#大屏需求"><span class="toc-number">1.</span> <span class="toc-text">大屏需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容不同分辨率"><span class="toc-number">2.</span> <span class="toc-text">兼容不同分辨率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用RAF"><span class="toc-number">3.</span> <span class="toc-text">使用RAF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#独立浮层组件"><span class="toc-number">4.</span> <span class="toc-text">独立浮层组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存动态组件"><span class="toc-number">5.</span> <span class="toc-text">缓存动态组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#避免echarts的内存泄露"><span class="toc-number">6.</span> <span class="toc-text">避免echarts的内存泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#slot嵌套使用"><span class="toc-number">7.</span> <span class="toc-text">slot嵌套使用</span></a></li></ol>
+		
+		</div>
+		
+		<p>大屏的数据可视化能够让用户从全局的角度了解当前业务的各种核心指标，它的视觉冲击效果很强， 往往能给用户留下深刻的印象。关于可视化大屏的需求分析、视觉效果定位和设计准则可以参考简书上的<a href="https://www.jianshu.com/p/b755181a7cd2" target="_blank" rel="external">可视化大屏经验分享</a>。本文章总结了<a id="more"></a>在实际项目开发中所遇到的几个问题及解决办法，以供开发人员参考。</p>
+<h4 id="大屏需求"><a href="#大屏需求" class="headerlink" title="大屏需求"></a>大屏需求</h4><p>项目经过几轮迭代后，需要开发一个全国版的大屏首页用来展示一些核心的指标，设计图如下：<br><img src="/images/bigdata_index.png" alt=""></p>
+<p>页面分成5个部分，中间展示全国版的热力图，自动轮播展示两类核心指标数据。其余页面四个角用来展示不同分类的指标数据。<code>热点类容Top10</code>列表区域可以自动循环轮播。对应不同分类指标的详情数据则通过浮层来展示，如下：<br><img src="/images/bigdata_layer.png" alt=""></p>
+<p>浮层可以自动轮播，或者鼠标悬浮到某个分类区域时，对应浮层自动弹出。</p>
+<p>在开发过程中遇到的问题及解决办法如下：</p>
+<h4 id="兼容不同分辨率"><a href="#兼容不同分辨率" class="headerlink" title="兼容不同分辨率"></a>兼容不同分辨率</h4><ul>
+<li>使用<code>@media</code>规则来设置不同分辨率下的字体大小，间距；</li>
+<li>背景图如果是jpg、png的话，在大屏上需要准备一个大尺寸的图片，否则小图片拉伸会变得模糊；</li>
+</ul>
+<h4 id="使用RAF"><a href="#使用RAF" class="headerlink" title="使用RAF"></a>使用RAF</h4><p>由于不同分类指标的详情数据需要通过浮层轮播来展示，考虑到大面积UI界面动效的流畅性，使用<code>requestAnimationFrame</code>来实现，而非<code>setInterval</code>。<br><img src="/images/bigdata_raf.png" alt=""></p>
+<h4 id="独立浮层组件"><a href="#独立浮层组件" class="headerlink" title="独立浮层组件"></a>独立浮层组件</h4><p>由于不同模块有自己的浮层内容，且浮层的动效和交互都是一致的，故抽离出一个独立的浮层容器，用了控制动效和交互，浮层内的内容则由不同的动态组件来填充。<br><img src="/images/bigdata_layer_container.png" alt=""></p>
+<h4 id="缓存动态组件"><a href="#缓存动态组件" class="headerlink" title="缓存动态组件"></a>缓存动态组件</h4><p>每个浮层内容需要轮播展示，考虑到性能的问题，使用<code>keep-alive</code>来包裹组件，这样动态组件只需要在第一次有数据时渲染界面，后面就使用缓存的组件展示，减少页面的渲染开销。<br><img src="/images/bigdata_layer_alive.png" alt=""></p>
+<h4 id="避免echarts的内存泄露"><a href="#避免echarts的内存泄露" class="headerlink" title="避免echarts的内存泄露"></a>避免echarts的内存泄露</h4><p>由于浮层使用了<code>setInterval</code>来定时轮播各个动态组件，而每个组件内又使用到了<code>echarts</code>来渲染图表。如果按照之前的用法，将每个echarts对象放到<code>this</code>里面，则会导致echarts对象在组件切换时得不得释放，导致浏览器内存使用不断增加，最终导致页面崩溃。其解决办法是使用echarts的<code>getInstanceByDom</code>和<code>dispose</code>方法来管理。<br><img src="/images/bigdata_echarts.png" alt=""></p>
+<h4 id="slot嵌套使用"><a href="#slot嵌套使用" class="headerlink" title="slot嵌套使用"></a>slot嵌套使用</h4><p>在项目开发中，我们经常会抽象出一些独立的功能组件，并且使用<code>slot</code>来进行内容分发。对于一般的<code>slot</code>用法我们应该很熟悉，而对于多层嵌套的slot，我们可以使用下面的写法来实现。<br><img src="/images/vue_slot_multiple.png" alt=""></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/performance/">performance</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/vue/">vue</a><a href="/tags/echarts/">echarts</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+    <!--
+	  <div data-url="http://ilucas.me/2019/09/29/big-data-visualize/" data-title="数据可视化大屏开发实践总结 | Lucas" data-tsina="null" class="share clearfix">
+	  </div>
+    -->
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/07/31/vue-props-default/"  title="Vue开发记录之props属性">
+ <strong>下一篇：</strong><br/> 
+ <span>Vue开发记录之props属性
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#大屏需求"><span class="toc-number">1.</span> <span class="toc-text">大屏需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容不同分辨率"><span class="toc-number">2.</span> <span class="toc-text">兼容不同分辨率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用RAF"><span class="toc-number">3.</span> <span class="toc-text">使用RAF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#独立浮层组件"><span class="toc-number">4.</span> <span class="toc-text">独立浮层组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存动态组件"><span class="toc-number">5.</span> <span class="toc-text">缓存动态组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#避免echarts的内存泄露"><span class="toc-number">6.</span> <span class="toc-text">避免echarts的内存泄露</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#slot嵌套使用"><span class="toc-number">7.</span> <span class="toc-text">slot嵌套使用</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/build/" title="build">build<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/css/" title="css">css<sup>14</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/html/" title="html">html<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/javascript/" title="javascript">javascript<sup>12</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/mvc/" title="mvc">mvc<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/other/" title="other">other<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/performance/" title="performance">performance<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/security/" title="security">security<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/test/" title="test">test<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/css3/" title="css3">css3<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/javascript/" title="javascript">javascript<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Animation/" title="Animation">Animation<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ember/" title="Ember">Ember<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vue/" title="vue">vue<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/performance/" title="performance">performance<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/security/" title="security">security<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/unit-test/" title="unit test">unit test<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RegExp/" title="RegExp">RegExp<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/promise/" title="promise">promise<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/flex/" title="flex">flex<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ESLint/" title="ESLint">ESLint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/grid/" title="grid">grid<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/media/" title="media">media<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backbone/" title="Backbone">Backbone<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/favicon/" title="favicon">favicon<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/crossorign/" title="crossorign">crossorign<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/img/" title="img">img<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Git/" title="Git">Git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Angular/" title="Angular">Angular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html/" title="html">html<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/modular/" title="modular">modular<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image/" title="image">image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/image-sprites/" title="image sprites">image sprites<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/font-icons/" title="font icons">font icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG-icons/" title="SVG icons">SVG icons<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/php/" title="php">php<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vh/" title="vh">vh<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/reflow/" title="reflow">reflow<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/repaint/" title="repaint">repaint<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RESTful/" title="RESTful">RESTful<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sass/" title="sass">sass<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SVG/" title="SVG">SVG<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/BEM/" title="BEM">BEM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/code-review/" title="code review">code review<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/webcomponent/" title="webcomponent">webcomponent<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://just4fun.github.io/" target="_blank" title="just4fun">just4fun</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <ul id="clock">
+    <li id="sec"></li>
+    <li id="hour"></li>
+    <li id="min"></li>
+  </ul>
+</aside>
+</div>
+
+    </div>
+    <footer><div id="footer" >
+  <div class="resources clearfix">
+    <ul>
+        <li class="css">
+            <div>css</div>
+            <ul>
+                <li><a href="https://css-tricks.com">CSS-Tricks</a></li>
+                <li><a href="http://fontawesome.io/">Font Awesome</a></li>
+                <li><a href="https://icomoon.io/">Iconmoon</a></li>
+                <li><a href="http://daneden.github.io/animate.css/">Animate.css</a></li>
+                <li><a href="http://leaverou.github.io/animatable/">Animatable</a></li>
+                <li><a href="http://browserhacks.com/">BrowserHacks</a></li>
+                <li><a href="http://sass-guidelin.es/">Sass Guidelines</a></li>
+            </ul>
+        </li>
+        <li class="js">
+            <div>javascript</div>
+            <ul>
+                <li><a href="http://dailyjs.com/">DailyJS</a></li>
+                <li><a href="http://javascriptweekly.com/issues">Javascript weekly</a></li>
+                <li><a href="http://modernweb.com/">modernweb</a></li>
+                <li><a href="http://www.jq22.com/">jQuery插件库</a></li>
+                <li><a href="http://imakewebthings.com/deck.js/">deck(ppt)</a></li>
+                <li><a href="https://github.com/Serhioromano/bootstrap-calendar">bootstrap-calendar</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://mailru.github.io/FileAPI/">FileAPI</a></li>
+                <li><a href="http://jscs.info/">JSCS</a></li>
+            </ul>
+        </li>
+        <li class="other">
+            <div>其它</div>
+            <ul>
+                <li><a href="https://www.surveymonkey.com/">SurveyMonkey</a></li>
+                <li><a href="https://prezi.com/">Prezi</a></li>
+                <li><a href="https://tinypng.com/">TinyPNG</a></li>
+                <li><a href="https://www.talkingdata.com">TalkingData</a></li>
+                <li><a href="https://github.com/dypsilon/frontend-dev-bookmarks">前端书籍集合</a></li>
+                <li><a href="http://linuxcommand.org/index.php">Writing Shell Scripts</a></li>
+                <li><a href="http://fullcalendar.io/">fullcalendar</a></li>
+                <li><a href="http://alvarotrigo.com/fullPage/#firstPage">fullPage</a></li>
+                <li><a href="http://www.catswhocode.com/blog/php-fast-and-easy-sql-queries-using-ezsql">ezSQL(common class) </a></li>
+                <li><a href="http://flightphp.com/learn">Flight(RESTful php framework)</a></li>
+                <li><a href="https://kimmobrunfeldt.github.io/progressbar.js/">Progressbar library</a></li>
+                <li><a href="http://dynamicsjs.com/">Dynamics library</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Lucas. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/clock.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdd54ddad72c29f111c95ab93ce862785' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
