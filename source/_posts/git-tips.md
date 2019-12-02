@@ -144,6 +144,27 @@ git branch -m renamed_branch
 #### 利用git hooks
 在.git/hooks中有许多hook文件，修改这些hook可以帮助我们进行一些检查，如对js和css进行格式化检查，提交信息是否满足项目的要求。
 
+#### git 代码统计命令
+统计某个时间段每人的代码提交量，包括增加，删除
+```
+git log  --since='2019-10-30' --until='2019-12-02' --format='%aN' | sort -u | while read name; do echo -en "$name,"; git log --since='2019-10-30' --until='2019-12-02' --author="$name" --numstat --pretty=tformat: --no-merges | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines, %s, removed lines, %s, total lines, %s\n", add, subs, loc }' -; done
+```
+
+仓库提交者（邮箱）排名前 5（如果看全部，去掉 head 管道即可）
+```
+git log --pretty='%aN' | sort | uniq -c | sort -k1 -n -r | head -n 5
+```
+
+贡献人数统计
+```
+git log --pretty='%aN' | sort -u | wc -l
+```
+
+提交数统计
+```
+git log --oneline | wc -l
+```
+
 #### 其他常用命令
 ```
 本地新建并切换到该分支：git checkout -b xxx
